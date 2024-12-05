@@ -29,10 +29,13 @@ import javax.swing.JPanel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class MedicalFileChooser extends JFileChooser {
+  /** Type of save, either binary or textual */
   private SaveType saveType;
+  /** Extension filter for textual files */
   private static FileNameExtensionFilter textExtFilter =
       new FileNameExtensionFilter("Only text files", "txt");
 
+  /** Extension filter for binary files */
   private static FileNameExtensionFilter binaryExtFilter =
       new FileNameExtensionFilter("Only meddat files", "meddat");
 
@@ -60,10 +63,18 @@ public class MedicalFileChooser extends JFileChooser {
     else setSelectedFile(new File("data.txt"));
   }
 
+  /**
+   * Get the save type set for this chooser
+   * @return set saveType
+  */
   public SaveType getSaveType() {
     return this.saveType;
   }
 
+  /**
+   * Set the save type for this chooser
+   * @param saveType save type to set
+  */
   public void setSaveType(SaveType saveType) {
     this.saveType = saveType;
   }
@@ -84,6 +95,13 @@ public class MedicalFileChooser extends JFileChooser {
     return dialog;
   }
 
+  /**
+   * This helper function adds a checkbox
+   * to the file chooser, allowing the user to choose
+   * whether they wish to save in a binary format
+   * or text
+   * @return created panel
+  */
   private JPanel createExtraPanel() {
     JPanel panel = new JPanel();
     boolean selected = getSaveType() == SaveType.BINARY ? true : false;
@@ -99,6 +117,7 @@ public class MedicalFileChooser extends JFileChooser {
         new ItemListener() {
           @Override
           public void itemStateChanged(ItemEvent e) {
+            // Toggle between BINARY and TEXT
             SaveType newType = getSaveType() == SaveType.BINARY ? SaveType.TEXT : SaveType.BINARY;
             setSaveType(newType);
             setSelectedFile(
@@ -111,6 +130,13 @@ public class MedicalFileChooser extends JFileChooser {
     return panel;
   }
 
+  /**
+   * This function will try to load the objects
+   * stored a text file into the specified service
+   * @param service HealthService to load data to
+   * @throws IOException if file has not been found
+   * are wrong or other I/O error
+  */
   private void loadText(HealthService service) throws IOException {
     FileReader fr = new FileReader(getSelectedFile());
     BufferedReader bf = new BufferedReader(fr);
@@ -186,6 +212,13 @@ public class MedicalFileChooser extends JFileChooser {
     bf.close();
   }
 
+  /**
+   * This function will try to load the objects
+   * stored a binary file into the specified service
+   * @param service HealthService to load data to
+   * @throws IOException if file has not been found
+   * are wrong or other I/O error
+  */
   private void loadBinary(HealthService service) throws IOException, ClassNotFoundException {
     FileInputStream chosenFile = new FileInputStream(getSelectedFile());
     ObjectInputStream inputStream = new ObjectInputStream(chosenFile);
@@ -203,6 +236,13 @@ public class MedicalFileChooser extends JFileChooser {
     inputStream.close();
   }
 
+  /**
+   * This function will try to save the objects
+   * stored in the specified service to a text file
+   * @param service HealthService to save data from
+   * @throws IOException if file has not been found
+   * are wrong or other I/O error
+  */
   private void saveText(HealthService service) throws IOException {
     PrintWriter pw = new PrintWriter(getSelectedFile());
 
@@ -280,6 +320,13 @@ public class MedicalFileChooser extends JFileChooser {
     pw.close();
   }
 
+  /**
+   * This function will try to save the objects
+   * stored in the specified service to a binary file
+   * @param service HealthService to save data from
+   * @throws IOException if file has not been found
+   * are wrong or other I/O error
+  */
   private void saveBinary(HealthService service) throws IOException {
     FileOutputStream chosenFile = new FileOutputStream(getSelectedFile());
     ObjectOutputStream stream = new ObjectOutputStream(chosenFile);
@@ -297,6 +344,12 @@ public class MedicalFileChooser extends JFileChooser {
     stream.close();
   }
 
+  /**
+   * This function will try to save the objects
+   * stored in the specified service to a binary or
+   * text file
+   * @param service HealthService to save data from
+  */
   public void save(HealthService service) {
     boolean success = false;
     while (!success) {
@@ -336,6 +389,12 @@ public class MedicalFileChooser extends JFileChooser {
     }
   }
 
+  /**
+   * This function will try to load the file
+   * stored in a binary or textual manner
+   * into the specified service
+   * @param service HealthService to load data into
+  */
   public void load(HealthService service) {
     try {
       if (getSaveType() == SaveType.BINARY) {
