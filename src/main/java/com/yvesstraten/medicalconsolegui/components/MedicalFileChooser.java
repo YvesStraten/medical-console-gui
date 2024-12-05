@@ -12,6 +12,7 @@ import java.awt.HeadlessException;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
@@ -25,9 +26,15 @@ import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class MedicalFileChooser extends JFileChooser {
   private SaveType saveType;
+  private static FileNameExtensionFilter textExtFilter =
+      new FileNameExtensionFilter("Only text files", "txt");
+
+  private static FileNameExtensionFilter binaryExtFilter =
+      new FileNameExtensionFilter("Only meddat files", "meddat");
 
   /**
    * Default constructor Sets the save type as binary
@@ -35,7 +42,7 @@ public class MedicalFileChooser extends JFileChooser {
    * @see SaveType
    */
   public MedicalFileChooser() {
-    this(SaveType.BINARY);
+    this(SaveType.BINARY, binaryExtFilter);
   }
 
   /**
@@ -44,9 +51,13 @@ public class MedicalFileChooser extends JFileChooser {
    * @param saveType type of save wanted
    * @see SaveType
    */
-  public MedicalFileChooser(SaveType saveType) {
+  public MedicalFileChooser(SaveType saveType, FileNameExtensionFilter fileFilter) {
     super();
     setSaveType(saveType);
+    setFileFilter(fileFilter);
+
+    if (getSaveType() == SaveType.BINARY) setSelectedFile(new File("data.meddat"));
+    else setSelectedFile(new File("data.txt"));
   }
 
   public SaveType getSaveType() {
@@ -83,17 +94,20 @@ public class MedicalFileChooser extends JFileChooser {
       message = "Load as binary file";
     }
 
-    JCheckBox saveType = new JCheckBox(message, selected);
-    saveType.addItemListener(
+    JCheckBox operationType = new JCheckBox(message, selected);
+    operationType.addItemListener(
         new ItemListener() {
           @Override
           public void itemStateChanged(ItemEvent e) {
             SaveType newType = getSaveType() == SaveType.BINARY ? SaveType.TEXT : SaveType.BINARY;
             setSaveType(newType);
+            setSelectedFile(
+                new File(getSaveType() == SaveType.BINARY ? "data.meddat" : "data.txt"));
+            setFileFilter(getSaveType() == SaveType.BINARY ? binaryExtFilter : textExtFilter);
           }
         });
 
-    panel.add(saveType);
+    panel.add(operationType);
     return panel;
   }
 
