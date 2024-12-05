@@ -1,10 +1,12 @@
-package com.yvesstraten.medicalconsolegui;
+package com.yvesstraten.medicalconsolegui.components;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
+
+import com.yvesstraten.medicalconsolegui.renderers.MedicalTableButtonRenderer;
 
 public class MedicalTable extends JTable {
   public MedicalTable(){

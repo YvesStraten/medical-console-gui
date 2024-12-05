@@ -1,4 +1,4 @@
-package com.yvesstraten.medicalconsolegui;
+package com.yvesstraten.medicalconsolegui.renderers;
 
 import javax.swing.JTable;
 import java.awt.Component;

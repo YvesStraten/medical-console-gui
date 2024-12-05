@@ -1,4 +1,4 @@
-package com.yvesstraten.medicalconsolegui;
+package com.yvesstraten.medicalconsolegui.components;
 
 import com.yvesstraten.medicalconsole.HealthService;
 import com.yvesstraten.medicalconsole.Patient;

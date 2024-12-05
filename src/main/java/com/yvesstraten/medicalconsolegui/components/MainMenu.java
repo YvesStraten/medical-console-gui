@@ -1,4 +1,4 @@
-package com.yvesstraten.medicalconsolegui;
+package com.yvesstraten.medicalconsolegui.components;
 
 import java.awt.BorderLayout;
 import java.awt.event.ItemEvent;
@@ -10,6 +10,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 
 import com.yvesstraten.medicalconsole.HealthService;
+import com.yvesstraten.medicalconsolegui.models.HospitalTableModel;
 
 public class MainMenu extends ApplicationPane {
   private JTable currentTable;

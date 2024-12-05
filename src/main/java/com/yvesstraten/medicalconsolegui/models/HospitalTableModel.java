@@ -1,12 +1,9 @@
-package com.yvesstraten.medicalconsolegui;
+package com.yvesstraten.medicalconsolegui.models;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
 
 import com.yvesstraten.medicalconsole.facilities.Hospital;

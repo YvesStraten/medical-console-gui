@@ -1,4 +1,4 @@
-package com.yvesstraten.medicalconsolegui;
+package com.yvesstraten.medicalconsolegui.components;
 
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;

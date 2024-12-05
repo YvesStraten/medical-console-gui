@@ -4,6 +4,7 @@ import javax.swing.JFrame;
 
 import com.yvesstraten.medicalconsole.HealthService;
 import com.yvesstraten.medicalconsole.MedicalConsole;
+import com.yvesstraten.medicalconsolegui.components.MedicalGuiFrame;
 
 public class MedicalGui extends JFrame {
   public static void main(String[] args) {
@@ -12,7 +13,8 @@ public class MedicalGui extends JFrame {
       System.setProperty("apple.laf.useScreenMenuBar", "true");
     }
 
-    HealthService service = MedicalConsole.generateSampleData();
+    HealthService service = new HealthService("Test");
+    // HealthService service = MedicalConsole.generateSampleData();
 		MedicalGuiFrame medicalFrame = new MedicalGuiFrame(service);
 		medicalFrame.setVisible(true);
   }
