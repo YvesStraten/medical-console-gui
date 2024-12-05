@@ -55,29 +55,10 @@ public class MedicalGuiFrame extends JFrame {
         new ActionListener() {
           @Override
           public void actionPerformed(ActionEvent e) {
-            JFileChooser fileChooser = new JFileChooser();
+            MedicalFileChooser fileChooser = new MedicalFileChooser();
             int returnVal = fileChooser.showOpenDialog(menuBar);
             if (returnVal == JFileChooser.APPROVE_OPTION) {
-              try {
-                FileInputStream chosenFile = new FileInputStream(fileChooser.getSelectedFile());
-                ObjectInputStream inputStream = new ObjectInputStream(chosenFile);
-                Object read = inputStream.readObject();
-                while (read != null) {
-                  System.out.println(read.toString());
-                  if (read instanceof Patient) {
-                    service.addPatient((Patient) read);
-                  } else if (read instanceof MedicalFacility) {
-                    service.addMedicalFacility((MedicalFacility) read);
-                  }
-                  read = inputStream.readObject();
-                }
-              } catch (IOException ioe) {
-                JOptionPane.showMessageDialog(fileChooser,
-                                              "Error when loading file");
-              } catch (ClassNotFoundException cnfe) {
-                JOptionPane.showMessageDialog(fileChooser,
-                                              "The file has invalid data!");
-              }
+              fileChooser.load(service);
               setTitle(getNewTitle(service));
             }
           }
@@ -88,52 +69,8 @@ public class MedicalGuiFrame extends JFrame {
         new ActionListener() {
           @Override
           public void actionPerformed(ActionEvent e) {
-            JFileChooser fileChooser = new JFileChooser();
-            boolean success = false;
-            while (!success) {
-              int returnVal = fileChooser.showSaveDialog(menuBar);
-              if (returnVal == JFileChooser.APPROVE_OPTION) {
-                try {
-                  FileOutputStream chosenFile = new FileOutputStream(fileChooser.getSelectedFile());
-                  ObjectOutputStream stream = new ObjectOutputStream(chosenFile);
-                  System.out.println("Writing!");
-                  for (Patient patient : service.getPatients()) {
-                    System.out.println("Writing!" + patient.toString());
-                    stream.writeObject(patient);
-                  }
-
-                  for (MedicalFacility facility : service.getMedicalFacilities()) {
-                    System.out.println("Writing!" + facility.toString());
-                    stream.writeObject(facility);
-                  }
-
-                  stream.close();
-
-                  success = true;
-                } catch(IOException ioe){
-                  // It is very likely that most IOExceptions come from the user
-                  // selecting a location that they cannot save to/path to save to
-                  // does not exist
-                  Object[] options = new Object[] { "Ok", "Cancel" };
-                  int chosenOption = JOptionPane.showOptionDialog(fileChooser,
-                                               "Could not write to file!, Please choose another location!",
-                                               "Warning",
-                                               JOptionPane.DEFAULT_OPTION,
-                                               JOptionPane.WARNING_MESSAGE,
-                                               null, options, options[0]);
-
-                  if(chosenOption == 1 &&
-                     chosenOption == JOptionPane.CANCEL_OPTION){
-                    System.out.println("Abort saving");
-                    success = true;
-                  } else {
-                    returnVal = fileChooser.showSaveDialog(menuBar);
-                  }
-                }
-              } else if (returnVal == JFileChooser.CANCEL_OPTION) {
-                success = true;
-              }
-            }
+            MedicalFileChooser fileChooser = new MedicalFileChooser();
+            fileChooser.save(service);
           }
         });
 
