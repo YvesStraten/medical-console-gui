@@ -4,10 +4,12 @@ import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JList;
 import javax.swing.table.AbstractTableModel;
 
 import com.yvesstraten.medicalconsole.facilities.Hospital;
 import com.yvesstraten.medicalconsole.facilities.Procedure;
+import com.yvesstraten.medicalconsolegui.components.ViewObjectButton;
 
 public class HospitalTableModel extends AbstractTableModel {
   private List<Hospital> hospitals;
@@ -52,12 +54,21 @@ public class HospitalTableModel extends AbstractTableModel {
       case 2: 
         return selectedHospital.getProbAdmit();
       case 3: 
-        return new JComboBox<Procedure>(selectedHospital.getProceduresStream().toArray(Procedure[]::new));
-      case 4: 
-        JButton view = new JButton("View"); 
+        return new JList<Procedure>(selectedHospital.getProceduresStream().toArray(Procedure[]::new));
+      case 4:
+        ViewObjectButton view = new ViewObjectButton();
         return view;
     }
     return null;
+  }
+
+  @Override
+  public boolean isCellEditable(int rowIndex, int columnIndex) {
+    if(columnIndex == 4){
+      return true;
+    }
+
+    return false;
   }
 
   @Override 
