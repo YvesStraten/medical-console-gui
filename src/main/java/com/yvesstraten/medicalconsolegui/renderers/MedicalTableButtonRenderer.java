@@ -1,16 +1,19 @@
 package com.yvesstraten.medicalconsolegui.renderers;
 
+import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import java.awt.Component;
-import javax.swing.table.TableCellRenderer;
+import javax.swing.table.DefaultTableCellRenderer;
 
-public class MedicalTableButtonRenderer implements TableCellRenderer {
-  private final TableCellRenderer defaultRenderer;
+import com.yvesstraten.medicalconsolegui.components.ViewObjectButton;
 
-  public MedicalTableButtonRenderer(TableCellRenderer renderer){
-    defaultRenderer = renderer;
+public class MedicalTableButtonRenderer extends DefaultTableCellRenderer {
+  public MedicalTableButtonRenderer(){
+    super();
   }
 
+  @Override
   public Component getTableCellRendererComponent(JTable table,
     Object value,
     boolean isSelected, 
@@ -18,10 +21,9 @@ public class MedicalTableButtonRenderer implements TableCellRenderer {
     int row,
     int column
   ){
-    if(value instanceof Component)
-      return (Component) value;
+    Component com = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
-    return defaultRenderer.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-
+    ViewObjectButton viewButton = new ViewObjectButton();
+    return viewButton;
   }
 }
