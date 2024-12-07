@@ -72,6 +72,15 @@ public class ClinicTableModel extends AbstractTableModel {
         return null;
     }
 
+  @Override
+  public boolean isCellEditable(int rowIndex, int columnIndex) {
+    if(columnIndex == 5){
+      return true;
+    }
+
+    return false;
+  }
+
     @Override
     public Class<?> getColumnClass(int column){
         return getValueAt(0, column).getClass();
