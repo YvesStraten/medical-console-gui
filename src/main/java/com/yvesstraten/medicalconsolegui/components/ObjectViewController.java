@@ -26,4 +26,15 @@ public abstract class ObjectViewController {
     public void setModel(HealthService model) {
         this.model = model;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof ObjectViewController){
+            ObjectViewController other = (ObjectViewController) obj;
+            return other.getView().equals(this.getView()) &&
+                other.getModel().equals(this.getModel());
+        }
+
+        return false;
+    }
 }

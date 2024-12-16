@@ -8,7 +8,7 @@ import javax.swing.table.AbstractTableModel;
 import com.yvesstraten.medicalconsole.facilities.Clinic;
 import com.yvesstraten.medicalconsolegui.components.ViewObjectButton;
 
-public class ClinicTableModel extends AbstractTableModel {
+public class ClinicTableModel extends MedicalTableModel {
     private List<Clinic> clinics;
     private final String[] columns = new String[]
         {
@@ -71,15 +71,6 @@ public class ClinicTableModel extends AbstractTableModel {
 
         return null;
     }
-
-  @Override
-  public boolean isCellEditable(int rowIndex, int columnIndex) {
-    if(columnIndex == 5){
-      return true;
-    }
-
-    return false;
-  }
 
     @Override
     public Class<?> getColumnClass(int column){

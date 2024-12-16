@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
+import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
 
 import com.yvesstraten.medicalconsole.HealthService;
@@ -25,27 +26,36 @@ public class MedicalTable extends JTable {
     setAutoCreateRowSorter(true);
 
     ActionListener listener = new ActionListener() {
-      boolean noDups = true;
       @Override
       public void actionPerformed(ActionEvent e) {
-        if(noDups){
-          JPanel panelToAdd = null;
           if(model instanceof ClinicTableModel){
               Clinic selected = service.getClinics().toList().get(getSelectedRow());
                     ClinicViewController controller = new ClinicViewController(new ClinicViewPanel(selected), service);
+          ObjectViewPanel view = controller.getView();
+          Component[] components = tabs.getComponents();
+          boolean duplicate = false;
+          for(int i = 0; i < components.length; i++){
+            Component current = components[i];
+            if(current.equals(view)){
+              tabs.setSelectedIndex(i);
+              duplicate = true;
+            }
+          }
 
-                    controller.getView().deleteView(new ActionListener() {
+          if(!duplicate){
+                    tabs.addTab(String.format("Clinic %d %s", selected.getId(), selected.getName()), view);
+                    view.deleteView(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             service.getMedicalFacilities().remove(service.getClinics().toList().get(getSelectedRow()));
-                        }
-                    	
-                    });
 
-            panelToAdd = controller.getView();
+
+                            tabs.remove(tabs.indexOfComponent(view));
+                            setModel(new ClinicTableModel(service.getClinics().toList()));
+                        }
+                    });
           }
-          tabs.addTab("Test", panelToAdd);
-        }
+          }
       }
     };
 

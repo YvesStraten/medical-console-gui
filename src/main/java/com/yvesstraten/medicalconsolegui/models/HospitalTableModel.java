@@ -11,7 +11,7 @@ import com.yvesstraten.medicalconsole.facilities.Hospital;
 import com.yvesstraten.medicalconsole.facilities.Procedure;
 import com.yvesstraten.medicalconsolegui.components.ViewObjectButton;
 
-public class HospitalTableModel extends AbstractTableModel {
+public class HospitalTableModel extends MedicalTableModel {
   private List<Hospital> hospitals;
   private final String[] columns = new String[] { "Id", "Name", "ProbAdmit", "Procedures", "View"};
 

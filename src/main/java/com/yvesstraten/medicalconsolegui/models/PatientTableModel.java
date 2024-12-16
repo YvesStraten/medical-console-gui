@@ -3,13 +3,11 @@ package com.yvesstraten.medicalconsolegui.models;
 import java.util.List;
 
 import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.table.AbstractTableModel;
 
 import com.yvesstraten.medicalconsole.Patient;
 import com.yvesstraten.medicalconsolegui.components.ViewObjectButton;
 
-public class PatientTableModel extends AbstractTableModel {
+public class PatientTableModel extends MedicalTableModel {
   private List<Patient> patients;
   private final String[] columns = new String[] { "Id", "Name", "Private patient", "Balance", "Current facility", "View"};
 
