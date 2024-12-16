@@ -19,7 +19,7 @@ public class MainMenu extends ApplicationPane {
   private JTable currentTable;
   private JScrollPane scrollPane;
 
-  public MainMenu(HealthService service, JTabbedPane tabs) {
+  public MainMenu(HealthService service, MedicalTabsPanel tabs) {
     super(service, tabs);
     setLayout(new BorderLayout(0, 30));
     JTable table = new MedicalTable(new HospitalTableModel(getService().getHospitals().toList()), tabs, service);

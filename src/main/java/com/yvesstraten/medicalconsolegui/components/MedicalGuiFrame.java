@@ -46,7 +46,7 @@ public class MedicalGuiFrame extends JFrame {
     setService(service);
 
     // Setup tabs
-    JTabbedPane tabbedPane = new JTabbedPane();
+    MedicalTabsPanel tabbedPane = new MedicalTabsPanel();
     // Setup the main menu
     JPanel mainMenu = new MainMenu(service, tabbedPane);
 
