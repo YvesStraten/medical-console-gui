@@ -22,7 +22,7 @@ public class MainMenu extends ApplicationPane {
   public MainMenu(HealthService service, JTabbedPane tabs) {
     super(service, tabs);
     setLayout(new BorderLayout(0, 30));
-    JTable table = new MedicalTable(new HospitalTableModel(getService().getHospitals().toList()), tabs);
+    JTable table = new MedicalTable(new HospitalTableModel(getService().getHospitals().toList()), tabs, service);
     setCurrentTable(table);
     JScrollPane scrollPane = new JScrollPane(getCurrentTable());
     setScrollPane(scrollPane);
@@ -49,7 +49,7 @@ public class MainMenu extends ApplicationPane {
                 tableModel = new PatientTableModel(service.getPatients());
               }
 
-              setCurrentTable(new MedicalTable(tableModel, tabs));
+              setCurrentTable(new MedicalTable(tableModel, tabs, service));
               getScrollPane().setViewportView(getCurrentTable());
             }
           }

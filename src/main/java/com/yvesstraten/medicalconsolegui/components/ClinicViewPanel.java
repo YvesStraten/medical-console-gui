@@ -1,39 +1,41 @@
 package com.yvesstraten.medicalconsolegui.components;
 
+import java.awt.Component;
+import java.awt.event.ActionListener;
+import java.lang.reflect.Field;
+import java.util.List;
+
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
-import com.yvesstraten.medicalconsole.HealthService;
 import com.yvesstraten.medicalconsole.facilities.Clinic;
+import com.yvesstraten.medicalconsole.operations.EditOperations;
 
 public class ClinicViewPanel extends ObjectViewPanel {
-    private Clinic clinic;
-
     public ClinicViewPanel(Clinic clinic){
         super();
-        setClinic(clinic);
-        JPanel drawnFields = drawFields();
-        super.setFieldsPanel(drawFields());
-        add(drawnFields);
-    }
+        System.out.println(clinic.toString());
+        String name = clinic.getName();
+        Double fee = clinic.getFee();
+        Double gapPercent = clinic.getGapPercent();
 
-    public Clinic getClinic(){
-        return this.clinic;
-    }
+        // Initialize main labels
+        JLabel nameLabel = new JLabel("Name");
+        JLabel feeLabel = new JLabel("Clinic Fee");
+        JLabel gapPercentLabel = new JLabel("Gap Percentage");
 
-    public void setClinic(Clinic clinic){
-        this.clinic = clinic;
-    }
+        // Initialize text areas
+        JTextArea nameTextArea = new JTextArea(name);
+        JTextArea feeTextArea = new JTextArea(fee.toString());
+        JTextArea gapPercentTextArea = new JTextArea(gapPercent.toString());
 
-    @Override
-    public JPanel drawFields() {
-        JPanel fieldContainer = new JPanel();
-        JLabel name = new JLabel("Name");
-        JTextArea nameTextArea = new JTextArea(getClinic().getName());
-        fieldContainer.add(name);
-        fieldContainer.add(nameTextArea);
-
-        return fieldContainer;
+        // Add components to Panel
+        add(nameLabel);
+        add(nameTextArea);
+        add(feeLabel);
+        add(feeTextArea);
+        add(gapPercentLabel);
+        add(gapPercentTextArea);
     }
 }

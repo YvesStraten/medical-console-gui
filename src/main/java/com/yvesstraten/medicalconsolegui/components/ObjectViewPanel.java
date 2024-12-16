@@ -1,44 +1,45 @@
 package com.yvesstraten.medicalconsolegui.components;
 
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import com.yvesstraten.medicalconsole.HealthService;
-
 public abstract class ObjectViewPanel extends JPanel {
-    private JPanel fieldsPanel;
+    private JButton deleteButton;
+    private JButton editButton;
 
     public ObjectViewPanel(){
-        super();
-        add(drawButtonsPanel());
-    }
-
-    public JPanel getFieldsPanel(){
-        return this.fieldsPanel;
-    }
-
-    public void setFieldsPanel(JPanel panel){
-        this.fieldsPanel = panel;
-    }
-
-    public JPanel drawButtonsPanel(){
-        JPanel container = new JPanel();
         JButton editButton = new JButton("Edit");
         JButton deleteButton = new JButton("Delete");
 
-        deleteButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-            }
-        });
-
-        container.add(editButton);
-        container.add(deleteButton);
-        return container;
+        add(editButton);
+        add(deleteButton);
+        setDeleteButton(deleteButton);
+        setEditButton(editButton);
     }
 
-    public abstract JPanel drawFields();
+    public JButton getEditButton() {
+        return editButton;
+    }
+
+    public void setEditButton(JButton editButton) {
+        this.editButton = editButton;
+    }
+
+    public JButton getDeleteButton() {
+        return deleteButton;
+    }
+
+    public void setDeleteButton(JButton deleteButton) {
+        this.deleteButton = deleteButton;
+    }
+
+    public void deleteView(ActionListener actionListener){
+        deleteButton.addActionListener(actionListener);
+    }
+
+    public void editView(ActionListener actionListener){
+        editButton.addActionListener(actionListener);
+    }
 }

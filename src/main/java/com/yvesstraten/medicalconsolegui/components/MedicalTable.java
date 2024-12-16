@@ -9,6 +9,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.table.TableModel;
 
+import com.yvesstraten.medicalconsole.HealthService;
 import com.yvesstraten.medicalconsole.facilities.Clinic;
 import com.yvesstraten.medicalconsolegui.editors.ViewButtonEditor;
 import com.yvesstraten.medicalconsolegui.models.ClinicTableModel;
@@ -19,7 +20,7 @@ public class MedicalTable extends JTable {
     throw new UnsupportedOperationException("Unsupported constructor " + " please provide a model");
   }
 
-  public MedicalTable(TableModel model, JTabbedPane tabs){
+    public MedicalTable(TableModel model, JTabbedPane tabs, HealthService service){
     super(model);
     setAutoCreateRowSorter(true);
 
@@ -27,28 +28,21 @@ public class MedicalTable extends JTable {
       boolean noDups = true;
       @Override
       public void actionPerformed(ActionEvent e) {
-        // TODO fix
-        // System.out.println(e.toString());
-        // JPanel viewPanel = new JPanel();
-        // for(int i = 0; i < tabs.getTabCount(); i++){
-        //   Component tabComp = tabs.getComponentAt(i);
-
-        //   // TODO: Create ViewPanel and add equals method
-        //   // to prevent duplicate tabs
-        //   if(tabComp.equals(viewPanel)){
-        //     System.out.println("THere is already a tab!");
-        //     noDups = false;
-        //     break;
-        //   }
-        // }
-
         if(noDups){
           JPanel panelToAdd = null;
           if(model instanceof ClinicTableModel){
-            ClinicTableModel clinicModel = (ClinicTableModel) model;
-            System.out.println("Selected row" + getSelectedRow());
-            Clinic selectedClinic = clinicModel.getClinics().get(getSelectedRow());
-            panelToAdd = new ClinicViewPanel(selectedClinic);
+              Clinic selected = service.getClinics().toList().get(getSelectedRow());
+                    ClinicViewController controller = new ClinicViewController(new ClinicViewPanel(selected), service);
+
+                    controller.getView().deleteView(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            service.getMedicalFacilities().remove(service.getClinics().toList().get(getSelectedRow()));
+                        }
+                    	
+                    });
+
+            panelToAdd = controller.getView();
           }
           tabs.addTab("Test", panelToAdd);
         }
