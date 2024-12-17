@@ -23,6 +23,16 @@ public class ProcedureTableModel extends MedicalTableModel {
     this.procedures = procedures;
   }
 
+  public void addProcedure(Procedure procedure){
+    getProcedures().add(procedure);
+    fireTableRowsInserted(getRowCount(), getRowCount());
+  }
+
+  public void deleteProcedure(int index){
+    getProcedures().remove(index);
+    fireTableRowsDeleted(index, index);
+  }
+
   @Override
   public int getRowCount() {
     return getProcedures().size();

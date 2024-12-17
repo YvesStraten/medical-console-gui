@@ -63,7 +63,7 @@ public class MedicalTable extends JTable {
             } else if (model instanceof HospitalTableModel) {
               Hospital selected = service.getHospitals().toList().get(getSelectedRow());
               HospitalViewController controller =
-                new HospitalViewController(new HospitalViewPanel(true, selected), service);
+                new HospitalViewController(new HospitalViewPanel(true, selected, selected.getProcedures()), service);
               ObjectViewPanel view = controller.getView();
               ActionListener deleteHospital =
                   new ActionListener() {
