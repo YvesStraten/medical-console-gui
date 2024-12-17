@@ -1,8 +1,10 @@
 package com.yvesstraten.medicalconsolegui.components;
 
 import com.yvesstraten.medicalconsole.HealthService;
+import com.yvesstraten.medicalconsole.Patient;
 import com.yvesstraten.medicalconsole.facilities.Clinic;
 import com.yvesstraten.medicalconsole.facilities.Hospital;
+import com.yvesstraten.medicalconsole.facilities.MedicalFacility;
 import com.yvesstraten.medicalconsolegui.editors.ViewButtonEditor;
 import com.yvesstraten.medicalconsolegui.models.ClinicTableModel;
 import com.yvesstraten.medicalconsolegui.models.HospitalTableModel;
@@ -89,8 +91,56 @@ public class MedicalTable extends JTable {
                   deleteHospital,
                   editHospital);
 
-            } else if (model instanceof PatientTableModel)
-              throw new UnsupportedOperationException("IMPLEMENT!");
+            } else if (model instanceof PatientTableModel) {
+              Patient selected = service.getPatients().get(getSelectedRow());
+              PatientViewPanel view = new PatientViewPanel(selected);
+              ActionListener deleteHospital =
+                  new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                      service.getPatients().remove(selected);
+                      tabs.remove(tabs.indexOfComponent(view));
+                      setModel(new PatientTableModel(service.getPatients()));
+                    }
+                  };
+
+              ActionListener editHospital =
+                  new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                      // TODO Auto-generated method stub
+                      throw new UnsupportedOperationException(
+                          "Unimplemented method 'actionPerformed'");
+                    }
+                  };
+
+              view.viewFacility(
+                  new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                      MedicalFacility current = selected.getCurrentFacility();
+                      ObjectViewPanel view = null;
+                      String base = null;
+                      if (current instanceof Clinic) {
+                        view = new ClinicViewPanel((Clinic) current);
+                        base = "Clinic";
+                      } else if (current instanceof Hospital) {
+                        view = new HospitalViewPanel((Hospital) current);
+                        base = "Hospital";
+                      } 
+
+                      String format = base + " %d %s"; 
+                      if(!tabs.isDuplicate(view)){
+                          tabs.addTab(String.format(format, selected.getId(), selected.getName()), view);
+                      }                    }
+                  });
+
+              tabs.addMedicalTab(
+                  String.format("Patient %d %s", selected.getId(), selected.getName()),
+                  view,
+                  deleteHospital,
+                  editHospital);
+            }
           }
         };
 

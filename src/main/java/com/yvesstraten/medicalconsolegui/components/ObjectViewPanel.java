@@ -36,10 +36,10 @@ public abstract class ObjectViewPanel extends JPanel {
     }
 
     public void deleteView(ActionListener actionListener){
-        deleteButton.addActionListener(actionListener);
+        getDeleteButton().addActionListener(actionListener);
     }
 
     public void editView(ActionListener actionListener){
-        editButton.addActionListener(actionListener);
+        getEditButton().addActionListener(actionListener);
     }
 }
