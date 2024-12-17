@@ -127,12 +127,15 @@ public class MedicalTable extends JTable {
                       } else if (current instanceof Hospital) {
                         view = new HospitalViewPanel((Hospital) current);
                         base = "Hospital";
-                      } 
+                      }
 
-                      String format = base + " %d %s"; 
-                      if(!tabs.isDuplicate(view)){
-                          tabs.addTab(String.format(format, selected.getId(), selected.getName()), view);
-                      }                    }
+                      String format = base + " %d %s";
+                      if (!tabs.isDuplicate(view)) {
+                        tabs.addTab(
+                            String.format(format, current.getId(), current.getName()), view);
+                        tabs.setSelectedIndex(tabs.getTabCount() - 1);
+                      }
+                    }
                   });
 
               tabs.addMedicalTab(
