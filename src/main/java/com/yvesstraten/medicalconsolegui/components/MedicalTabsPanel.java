@@ -1,35 +1,66 @@
 package com.yvesstraten.medicalconsolegui.components;
 
+import java.awt.Color;
 import java.awt.Component;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
 public class MedicalTabsPanel extends JTabbedPane {
-    public MedicalTabsPanel(){
-        super();
-    }
+  public JPanel getTabComponent(String title) {
+    JPanel tab = new JPanel(new GridLayout(1, 2));
+    JLabel tabLabel = new JLabel(title);
 
-    public boolean isDuplicate(Component comp){
-          Component[] components = getComponents();
-          boolean isDuplicate = false;
-          for(int i = 0; i < components.length; i++){
-            Component current = components[i];
-            if(current.equals(comp)){
-              setSelectedIndex(i);
-              isDuplicate = true;
-            }
+    JButton closeButton = new JButton("x");
+    closeButton.addActionListener(
+        new ActionListener() {
+          @Override
+          public void actionPerformed(ActionEvent e) {
+            removeTabAt(getSelectedIndex());
           }
+        });
 
-          return isDuplicate;
-    }
+    // Needed to make JLabel look the same
+    // as default
+    tab.setOpaque(false);
+    tab.add(tabLabel);
+    tab.add(closeButton);
 
-    public void addMedicalTab(String title, ObjectViewPanel panel, ActionListener deleteAction, ActionListener editAction){
-        if(!isDuplicate(panel)){
-            addTab(title, panel);
-            setSelectedIndex(getTabCount() - 1);
-            panel.deleteView(deleteAction);
-            panel.editView(editAction);
+    return tab;
+  }
+
+  public MedicalTabsPanel() {
+    super();
+  }
+
+  public boolean isDuplicate(Component comp) {
+    int tabCount = getTabCount();
+    boolean isDuplicate = false;
+    for (int i = 0; i < tabCount; i++) {
+      Component current = getTabComponentAt(i);
+      if (current != null) {
+        if (current.equals(comp)) {
+          setSelectedIndex(i);
+          isDuplicate = true;
         }
+      }
     }
+
+    return isDuplicate;
+  }
+
+  public void addMedicalTab(
+      String title, ObjectViewPanel panel, ActionListener deleteAction, ActionListener editAction) {
+    if (!isDuplicate(panel)) {
+      addTab(title, panel);
+      setTabComponentAt(getTabCount() - 1, getTabComponent(title));
+      setSelectedIndex(getTabCount() - 1);
+      panel.deleteView(deleteAction);
+      panel.editView(editAction);
+    }
+  }
 }
