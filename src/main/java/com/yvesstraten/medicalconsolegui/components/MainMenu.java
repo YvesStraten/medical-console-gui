@@ -1,19 +1,23 @@
 package com.yvesstraten.medicalconsolegui.components;
 
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.TableModel;
+
 import com.yvesstraten.medicalconsole.HealthService;
 import com.yvesstraten.medicalconsolegui.models.ClinicTableModel;
 import com.yvesstraten.medicalconsolegui.models.HospitalTableModel;
 import com.yvesstraten.medicalconsolegui.models.PatientTableModel;
-
-import java.awt.BorderLayout;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import javax.swing.JComboBox;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
-import javax.swing.JTable;
-import javax.swing.table.TableModel;
 
 public class MainMenu extends ApplicationPane {
   private JTable currentTable;
@@ -27,8 +31,19 @@ public class MainMenu extends ApplicationPane {
     JScrollPane scrollPane = new JScrollPane(getCurrentTable());
     setScrollPane(scrollPane);
 
+    JPanel selectorPanel = new JPanel();
     JComboBox<String> comboBox =
         new JComboBox<String>(new String[] {"Hospitals", "Clinics", "Patients"});
+
+    JButton addButton = new JButton("+");
+    addButton.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        String selectedItem = (String) comboBox.getSelectedItem();
+        JOptionPane.showMessageDialog(addButton, selectedItem);
+
+      }
+    });
 
     comboBox.addItemListener(
         new ItemListener() {
@@ -55,7 +70,12 @@ public class MainMenu extends ApplicationPane {
           }
         });
 
-    add(comboBox, BorderLayout.NORTH);
+    // Add components to selector panel
+    selectorPanel.add(comboBox);
+    selectorPanel.add(addButton);
+
+    // Add components to frame
+    add(selectorPanel, BorderLayout.NORTH);
     add(scrollPane, BorderLayout.CENTER);
 
     doLayout();
