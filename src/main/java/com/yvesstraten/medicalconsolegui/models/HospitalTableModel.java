@@ -2,10 +2,7 @@ package com.yvesstraten.medicalconsolegui.models;
 
 import java.util.List;
 
-import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JList;
-import javax.swing.table.AbstractTableModel;
 
 import com.yvesstraten.medicalconsole.facilities.Hospital;
 import com.yvesstraten.medicalconsole.facilities.Procedure;
@@ -60,15 +57,6 @@ public class HospitalTableModel extends MedicalTableModel {
         return view;
     }
     return null;
-  }
-
-  @Override
-  public boolean isCellEditable(int rowIndex, int columnIndex) {
-    if(columnIndex == 4){
-      return true;
-    }
-
-    return false;
   }
 
   @Override 

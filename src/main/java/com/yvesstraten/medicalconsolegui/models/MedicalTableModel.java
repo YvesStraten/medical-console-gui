@@ -7,7 +7,7 @@ import com.yvesstraten.medicalconsolegui.components.ViewObjectButton;
 
 public abstract class MedicalTableModel extends AbstractTableModel {
     public MedicalTableModel(){
-        
+        super();
     }
 
     @Override

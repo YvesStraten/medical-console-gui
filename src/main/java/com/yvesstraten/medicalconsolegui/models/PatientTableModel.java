@@ -1,26 +1,25 @@
 package com.yvesstraten.medicalconsolegui.models;
 
-import java.util.List;
-
-import javax.swing.JButton;
-
 import com.yvesstraten.medicalconsole.Patient;
 import com.yvesstraten.medicalconsolegui.components.ViewObjectButton;
+import java.util.List;
+import javax.swing.JButton;
 
 public class PatientTableModel extends MedicalTableModel {
   private List<Patient> patients;
-  private final String[] columns = new String[] { "Id", "Name", "Private patient", "Balance", "Current facility", "View"};
+  private final String[] columns =
+      new String[] {"Id", "Name", "Private patient", "Balance", "Current facility", "View"};
 
-  public PatientTableModel(List<Patient> patients){
+  public PatientTableModel(List<Patient> patients) {
     super();
     setPatients(patients);
   }
 
-  public List<Patient> getPatients(){
+  public List<Patient> getPatients() {
     return this.patients;
   }
 
-  public void setPatients(List<Patient> patients){
+  public void setPatients(List<Patient> patients) {
     this.patients = patients;
   }
 
@@ -35,22 +34,20 @@ public class PatientTableModel extends MedicalTableModel {
   }
 
   @Override
-  public String getColumnName(int column){
+  public String getColumnName(int column) {
     return columns[column];
   }
 
   @Override
   public Object getValueAt(int rowIndex, int columnIndex) {
     Patient selectedPatient = getPatients().get(rowIndex);
-    switch(columnIndex){
+    switch (columnIndex) {
       case 0:
         return selectedPatient.getId();
       case 1:
         return selectedPatient.getName();
       case 2:
-        return selectedPatient.isPrivate()
-            ? "Yes"
-            : "No";
+        return selectedPatient.isPrivate();
       case 3:
         return selectedPatient.getBalance();
       case 4:
@@ -64,7 +61,7 @@ public class PatientTableModel extends MedicalTableModel {
   }
 
   @Override
-  public Class<?> getColumnClass(int column){
+  public Class<?> getColumnClass(int column) {
     return getValueAt(0, column).getClass();
   }
 }
