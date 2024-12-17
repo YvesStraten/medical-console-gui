@@ -32,7 +32,7 @@ public class MedicalTable extends JTable {
             if (model instanceof ClinicTableModel) {
               Clinic selected = service.getClinics().toList().get(getSelectedRow());
               ClinicViewController controller =
-                  new ClinicViewController(new ClinicViewPanel(selected), service);
+                new ClinicViewController(new ClinicViewPanel(true, selected), service);
               ObjectViewPanel view = controller.getView();
               ActionListener clinicEdit =
                   new ActionListener() {
@@ -59,11 +59,11 @@ public class MedicalTable extends JTable {
                   String.format("Clinic %d %s", selected.getId(), selected.getName()),
                   view,
                   clinicDelete,
-                  clinicEdit);
+                  clinicEdit, null);
             } else if (model instanceof HospitalTableModel) {
               Hospital selected = service.getHospitals().toList().get(getSelectedRow());
               HospitalViewController controller =
-                  new HospitalViewController(new HospitalViewPanel(selected), service);
+                new HospitalViewController(new HospitalViewPanel(true, selected), service);
               ObjectViewPanel view = controller.getView();
               ActionListener deleteHospital =
                   new ActionListener() {
@@ -89,11 +89,11 @@ public class MedicalTable extends JTable {
                   String.format("Hospital %d %s", selected.getId(), selected.getName()),
                   view,
                   deleteHospital,
-                  editHospital);
+                  editHospital, null);
 
             } else if (model instanceof PatientTableModel) {
               Patient selected = service.getPatients().get(getSelectedRow());
-              PatientViewPanel view = new PatientViewPanel(selected);
+              PatientViewPanel view = new PatientViewPanel(true, selected);
               ActionListener deleteHospital =
                   new ActionListener() {
                     @Override
@@ -142,7 +142,7 @@ public class MedicalTable extends JTable {
                   String.format("Patient %d %s", selected.getId(), selected.getName()),
                   view,
                   deleteHospital,
-                  editHospital);
+                  editHospital, null);
             }
           }
         };

@@ -10,8 +10,12 @@ public class PatientViewPanel extends ObjectViewPanel {
   Patient patient;
   JButton viewButton;
 
-  public PatientViewPanel(Patient patient) {
-    super();
+  public PatientViewPanel(Patient patient){
+    this(false, patient);
+  }
+
+  public PatientViewPanel(boolean isMutable, Patient patient) {
+    super(isMutable);
     setPatient(patient);
 
     String name = patient.getName();
