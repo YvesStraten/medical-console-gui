@@ -27,6 +27,7 @@ public class MedicalTabsPanel extends JTabbedPane {
     public void addMedicalTab(String title, ObjectViewPanel panel, ActionListener deleteAction, ActionListener editAction){
         if(!isDuplicate(panel)){
             addTab(title, panel);
+            setSelectedIndex(getTabCount() - 1);
             panel.deleteView(deleteAction);
             panel.editView(editAction);
         }
