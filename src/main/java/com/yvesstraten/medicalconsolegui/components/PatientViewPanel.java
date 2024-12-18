@@ -3,23 +3,25 @@ package com.yvesstraten.medicalconsolegui.components;
 import com.yvesstraten.medicalconsole.Patient;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 public class PatientViewPanel extends ObjectViewPanel {
-  Patient patient;
-  JButton viewButton;
+  private Patient patient;
+  private JButton viewButton;
+  private JTextField[] textFields;
 
   public PatientViewPanel(Patient patient){
     this(false, patient);
   }
 
   public PatientViewPanel(boolean isMutable, Patient patient) {
-    super(isMutable);
+    super();
     setPatient(patient);
 
     String name = patient.getName();
-    String status = patient.isPrivate() ? "Yes" : "No";
     Double balance = patient.getBalance();
 
     // Initialize labels
@@ -28,17 +30,24 @@ public class PatientViewPanel extends ObjectViewPanel {
     JLabel balanceLabel = new JLabel("Balance");
     JLabel currentFacilityLabel = new JLabel("Current facility");
 
-    JTextArea nameText = new JTextArea(name);
-    JTextArea statusText = new JTextArea(status);
-    JTextArea balanceText = new JTextArea(balance.toString());
+    JTextField nameText = new JTextField(name);
+    JCheckBox statusBox = new JCheckBox();
+    statusBox.setSelected(patient.isPrivate());
+
+    JTextField balanceText = new JTextField(balance.toString());
+    textFields = new JTextField[] { nameText, balanceText }; 
     // Add components
     add(nameLabel);
     add(nameText);
     add(statusLabel);
-    add(statusText);
+    add(statusBox);
     add(balanceLabel);
     add(balanceText);
     add(currentFacilityLabel);
+
+    if(!isMutable){
+      preventMutations();
+    }
 
     if (patient.getCurrentFacility() != null) {
       ViewObjectButton viewFacility = new ViewObjectButton();
@@ -49,6 +58,23 @@ public class PatientViewPanel extends ObjectViewPanel {
       add(viewFacilityLabel);
     }
   }
+
+  public static PatientViewPanel showViewPanel(Patient patient){
+    PatientViewPanel panel = new PatientViewPanel(patient);
+    panel.getEditButton().setEnabled(true);
+    panel.getDeleteButton().setEnabled(true);
+
+    return panel;
+  }
+
+  public static PatientViewPanel showAddPanel(Patient pat) {
+    PatientViewPanel panel = new PatientViewPanel(pat);
+    panel.preventMutations();
+
+    return panel;
+  }
+
+
 
   public Patient getPatient() {
     return patient;
@@ -70,6 +96,13 @@ public class PatientViewPanel extends ObjectViewPanel {
       if(getViewButton() != null){
           getViewButton().addActionListener(listener);
       }
+  }
+
+  @Override
+  public void allowEdit() {
+    for(JTextField textField: textFields){
+      textField.setEnabled(true);
+    }
   }
 
   @Override

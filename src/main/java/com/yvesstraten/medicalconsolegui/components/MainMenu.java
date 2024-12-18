@@ -71,7 +71,7 @@ public class MainMenu extends ApplicationPane {
                     }
                   };
 
-              tabs.addMedicalTab("Adding hospital", viewPanel, null, null, saveListener);
+              tabs.addMedicalTab("Adding hospital");
 
             } else if (selectedItem.equals(comboBox.getItemAt(1))) {
 

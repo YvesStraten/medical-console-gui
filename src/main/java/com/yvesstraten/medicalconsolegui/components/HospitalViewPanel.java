@@ -27,7 +27,6 @@ public class HospitalViewPanel extends ObjectViewPanel {
   public HospitalViewPanel(Hospital hospital, List<Procedure> procedures) {
     super();
     setHospital(hospital);
-    String placeholderName = "Name of hospital";
 
     // Initialize main labels
     JLabel nameLabel = new JLabel("Name");
@@ -35,7 +34,7 @@ public class HospitalViewPanel extends ObjectViewPanel {
     JLabel selectedProceduresLabel = new JLabel("Selected Procedures");
 
     // Initialize detail areas
-    JTextField nameTextArea = new MedicalTextField(placeholderName);
+    JTextField nameTextArea = new MedicalTextField(getHospital().getName());
     textFields = new JTextField[] {nameTextArea};
 
     nameTextArea

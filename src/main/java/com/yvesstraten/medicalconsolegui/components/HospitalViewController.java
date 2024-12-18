@@ -10,6 +10,14 @@ import java.util.ArrayList;
 public class HospitalViewController extends ObjectViewController {
   public HospitalViewController(HospitalViewPanel view, HealthService model) {
     super(view, model);
+
+    view.deleteView(
+        new ActionListener() {
+          @Override
+          public void actionPerformed(ActionEvent e) {
+            model.getMedicalFacilities().remove(view.getHospital());
+          }
+        });
   }
 
   public static HospitalViewController getAddController(HealthService model) {

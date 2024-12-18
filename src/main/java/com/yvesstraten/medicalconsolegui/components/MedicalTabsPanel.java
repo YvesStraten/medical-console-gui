@@ -53,14 +53,18 @@ public class MedicalTabsPanel extends JTabbedPane {
   }
 
   public void addMedicalTab(
-                            String title, ObjectViewPanel panel, ActionListener deleteAction, ActionListener editAction, ActionListener saveAction) {
+      String title,
+      ObjectViewController controller) {
+    ObjectViewPanel panel = controller.getView();
+
     if (!isDuplicate(panel)) {
       addTab(title, panel);
       setTabComponentAt(getTabCount() - 1, getTabComponent(title));
       setSelectedIndex(getTabCount() - 1);
-      panel.deleteView(deleteAction);
-      panel.editView(editAction);
-      panel.saveView(saveAction);
     }
+  }
+
+  public void removeMedicalTab(ObjectViewController controller){
+    remove(indexOfComponent(controller.getView()));
   }
 }

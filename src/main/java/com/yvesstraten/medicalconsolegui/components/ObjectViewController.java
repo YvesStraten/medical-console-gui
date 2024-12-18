@@ -3,6 +3,8 @@ package com.yvesstraten.medicalconsolegui.components;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ViewportLayout;
+
 import com.yvesstraten.medicalconsole.HealthService;
 
 public abstract class ObjectViewController {
