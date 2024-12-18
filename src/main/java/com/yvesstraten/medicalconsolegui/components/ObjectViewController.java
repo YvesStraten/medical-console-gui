@@ -1,5 +1,8 @@
 package com.yvesstraten.medicalconsolegui.components;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import com.yvesstraten.medicalconsole.HealthService;
 
 public abstract class ObjectViewController {
@@ -9,6 +12,20 @@ public abstract class ObjectViewController {
     public ObjectViewController(ObjectViewPanel panel, HealthService model) {
         setView(panel);
         setModel(model);
+
+        view.editView(new ActionListener() {
+          @Override
+          public void actionPerformed(ActionEvent e) {
+            view.allowEdit();
+          }
+        });
+
+        view.saveView(new ActionListener() {
+          @Override
+          public void actionPerformed(ActionEvent e) {
+              view.save();
+          }
+        });
     }
 
     public ObjectViewPanel getView() {

@@ -3,17 +3,15 @@ package com.yvesstraten.medicalconsolegui.components;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 public abstract class ObjectViewPanel extends JPanel {
   private JButton deleteButton;
   private JButton editButton;
   private JButton saveButton;
 
-  public ObjectViewPanel(){
-    this(false);
-  }
-
-  public ObjectViewPanel(boolean isMutable) {
+  private JTextField[] textFields;
+  public ObjectViewPanel() {
     JButton editButton = new JButton("Edit");
     JButton deleteButton = new JButton("Delete");
     JButton saveButton = new JButton("Save");
@@ -24,10 +22,6 @@ public abstract class ObjectViewPanel extends JPanel {
     setDeleteButton(deleteButton);
     setEditButton(editButton);
     setSaveButton(saveButton);
-
-    if(!isMutable){
-      preventMutations();
-    }
   }
 
   public JButton getEditButton() {
@@ -54,6 +48,15 @@ public abstract class ObjectViewPanel extends JPanel {
     this.saveButton = saveButton;
   }
 
+  public JTextField[] getTextFields() {
+    return textFields;
+  }
+
+  public void setTextFields(JTextField[] textFields) {
+    this.textFields = textFields;
+  }
+
+
   public void deleteView(ActionListener actionListener) {
     getDeleteButton().addActionListener(actionListener);
   }
@@ -61,6 +64,10 @@ public abstract class ObjectViewPanel extends JPanel {
   public void editView(ActionListener actionListener) {
     getEditButton().addActionListener(actionListener);
   }
+
+  public abstract void allowEdit();
+
+  public abstract void save();
 
   public void saveView(ActionListener actionListener){
     getSaveButton().addActionListener(actionListener);

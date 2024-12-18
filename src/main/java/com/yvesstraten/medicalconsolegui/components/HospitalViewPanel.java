@@ -19,15 +19,15 @@ import javax.swing.event.TableModelListener;
 
 public class HospitalViewPanel extends ObjectViewPanel {
   private Hospital hospital;
+  private JButton selectButton;
+  private JButton deselectButton;
+  private JTextField[] textFields;
+  private String setName;
 
-  public HospitalViewPanel(Hospital hospital) {
-    this(false, hospital, hospital.getProcedures());
-  }
-
-  public HospitalViewPanel(boolean isMutable, Hospital hospital, List<Procedure> procedures) {
-    super(isMutable);
+  public HospitalViewPanel(Hospital hospital, List<Procedure> procedures) {
+    super();
     setHospital(hospital);
-    String name = hospital.getName();
+    String placeholderName = "Name of hospital";
 
     // Initialize main labels
     JLabel nameLabel = new JLabel("Name");
@@ -35,7 +35,9 @@ public class HospitalViewPanel extends ObjectViewPanel {
     JLabel selectedProceduresLabel = new JLabel("Selected Procedures");
 
     // Initialize detail areas
-    JTextField nameTextArea = new JTextField(name);
+    JTextField nameTextArea = new MedicalTextField(placeholderName);
+    textFields = new JTextField[] {nameTextArea};
+
     nameTextArea
         .getDocument()
         .addDocumentListener(
@@ -71,44 +73,47 @@ public class HospitalViewPanel extends ObjectViewPanel {
 
     // Buttons to select or remove procedures
     JButton selectProcedure = new JButton("->");
+    setSelectButton(selectProcedure);
     // Add procedures to selected procedures table
     selectProcedure.addActionListener(
         new ActionListener() {
           @Override
           public void actionPerformed(ActionEvent e) {
             int selectedRow = proceduresTable.getSelectedRow();
-            Procedure selected =
-                proceduresTableModel.getProcedures().get(selectedRow);
-            proceduresTableModel.deleteProcedure(selectedRow);
-            selectedProceduresModel.addProcedure(selected);
+            if (selectedRow != -1) {
+              Procedure selected = proceduresTableModel.getProcedures().get(selectedRow);
+              proceduresTableModel.deleteProcedure(selectedRow);
+              selectedProceduresModel.addProcedure(selected);
+            }
           }
         });
 
     JButton removeProcedure = new JButton("<-");
+    setDeselectButton(removeProcedure);
     // Move procedure back to the list of available procedures
     removeProcedure.addActionListener(
         new ActionListener() {
           @Override
           public void actionPerformed(ActionEvent e) {
             int selectedRow = selectedProceduresTable.getSelectedRow();
-            Procedure selected =
-                selectedProceduresModel
-                    .getProcedures()
-                    .get(selectedRow);
-            proceduresTableModel.addProcedure(selected);
-            selectedProceduresModel.deleteProcedure(selectedRow);
+            if (selectedRow != 1) {
+              Procedure selected = selectedProceduresModel.getProcedures().get(selectedRow);
+              proceduresTableModel.addProcedure(selected);
+              selectedProceduresModel.deleteProcedure(selectedRow);
+            }
           }
         });
 
     // Update underlying hospital when
     // selected procedures change
-    selectedProceduresModel.addTableModelListener(new TableModelListener() {
-      @Override
-      public void tableChanged(TableModelEvent e) {
-        hospital.setProcedures(new ArrayList<Procedure>(selectedProceduresModel.getProcedures()));
-      }
-    });
-
+    selectedProceduresModel.addTableModelListener(
+        new TableModelListener() {
+          @Override
+          public void tableChanged(TableModelEvent e) {
+            setSetProcedures(
+                new ArrayList<Procedure>(selectedProceduresModel.getProcedures()));
+          }
+        });
 
     // Add components to Panel
     add(nameLabel);
@@ -121,12 +126,78 @@ public class HospitalViewPanel extends ObjectViewPanel {
     add(selectedProceduresScroll);
   }
 
+  public static HospitalViewPanel showAddPanel(Hospital hospital, List<Procedure> allProcs) {
+    HospitalViewPanel panel = new HospitalViewPanel(hospital, allProcs);
+    panel.preventMutations();
+
+    return panel;
+  }
+
+  public static HospitalViewPanel showViewPanel(Hospital hospital, List<Procedure> allProcs) {
+    HospitalViewPanel panel = new HospitalViewPanel(hospital, allProcs);
+    panel.getEditButton().setEnabled(true);
+    panel.getSelectButton().setEnabled(false);
+    panel.getDeselectButton().setEnabled(false);
+    panel.getDeleteButton().setEnabled(true);
+
+    return panel;
+  }
+
   public Hospital getHospital() {
     return hospital;
   }
 
   public void setHospital(Hospital hospital) {
     this.hospital = hospital;
+  }
+
+  public String getSetName() {
+    return setName;
+  }
+
+  public void setSetName(String setName) {
+    this.setName = setName;
+  }
+
+  private ArrayList<Procedure> setProcedures;
+
+  public ArrayList<Procedure> getSetProcedures() {
+    return setProcedures;
+  }
+
+  public void setSetProcedures(ArrayList<Procedure> setProcedures) {
+    this.setProcedures = setProcedures;
+  }
+
+
+  public JButton getSelectButton() {
+    return selectButton;
+  }
+
+  public void setSelectButton(JButton selectButton) {
+    this.selectButton = selectButton;
+  }
+
+  public JButton getDeselectButton() {
+    return deselectButton;
+  }
+
+  public void setDeselectButton(JButton deselectButton) {
+    this.deselectButton = deselectButton;
+  }
+
+  @Override
+  public void allowEdit() {
+    textFields[0].setEnabled(true);
+    getSelectButton().setEnabled(true);
+    getDeselectButton().setEnabled(true);
+  }
+
+
+  @Override
+  public void save() {
+     getHospital().setName(getName());
+     getHospital().setProcedures(getSetProcedures());
   }
 
   @Override
