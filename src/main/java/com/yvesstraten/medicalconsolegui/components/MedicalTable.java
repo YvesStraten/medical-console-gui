@@ -24,17 +24,26 @@ public class MedicalTable extends JTable {
     super(model);
     setAutoCreateRowSorter(true);
 
-    ActionListener listener =
+    ActionListener onView =
         new ActionListener() {
+          ObjectViewController viewController = null;
+
           @Override
           public void actionPerformed(ActionEvent e) {
-            // TODO add remaining tab cases
-            if (model instanceof ClinicTableModel) {
-              Clinic selected = service.getClinics().toList().get(getSelectedRow());
-              ClinicViewController controller =
-                new ClinicViewController(new ClinicViewPanel(true, selected), service);
-              ObjectViewPanel view = controller.getView();
-              ActionListener clinicEdit =
+            TableModel currentModel = getModel();
+            int selectedRow = getSelectedRow();
+            // Tab title
+            String tabTitle = null;
+            // Actions
+            ActionListener edit = null;
+            ActionListener delete = null;
+            ActionListener save = null;
+
+            if (currentModel instanceof ClinicTableModel) {
+              Clinic selected = service.getClinics().toList().get(selectedRow);
+              viewController =
+                  new ClinicViewController(new ClinicViewPanel(true, selected), service);
+              edit =
                   new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -44,67 +53,49 @@ public class MedicalTable extends JTable {
                     }
                   };
 
-              ActionListener clinicDelete =
+              delete =
                   new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                       service.getMedicalFacilities().remove(selected);
 
-                      tabs.remove(tabs.indexOfComponent(view));
+                      tabs.remove(tabs.indexOfComponent(viewController.getView()));
                       setModel(new ClinicTableModel(service.getClinics().toList()));
                     }
                   };
 
-              tabs.addMedicalTab(
-                  String.format("Clinic %d %s", selected.getId(), selected.getName()),
-                  view,
-                  clinicDelete,
-                  clinicEdit, null);
-            } else if (model instanceof HospitalTableModel) {
-              Hospital selected = service.getHospitals().toList().get(getSelectedRow());
-              HospitalViewController controller =
-                new HospitalViewController(new HospitalViewPanel(true, selected, selected.getProcedures()), service);
-              ObjectViewPanel view = controller.getView();
-              ActionListener deleteHospital =
+              tabTitle = String.format("Clinic %d %s", selected.getId(), selected.getName());
+
+            } else if (currentModel instanceof HospitalTableModel) {
+              Hospital selected = service.getHospitals().toList().get(selectedRow);
+              viewController = HospitalViewController.getViewController(service, selected);
+
+              delete =
                   new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                       service.getMedicalFacilities().remove(selected);
-                      tabs.remove(tabs.indexOfComponent(view));
+                      tabs.remove(tabs.indexOfComponent(viewController.getView()));
                       setModel(new HospitalTableModel(service.getHospitals().toList()));
                     }
                   };
 
-              ActionListener editHospital =
-                  new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                      // TODO Auto-generated method stub
-                      throw new UnsupportedOperationException(
-                          "Unimplemented method 'actionPerformed'");
-                    }
-                  };
-
-              tabs.addMedicalTab(
-                  String.format("Hospital %d %s", selected.getId(), selected.getName()),
-                  view,
-                  deleteHospital,
-                  editHospital, null);
-
-            } else if (model instanceof PatientTableModel) {
-              Patient selected = service.getPatients().get(getSelectedRow());
-              PatientViewPanel view = new PatientViewPanel(true, selected);
-              ActionListener deleteHospital =
+              tabTitle = String.format("Hospital %d %s", selected.getId(), selected.getName());
+            } else if (currentModel instanceof PatientTableModel) {
+              Patient selected = service.getPatients().get(selectedRow);
+              viewController =
+                  new PatientViewController(new PatientViewPanel(true, selected), service);
+              delete =
                   new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                       service.getPatients().remove(selected);
-                      tabs.remove(tabs.indexOfComponent(view));
+                      tabs.remove(tabs.indexOfComponent(viewController));
                       setModel(new PatientTableModel(service.getPatients()));
                     }
                   };
 
-              ActionListener editHospital =
+              edit =
                   new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -114,40 +105,40 @@ public class MedicalTable extends JTable {
                     }
                   };
 
-              view.viewFacility(
-                  new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                      MedicalFacility current = selected.getCurrentFacility();
-                      ObjectViewPanel view = null;
-                      String base = null;
-                      if (current instanceof Clinic) {
-                        view = new ClinicViewPanel((Clinic) current);
-                        base = "Clinic";
-                      } else if (current instanceof Hospital) {
-                        view = new HospitalViewPanel((Hospital) current);
-                        base = "Hospital";
-                      }
+              ((PatientViewPanel) viewController.getView())
+                  .viewFacility(
+                      new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                          MedicalFacility current = selected.getCurrentFacility();
+                          ObjectViewController alternateViewController = null;
+                          String base = null;
+                          if (current instanceof Clinic) {
+                            alternateViewController =
+                                new ClinicViewController(
+                                    new ClinicViewPanel((Clinic) current), service);
+                            base = "Clinic";
+                          } else if (current instanceof Hospital) {
+                            alternateViewController =
+                                HospitalViewController.getViewController(
+                                    service, (Hospital) current);
+                            base = "Hospital";
+                          }
 
-                      String format = base + " %d %s";
-                      if (!tabs.isDuplicate(view)) {
-                        tabs.addTab(
-                            String.format(format, current.getId(), current.getName()), view);
-                        tabs.setSelectedIndex(tabs.getTabCount() - 1);
-                      }
-                    }
-                  });
-
-              tabs.addMedicalTab(
-                  String.format("Patient %d %s", selected.getId(), selected.getName()),
-                  view,
-                  deleteHospital,
-                  editHospital, null);
+                          String format = base + " %d %s";
+                          String tabName =
+                              String.format(format, current.getId(), current.getName());
+                          tabs.addMedicalTab(tabName, alternateViewController, null, null, null);
+                        }
+                      });
+              tabTitle = String.format("Patient %d %s", selected.getId(), selected.getName());
             }
+
+            tabs.addMedicalTab(tabTitle, viewController, delete, edit, save);
           }
         };
 
     setDefaultRenderer(ViewObjectButton.class, new MedicalTableButtonRenderer());
-    setDefaultEditor(ViewObjectButton.class, new ViewButtonEditor(listener));
+    setDefaultEditor(ViewObjectButton.class, new ViewButtonEditor(onView));
   }
 }
