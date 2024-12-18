@@ -65,6 +65,7 @@ public class MedicalTabsPanel extends JTabbedPane {
   }
 
   public void removeMedicalTab(ObjectViewController controller){
+    System.out.println("REMOVING TAB");
     remove(indexOfComponent(controller.getView()));
   }
 }

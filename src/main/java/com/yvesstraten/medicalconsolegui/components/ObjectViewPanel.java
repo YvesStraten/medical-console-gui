@@ -6,15 +6,15 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 public abstract class ObjectViewPanel extends JPanel {
-  private JButton deleteButton;
-  private JButton editButton;
-  private JButton saveButton;
+  private DeleteObjectButton deleteButton;
+  private EditObjectButton editButton;
+  private SaveObjectButton saveButton;
 
   private JTextField[] textFields;
   public ObjectViewPanel() {
-    JButton editButton = new JButton("Edit");
-    JButton deleteButton = new JButton("Delete");
-    JButton saveButton = new JButton("Save");
+    EditObjectButton editButton = new EditObjectButton();
+    DeleteObjectButton deleteButton = new DeleteObjectButton("Delete");
+    SaveObjectButton saveButton = new SaveObjectButton();
 
     add(editButton);
     add(deleteButton);
@@ -24,27 +24,27 @@ public abstract class ObjectViewPanel extends JPanel {
     setSaveButton(saveButton);
   }
 
-  public JButton getEditButton() {
+  public EditObjectButton getEditButton() {
     return editButton;
   }
 
-  public void setEditButton(JButton editButton) {
+  public void setEditButton(EditObjectButton editButton) {
     this.editButton = editButton;
   }
 
-  public JButton getDeleteButton() {
+  public DeleteObjectButton getDeleteButton() {
     return deleteButton;
   }
 
-  public void setDeleteButton(JButton deleteButton) {
+  public void setDeleteButton(DeleteObjectButton deleteButton) {
     this.deleteButton = deleteButton;
   }
 
-  public JButton getSaveButton() {
+  public SaveObjectButton getSaveButton() {
     return saveButton;
   }
 
-  public void setSaveButton(JButton saveButton) {
+  public void setSaveButton(SaveObjectButton saveButton) {
     this.saveButton = saveButton;
   }
 

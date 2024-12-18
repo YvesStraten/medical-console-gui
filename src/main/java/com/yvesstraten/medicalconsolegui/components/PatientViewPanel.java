@@ -7,17 +7,14 @@ import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.text.View;
 
 public class PatientViewPanel extends ObjectViewPanel {
   private Patient patient;
-  private JButton viewButton;
+  private ViewObjectButton viewButton;
   private JTextField[] textFields;
 
-  public PatientViewPanel(Patient patient){
-    this(false, patient);
-  }
-
-  public PatientViewPanel(boolean isMutable, Patient patient) {
+  public PatientViewPanel(Patient patient) {
     super();
     setPatient(patient);
 
@@ -30,11 +27,11 @@ public class PatientViewPanel extends ObjectViewPanel {
     JLabel balanceLabel = new JLabel("Balance");
     JLabel currentFacilityLabel = new JLabel("Current facility");
 
-    JTextField nameText = new JTextField(name);
+    JTextField nameText = new MedicalTextField(name);
     JCheckBox statusBox = new JCheckBox();
     statusBox.setSelected(patient.isPrivate());
 
-    JTextField balanceText = new JTextField(balance.toString());
+    JTextField balanceText = new MedicalTextField(balance.toString());
     textFields = new JTextField[] { nameText, balanceText }; 
     // Add components
     add(nameLabel);
@@ -44,10 +41,6 @@ public class PatientViewPanel extends ObjectViewPanel {
     add(balanceLabel);
     add(balanceText);
     add(currentFacilityLabel);
-
-    if(!isMutable){
-      preventMutations();
-    }
 
     if (patient.getCurrentFacility() != null) {
       ViewObjectButton viewFacility = new ViewObjectButton();
@@ -74,7 +67,9 @@ public class PatientViewPanel extends ObjectViewPanel {
     return panel;
   }
 
-
+  @Override
+  public void save() {
+  }
 
   public Patient getPatient() {
     return patient;
@@ -84,11 +79,11 @@ public class PatientViewPanel extends ObjectViewPanel {
     this.patient = patient;
   }
 
-  public JButton getViewButton() {
+  public ViewObjectButton getViewButton() {
     return viewButton;
   }
 
-  public void setViewButton(JButton viewButton) {
+  public void setViewButton(ViewObjectButton viewButton) {
     this.viewButton = viewButton;
   }
 

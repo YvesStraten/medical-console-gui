@@ -25,7 +25,7 @@ public class ProcedureTableModel extends MedicalTableModel {
 
   public void addProcedure(Procedure procedure){
     getProcedures().add(procedure);
-    fireTableRowsInserted(getRowCount(), getRowCount());
+    fireTableRowsInserted(getRowCount() - 1, getRowCount() - 1);
   }
 
   public void deleteProcedure(int index){
@@ -50,6 +50,10 @@ public class ProcedureTableModel extends MedicalTableModel {
 
   @Override
   public Object getValueAt(int rowIndex, int columnIndex) {
+    if(getProcedures().isEmpty()){
+      return null;
+    }
+
     Procedure selectedProcedure = getProcedures().get(rowIndex);
 
     switch (columnIndex) {
@@ -73,6 +77,7 @@ public class ProcedureTableModel extends MedicalTableModel {
 
   @Override
   public Class<?> getColumnClass(int column) {
-    return getValueAt(0, column).getClass();
+    Object value = getValueAt(0, column);
+    return value != null ? value.getClass() : Object.class;
   }
 }

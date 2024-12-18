@@ -2,58 +2,41 @@ package com.yvesstraten.medicalconsolegui.components;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JButton;
+import javax.swing.table.TableModel;
 
-import javax.swing.ViewportLayout;
+public abstract class ObjectViewController implements ActionListener {
+  private ObjectViewPanel view;
+  private int selectedRow;
 
-import com.yvesstraten.medicalconsole.HealthService;
+  public ObjectViewController(ObjectViewPanel panel, int selectedRow) {
+    setView(panel);
+    setSelectedRow(selectedRow);
+  }
 
-public abstract class ObjectViewController {
-    ObjectViewPanel view;
-    HealthService model;
+  public ObjectViewPanel getView() {
+    return view;
+  }
 
-    public ObjectViewController(ObjectViewPanel panel, HealthService model) {
-        setView(panel);
-        setModel(model);
+  public void setView(ObjectViewPanel view) {
+    this.view = view;
+  }
 
-        view.editView(new ActionListener() {
-          @Override
-          public void actionPerformed(ActionEvent e) {
-            view.allowEdit();
-          }
-        });
+  public int getSelectedRow() {
+    return selectedRow;
+  }
 
-        view.saveView(new ActionListener() {
-          @Override
-          public void actionPerformed(ActionEvent e) {
-              view.save();
-          }
-        });
+  public void setSelectedRow(int selectedRow) {
+    this.selectedRow = selectedRow;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (obj instanceof ObjectViewController) {
+      ObjectViewController other = (ObjectViewController) obj;
+      return other.getView().equals(this.getView());
     }
 
-    public ObjectViewPanel getView() {
-        return view;
-    }
-
-    public void setView(ObjectViewPanel view) {
-        this.view = view;
-    }
-
-    public HealthService getModel() {
-        return model;
-    }
-
-    public void setModel(HealthService model) {
-        this.model = model;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if(obj instanceof ObjectViewController){
-            ObjectViewController other = (ObjectViewController) obj;
-            return other.getView().equals(this.getView()) &&
-                other.getModel().equals(this.getModel());
-        }
-
-        return false;
-    }
+    return false;
+  }
 }

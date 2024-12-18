@@ -23,6 +23,16 @@ public class PatientTableModel extends MedicalTableModel {
     this.patients = patients;
   }
 
+  public void addPatient(Patient pat){
+    getPatients().add(pat);
+    fireTableRowsInserted(getRowCount() - 1, getRowCount() - 1);
+  }
+
+  public void deletePatient(int index){
+    getPatients().remove(index);
+    fireTableRowsDeleted(index, index);
+  }
+
   @Override
   public int getRowCount() {
     return getPatients().size();
@@ -40,6 +50,10 @@ public class PatientTableModel extends MedicalTableModel {
 
   @Override
   public Object getValueAt(int rowIndex, int columnIndex) {
+    if(getPatients().isEmpty()){
+      return null;
+    }
+
     Patient selectedPatient = getPatients().get(rowIndex);
     switch (columnIndex) {
       case 0:
@@ -62,6 +76,7 @@ public class PatientTableModel extends MedicalTableModel {
 
   @Override
   public Class<?> getColumnClass(int column) {
-    return getValueAt(0, column).getClass();
+    Object value = getValueAt(0, column);
+    return value != null ? value.getClass() : Object.class;
   }
 }

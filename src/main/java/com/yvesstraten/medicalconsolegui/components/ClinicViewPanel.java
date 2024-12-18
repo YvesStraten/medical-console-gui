@@ -2,7 +2,6 @@ package com.yvesstraten.medicalconsolegui.components;
 
 import com.yvesstraten.medicalconsole.facilities.Clinic;
 
-import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -12,10 +11,6 @@ public class ClinicViewPanel extends ObjectViewPanel {
   private JTextField[] textFields;
 
   public ClinicViewPanel(Clinic clinic) {
-    this(false, clinic);
-  }
-
-  public ClinicViewPanel(boolean isMutable, Clinic clinic) {
     super();
     setClinic(clinic);
     String name = clinic.getName();
@@ -28,9 +23,9 @@ public class ClinicViewPanel extends ObjectViewPanel {
     JLabel gapPercentLabel = new JLabel("Gap Percentage");
 
     // Initialize text areas
-    JTextField nameTextArea = new JTextField(name);
-    JTextField feeTextArea = new JTextField(fee.toString());
-    JTextField gapPercentTextArea = new JTextField(gapPercent.toString());
+    JTextField nameTextArea = new MedicalTextField(name);
+    JTextField feeTextArea = new MedicalTextField(fee.toString());
+    JTextField gapPercentTextArea = new MedicalTextField(gapPercent.toString());
     textFields = new JTextField[] {nameTextArea, feeTextArea, gapPercentTextArea};
 
     // Add components to Panel
@@ -40,10 +35,6 @@ public class ClinicViewPanel extends ObjectViewPanel {
     add(feeTextArea);
     add(gapPercentLabel);
     add(gapPercentTextArea);
-
-    if (!isMutable) {
-      preventMutations();
-    }
   }
 
   public static ClinicViewPanel getAddPanel(Clinic selected){
@@ -55,8 +46,8 @@ public class ClinicViewPanel extends ObjectViewPanel {
 
   public static ClinicViewPanel getViewPanel(Clinic selected){
     ClinicViewPanel panel = new ClinicViewPanel(selected);
-    // panel.getEditButton().setEnabled(true);
-    // panel.getDeleteButton().setEnabled(true);
+    panel.getEditButton().setEnabled(true);
+    panel.getDeleteButton().setEnabled(true);
 
     return panel;
   }

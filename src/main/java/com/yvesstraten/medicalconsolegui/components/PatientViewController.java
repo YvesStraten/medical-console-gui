@@ -1,57 +1,46 @@
 package com.yvesstraten.medicalconsolegui.components;
 
-import com.yvesstraten.medicalconsole.HealthService;
 import com.yvesstraten.medicalconsole.Patient;
-import com.yvesstraten.medicalconsole.facilities.Clinic;
-import com.yvesstraten.medicalconsole.facilities.Hospital;
-import com.yvesstraten.medicalconsole.facilities.MedicalFacility;
+import com.yvesstraten.medicalconsolegui.models.PatientTableModel;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class PatientViewController extends ObjectViewController {
+  private PatientTableModel model;
 
-  public PatientViewController(PatientViewPanel panel, MedicalTabsPanel tabs, HealthService model) {
-    super(panel, model);
-
-    panel.deleteView(
-        new ActionListener() {
-          @Override
-          public void actionPerformed(ActionEvent e) {
-            model.getPatients().remove(panel.getPatient());
-          }
-        });
-
-    panel.viewFacility(
-        new ActionListener() {
-          @Override
-          public void actionPerformed(ActionEvent e) {
-            MedicalFacility current = panel.getPatient().getCurrentFacility();
-            ObjectViewController alternateViewController = null;
-            String base = null;
-            if (current instanceof Clinic) {
-              alternateViewController =
-                  new ClinicViewController(new ClinicViewPanel((Clinic) current), model);
-              base = "Clinic";
-            } else if (current instanceof Hospital) {
-              alternateViewController =
-                  HospitalViewController.getViewController(model, (Hospital) current);
-              base = "Hospital";
-            }
-
-            String format = base + " %d %s";
-            String tabName = String.format(format, current.getId(), current.getName());
-            tabs.addMedicalTab(tabName, alternateViewController, null, null, null);
-          }
-        });
+  public PatientViewController(PatientViewPanel view, PatientTableModel model, int currentRow) {
+    super(view, currentRow);
+    setModel(model);
+    view.getDeleteButton().addActionListener(this);
+    view.getEditButton().addActionListener(this);
   }
 
-  public static PatientViewController getAddController(
-      HealthService model, MedicalTabsPanel tabs, Patient selected) {
-    return new PatientViewController(PatientViewPanel.showAddPanel(selected), tabs, model);
+  public PatientTableModel getModel() {
+    return model;
   }
 
-  public static PatientViewController getViewPanel(
-      HealthService model, MedicalTabsPanel tabs, Patient selected) {
-    return new PatientViewController(PatientViewPanel.showViewPanel(selected), tabs, model);
+  public void setModel(PatientTableModel model) {
+    this.model = model;
+  }
+
+  // public static PatientViewController getAddController(
+  //     HealthService model, MedicalTabsPanel tabs, Patient selected) {
+  //   return new PatientViewController(PatientViewPanel.showAddPanel(selected), tabs, model);
+  // }
+  //
+  public static PatientViewController getViewController(PatientTableModel model, int currentIndex) {
+    Patient clinic = model.getPatients().get(currentIndex);
+    return new PatientViewController(PatientViewPanel.showViewPanel(clinic), model, currentIndex);
+  }
+
+  @Override
+  public void actionPerformed(ActionEvent e) {
+    Object source = e.getSource();
+    if (source instanceof DeleteObjectButton) {
+      getModel().deletePatient(getSelectedRow());
+    } else if (source instanceof EditObjectButton) {
+      getView().allowEdit();
+    } else if (source instanceof SaveObjectButton) {
+      System.out.println("Save");
+    }   
   }
 }

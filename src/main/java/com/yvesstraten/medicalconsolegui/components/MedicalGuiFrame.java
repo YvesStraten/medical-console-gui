@@ -1,28 +1,16 @@
 package com.yvesstraten.medicalconsolegui.components;
 
-import com.yvesstraten.medicalconsole.HealthService;
-import com.yvesstraten.medicalconsole.Patient;
-import com.yvesstraten.medicalconsole.facilities.MedicalFacility;
-
-import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionListener;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
+
+import com.yvesstraten.medicalconsole.HealthService;
 
 public class MedicalGuiFrame extends JFrame {
   private HealthService service;

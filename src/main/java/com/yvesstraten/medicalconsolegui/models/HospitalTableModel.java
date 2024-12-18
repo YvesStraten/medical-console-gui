@@ -25,6 +25,16 @@ public class HospitalTableModel extends MedicalTableModel {
     this.hospitals = hospitals;
   }
 
+  public void addHospital(Hospital hospital){
+    getHospitals().add(hospital);
+    fireTableRowsInserted(getRowCount() - 1, getRowCount() - 1);
+  }
+
+  public void deleteHospital(int selectedRow){
+    getHospitals().remove(selectedRow);
+    fireTableRowsDeleted(selectedRow, selectedRow);
+  }
+
   @Override
   public int getRowCount() {
     return getHospitals().size();
@@ -42,6 +52,10 @@ public class HospitalTableModel extends MedicalTableModel {
 
   @Override
   public Object getValueAt(int rowIndex, int columnIndex) {
+    if(getHospitals().isEmpty()){
+      return null;
+    }
+
     Hospital selectedHospital = getHospitals().get(rowIndex);
     switch(columnIndex){
       case 0: 
@@ -61,6 +75,7 @@ public class HospitalTableModel extends MedicalTableModel {
 
   @Override 
   public Class<?> getColumnClass(int column){
-    return getValueAt(0, column).getClass();
+    Object value = getValueAt(0, column);
+    return value != null ? value.getClass() : Object.class;
   }
 }
