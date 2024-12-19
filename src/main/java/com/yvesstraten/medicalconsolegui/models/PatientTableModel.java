@@ -1,18 +1,20 @@
 package com.yvesstraten.medicalconsolegui.models;
 
+import com.yvesstraten.medicalconsole.HealthService;
 import com.yvesstraten.medicalconsole.Patient;
+import com.yvesstraten.medicalconsole.facilities.MedicalFacility;
+import com.yvesstraten.medicalconsolegui.components.SimulateVisitButton;
 import com.yvesstraten.medicalconsolegui.components.ViewObjectButton;
 import java.util.List;
-import javax.swing.JButton;
 
 public class PatientTableModel extends MedicalTableModel {
   private List<Patient> patients;
   private final String[] columns =
-      new String[] {"Id", "Name", "Private patient", "Balance", "Current facility", "View"};
+      new String[] {"Id", "Name", "Private patient", "Balance", "Current facility", "Simulate visit", "View"};
 
-  public PatientTableModel(List<Patient> patients) {
+  public PatientTableModel(HealthService service) {
     super();
-    setPatients(patients);
+    setPatients(service.getPatients());
   }
 
   public List<Patient> getPatients() {
@@ -23,12 +25,17 @@ public class PatientTableModel extends MedicalTableModel {
     this.patients = patients;
   }
 
-  public void addPatient(Patient pat){
+  public void addPatient(Patient pat) {
     getPatients().add(pat);
     fireTableRowsInserted(getRowCount() - 1, getRowCount() - 1);
   }
 
-  public void deletePatient(int index){
+  public void setPatient(int index, Patient pat) {
+    getPatients().set(index, pat);
+    fireTableRowsUpdated(index, index);
+  }
+
+  public void deletePatient(int index) {
     getPatients().remove(index);
     fireTableRowsDeleted(index, index);
   }
@@ -50,7 +57,7 @@ public class PatientTableModel extends MedicalTableModel {
 
   @Override
   public Object getValueAt(int rowIndex, int columnIndex) {
-    if(getPatients().isEmpty()){
+    if (getPatients().isEmpty()) {
       return null;
     }
 
@@ -65,9 +72,15 @@ public class PatientTableModel extends MedicalTableModel {
       case 3:
         return selectedPatient.getBalance();
       case 4:
-        JButton viewFacility = new JButton("View facility");
-        return viewFacility;
-      case 5:
+        MedicalFacility current = selectedPatient.getCurrentFacility();
+        if (current != null) {
+          return current.getName();
+        } else {
+          return "None";
+        }
+      case 5: 
+        return new SimulateVisitButton();
+      case 6:
         ViewObjectButton view = new ViewObjectButton();
         return view;
     }

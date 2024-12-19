@@ -2,17 +2,20 @@ package com.yvesstraten.medicalconsolegui.components;
 
 import com.yvesstraten.medicalconsole.facilities.Clinic;
 
+import java.awt.Component;
+
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
-public class ClinicViewPanel extends ObjectViewPanel {
-  private Clinic clinic;
+public class ClinicViewPanel extends MedicalFacilityViewPanel {
   private JTextField[] textFields;
 
+  public ClinicViewPanel(int id) {
+    this(new Clinic(id, "Please input new name", 0, 0));
+  }
+
   public ClinicViewPanel(Clinic clinic) {
-    super();
-    setClinic(clinic);
+    super(clinic);
     String name = clinic.getName();
     Double fee = clinic.getFee();
     Double gapPercent = clinic.getGapPercent();
@@ -26,7 +29,7 @@ public class ClinicViewPanel extends ObjectViewPanel {
     JTextField nameTextArea = new MedicalTextField(name);
     JTextField feeTextArea = new MedicalTextField(fee.toString());
     JTextField gapPercentTextArea = new MedicalTextField(gapPercent.toString());
-    textFields = new JTextField[] {nameTextArea, feeTextArea, gapPercentTextArea};
+    setInputComponents(new JTextField[] {nameTextArea, feeTextArea, gapPercentTextArea});
 
     // Add components to Panel
     add(nameLabel);
@@ -37,14 +40,15 @@ public class ClinicViewPanel extends ObjectViewPanel {
     add(gapPercentTextArea);
   }
 
-  public static ClinicViewPanel getAddPanel(Clinic selected){
-    ClinicViewPanel panel = new ClinicViewPanel(selected);
+  public static ClinicViewPanel showAddPanel(int id) {
+    ClinicViewPanel panel = new ClinicViewPanel(id);
     panel.preventMutations();
+    panel.enableInputComponents();
 
     return panel;
   }
 
-  public static ClinicViewPanel getViewPanel(Clinic selected){
+  public static ClinicViewPanel getViewPanel(Clinic selected) {
     ClinicViewPanel panel = new ClinicViewPanel(selected);
     panel.getEditButton().setEnabled(true);
     panel.getDeleteButton().setEnabled(true);
@@ -52,46 +56,30 @@ public class ClinicViewPanel extends ObjectViewPanel {
     return panel;
   }
 
-  public Clinic getClinic() {
-    return clinic;
+  @Override
+  public Clinic getFacility() {
+    return (Clinic) super.getFacility();
   }
 
-  public void setClinic(Clinic clinic) {
-    this.clinic = clinic;
+  public void setFacility(Clinic clinic) {
+    super.setFacility(clinic);
   }
 
   @Override
-  public void allowEdit() {
-    for (JTextField textField : textFields) {
-      textField.setEnabled(true);
-    }
-  }
+  public void save() throws NumberFormatException {
+    JTextField[] inputComponents = (JTextField[]) getInputComponents();
+    String name = inputComponents[0].getText();
+    double fee = Double.parseDouble(inputComponents[1].getText());
+    double gapPercentage = Double.parseDouble(inputComponents[2].getText());
 
-  @Override
-  public boolean equals(Object obj) {
-    if (obj instanceof ClinicViewPanel) {
-      ClinicViewPanel other = (ClinicViewPanel) obj;
-
-      return other.getClinic().equals(this.getClinic());
-    }
-
-    return false;
-  }
-
-  @Override
-  public void save() {
-    JTextField[] textFields = getTextFields();
-    try {
-      String name = textFields[0].getText();
-      double fee = Double.parseDouble(textFields[1].getText());
-      double gapPercentage = Double.parseDouble(textFields[2].getText());
-
-      getClinic().setName(name);
-      getClinic().setFee(fee);
-      getClinic().setGapPercent(gapPercentage);
-
-    } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(this, e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
-    }
+    getFacility().setName(name);
+    getFacility().setFee(fee);
+    getFacility().setGapPercent(gapPercentage);
+    
+    // Update this field instantly, as depending on 
+    // input it will need it, e.g 50 should become 0.5
+    Double newGap = getFacility().getGapPercent();
+    inputComponents[1].setText(newGap.toString());
+    repaint();
   }
 }

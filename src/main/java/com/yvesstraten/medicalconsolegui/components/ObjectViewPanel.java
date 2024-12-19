@@ -1,16 +1,18 @@
 package com.yvesstraten.medicalconsolegui.components;
 
+import java.awt.Component;
 import java.awt.event.ActionListener;
-import javax.swing.JButton;
+
+import javax.swing.JComponent;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 public abstract class ObjectViewPanel extends JPanel {
   private DeleteObjectButton deleteButton;
   private EditObjectButton editButton;
   private SaveObjectButton saveButton;
 
-  private JTextField[] textFields;
+  private Component[] inputComponents;
+
   public ObjectViewPanel() {
     EditObjectButton editButton = new EditObjectButton();
     DeleteObjectButton deleteButton = new DeleteObjectButton("Delete");
@@ -48,12 +50,12 @@ public abstract class ObjectViewPanel extends JPanel {
     this.saveButton = saveButton;
   }
 
-  public JTextField[] getTextFields() {
-    return textFields;
+  public Component[] getInputComponents() {
+    return inputComponents;
   }
 
-  public void setTextFields(JTextField[] textFields) {
-    this.textFields = textFields;
+  public void setInputComponents(Component[] textFields) {
+    this.inputComponents = textFields;
   }
 
 
@@ -65,8 +67,6 @@ public abstract class ObjectViewPanel extends JPanel {
     getEditButton().addActionListener(actionListener);
   }
 
-  public abstract void allowEdit();
-
   public abstract void save();
 
   public void saveView(ActionListener actionListener){
@@ -76,5 +76,11 @@ public abstract class ObjectViewPanel extends JPanel {
   public void preventMutations(){
     getEditButton().setEnabled(false);
     getDeleteButton().setEnabled(false);
+  }
+
+  public void enableInputComponents(){
+    for(Component component: getInputComponents()){
+      component.setEnabled(true);
+    }
   }
 }

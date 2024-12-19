@@ -57,6 +57,7 @@ public class MedicalTabsPanel extends JTabbedPane {
       ObjectViewController controller) {
     ObjectViewPanel panel = controller.getView();
 
+    System.out.println("Spawning");
     if (!isDuplicate(panel)) {
       addTab(title, panel);
       setTabComponentAt(getTabCount() - 1, getTabComponent(title));
@@ -67,5 +68,6 @@ public class MedicalTabsPanel extends JTabbedPane {
   public void removeMedicalTab(ObjectViewController controller){
     System.out.println("REMOVING TAB");
     remove(indexOfComponent(controller.getView()));
+    setSelectedIndex(0);
   }
 }

@@ -1,19 +1,19 @@
 package com.yvesstraten.medicalconsolegui.models;
 
-import javax.swing.JButton;
+import com.yvesstraten.medicalconsolegui.components.SimulateVisitButton;
+import com.yvesstraten.medicalconsolegui.components.ViewObjectButton;
 import javax.swing.table.AbstractTableModel;
 
-import com.yvesstraten.medicalconsolegui.components.ViewObjectButton;
-
 public abstract class MedicalTableModel extends AbstractTableModel {
-    public MedicalTableModel(){
-        super();
-    }
+  public MedicalTableModel() {
+    super();
+  }
 
-    @Override
-    public boolean isCellEditable(int rowIndex, int columnIndex) {
-        if(getColumnClass(columnIndex).equals(ViewObjectButton.class))
-            return true;
-        else return false;
-    }
+  @Override
+  public boolean isCellEditable(int rowIndex, int columnIndex) {
+    Class<?> clazz = getColumnClass(columnIndex);
+    if (clazz.equals(ViewObjectButton.class)) return true;
+    else if (clazz.equals(SimulateVisitButton.class)) return true;
+    else return false;
+  }
 }

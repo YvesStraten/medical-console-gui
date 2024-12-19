@@ -1,25 +1,34 @@
 package com.yvesstraten.medicalconsolegui.models;
 
+import com.yvesstraten.medicalconsole.HealthService;
+import com.yvesstraten.medicalconsole.facilities.Hospital;
 import com.yvesstraten.medicalconsole.facilities.Procedure;
 import com.yvesstraten.medicalconsolegui.components.ViewObjectButton;
-import java.util.List;
+
+import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class ProcedureTableModel extends MedicalTableModel {
-  private List<Procedure> procedures;
+  private ArrayList<Procedure> procedures;
 
   private final String[] columns =
       new String[] {"Id", "Name", "Description", "Elective or not", "Base fee"};
 
-  public ProcedureTableModel(List<Procedure> procedures) {
+  public ProcedureTableModel(ArrayList<Procedure> procedures){
     super();
     setProcedures(procedures);
   }
 
-  public List<Procedure> getProcedures() {
+  public ProcedureTableModel(HealthService service) {
+    super();
+    setProcedures(service.getHospitals().flatMap(Hospital::getProceduresStream).collect(Collectors.toCollection(ArrayList::new)));
+  }
+
+  public ArrayList<Procedure> getProcedures() {
     return procedures;
   }
 
-  public void setProcedures(List<Procedure> procedures) {
+  public void setProcedures(ArrayList<Procedure> procedures) {
     this.procedures = procedures;
   }
 

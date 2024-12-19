@@ -35,6 +35,11 @@ public class HospitalTableModel extends MedicalTableModel {
     fireTableRowsDeleted(selectedRow, selectedRow);
   }
 
+  public void setHospital(int selectedRow, Hospital hospital){
+    getHospitals().set(selectedRow, hospital);
+    fireTableRowsUpdated(selectedRow, selectedRow);
+  }
+
   @Override
   public int getRowCount() {
     return getHospitals().size();

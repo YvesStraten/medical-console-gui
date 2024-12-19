@@ -1,9 +1,6 @@
 package com.yvesstraten.medicalconsolegui.components;
 
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JButton;
-import javax.swing.table.TableModel;
 
 public abstract class ObjectViewController implements ActionListener {
   private ObjectViewPanel view;
@@ -12,6 +9,9 @@ public abstract class ObjectViewController implements ActionListener {
   public ObjectViewController(ObjectViewPanel panel, int selectedRow) {
     setView(panel);
     setSelectedRow(selectedRow);
+    getView().getDeleteButton().addActionListener(this);
+    getView().getEditButton().addActionListener(this);
+    getView().getSaveButton().addActionListener(this);
   }
 
   public ObjectViewPanel getView() {
@@ -29,6 +29,8 @@ public abstract class ObjectViewController implements ActionListener {
   public void setSelectedRow(int selectedRow) {
     this.selectedRow = selectedRow;
   }
+
+  public abstract String getTitle();
 
   @Override
   public boolean equals(Object obj) {

@@ -8,7 +8,11 @@ public class MedicalTextField extends JTextField {
   }
 
   public MedicalTextField(String text){
-    super(text);
+    this(text, text.length());
+  }
+
+  public MedicalTextField(String text, int cols){
+    super(text, cols);
     setEnabled(false);
   }
 }
