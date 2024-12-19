@@ -11,7 +11,7 @@ public class FacilityTableModel extends MedicalTableModel {
       new String[] {"Id", "Name", "Type" };
 
   public FacilityTableModel(HealthService service) {
-    super();
+    super(service);
     setFacilities(service.getMedicalFacilities());
   }
 

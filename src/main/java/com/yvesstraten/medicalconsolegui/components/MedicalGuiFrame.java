@@ -1,5 +1,6 @@
 package com.yvesstraten.medicalconsolegui.components;
 
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -28,13 +29,11 @@ public class MedicalGuiFrame extends JFrame {
     // Frame setup
     super(getNewTitle(service));
 
-    // Default options for this frame
-    setSize(800, 800);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     setService(service);
 
     // Setup the main menu
-    JPanel mainMenu = new MainMenu(service);
+    MainMenu mainMenu = new MainMenu(service);
 
     // Setup menubar
     JMenuBar menuBar = new JMenuBar();
@@ -64,12 +63,13 @@ public class MedicalGuiFrame extends JFrame {
           }
         });
 
+    // Add components
     customMenu.add(save);
     customMenu.add(load);
     menuBar.add(customMenu);
-
     setJMenuBar(menuBar);
     add(mainMenu);
+    pack();
   }
 
   public HealthService getService() {

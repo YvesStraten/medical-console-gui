@@ -1,10 +1,8 @@
 package com.yvesstraten.medicalconsolegui.components;
 
-import java.awt.BorderLayout;
+import java.awt.GridLayout;
 
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
 
 import com.yvesstraten.medicalconsole.HealthService;
 
@@ -12,8 +10,14 @@ public class MainMenu extends JPanel {
   private HealthService service;
 
   public MainMenu(HealthService service) {
-    setLayout(new BorderLayout(0, 30));
+    super();
+    setService(service);
+    setLayout(new GridLayout(2, 2));
+    
+    // Instantiate components
     ListPanel listPanel = new ListPanel(service);
+    AddButtonsPane addButtonsPane = new AddButtonsPane(listPanel);
+    add(addButtonsPane);
     add(listPanel);
   }
 

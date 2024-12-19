@@ -13,13 +13,8 @@ public class ProcedureTableModel extends MedicalTableModel {
   private final String[] columns =
       new String[] {"Id", "Name", "Description", "Elective or not", "Base fee"};
 
-  public ProcedureTableModel(ArrayList<Procedure> procedures){
-    super();
-    setProcedures(procedures);
-  }
-
   public ProcedureTableModel(HealthService service) {
-    super();
+    super(service);
     setProcedures(service.getHospitals().flatMap(Hospital::getProceduresStream).collect(Collectors.toCollection(ArrayList::new)));
   }
 
@@ -31,8 +26,12 @@ public class ProcedureTableModel extends MedicalTableModel {
     this.procedures = procedures;
   }
 
-  public void addProcedure(Procedure procedure){
+  public void addProcedure(Hospital hospital, String name, String description, boolean isElective, double cost){
+    getService().initializeProcedure(hospital, name, description, isElective, cost);
+    ArrayList<Procedure> procedures = hospital.getProcedures();
+    Procedure procedure = procedures.get(procedures.size() - 1);
     getProcedures().add(procedure);
+    
     fireTableRowsInserted(getRowCount() - 1, getRowCount() - 1);
   }
 

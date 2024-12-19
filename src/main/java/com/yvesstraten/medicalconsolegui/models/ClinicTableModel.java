@@ -2,24 +2,31 @@ package com.yvesstraten.medicalconsolegui.models;
 
 import com.yvesstraten.medicalconsole.HealthService;
 import com.yvesstraten.medicalconsole.facilities.Clinic;
-import java.util.List;
-import javax.swing.JButton;
+import com.yvesstraten.medicalconsole.facilities.MedicalFacility;
+import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class ClinicTableModel extends MedicalTableModel {
-  private List<Clinic> clinics;
-  private final String[] columns =
-      new String[] {"Id", "Name", "Fee", "Gap percentage" };
+  private ArrayList<Clinic> clinics;
+  private final String[] columns = new String[] {"Id", "Name", "Fee", "Gap percentage"};
 
   public ClinicTableModel(HealthService service) {
-    super();
-    setClinics(service.getClinics().toList());
+    super(service);
+    setClinics(service.getClinics().collect(Collectors.toCollection(ArrayList::new)));
   }
 
-  public List<Clinic> getClinics() {
+  public ArrayList<Clinic> getClinics() {
     return this.clinics;
   }
 
-  public void addClinic(Clinic clinic) {
+  public void setClinics(ArrayList<Clinic> clinics) {
+    this.clinics = clinics;
+  }
+
+  public void addClinic(String name, double fee, double gapPercentage) {
+    getService().initializeClinic(name, fee, gapPercentage);
+    ArrayList<MedicalFacility> facilities = getService().getMedicalFacilities();
+    Clinic clinic = (Clinic) facilities.get(facilities.size() - 1);
     getClinics().add(clinic);
     fireTableRowsInserted(getRowCount() - 1, getRowCount() - 1);
   }
@@ -27,10 +34,6 @@ public class ClinicTableModel extends MedicalTableModel {
   public void deleteClinic(int index) {
     getClinics().remove(index);
     fireTableRowsDeleted(index, index);
-  }
-
-  public void setClinics(List<Clinic> clinics) {
-    this.clinics = clinics;
   }
 
   @Override
@@ -50,7 +53,7 @@ public class ClinicTableModel extends MedicalTableModel {
 
   @Override
   public Object getValueAt(int rowIndex, int columnIndex) {
-    if(getClinics().isEmpty()){
+    if (getClinics().isEmpty()) {
       return null;
     }
 

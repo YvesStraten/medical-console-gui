@@ -3,28 +3,32 @@ package com.yvesstraten.medicalconsolegui.models;
 import com.yvesstraten.medicalconsole.HealthService;
 import com.yvesstraten.medicalconsole.Patient;
 import com.yvesstraten.medicalconsole.facilities.MedicalFacility;
-import java.util.List;
+import java.util.ArrayList;
 
 public class PatientTableModel extends MedicalTableModel {
-  private List<Patient> patients;
+  private ArrayList<Patient> patients;
   private final String[] columns =
       new String[] {"Id", "Name", "Private patient", "Balance", "Current facility"};
 
   public PatientTableModel(HealthService service) {
-    super();
+    super(service);
     setPatients(service.getPatients());
   }
 
-  public List<Patient> getPatients() {
+  public ArrayList<Patient> getPatients() {
     return this.patients;
   }
 
-  public void setPatients(List<Patient> patients) {
+  public void setPatients(ArrayList<Patient> patients) {
     this.patients = patients;
   }
 
-  public void addPatient(Patient pat) {
-    getPatients().add(pat);
+  public void addPatient(
+      String name, boolean isPrivate) {
+    getService().initializePatient(name, isPrivate);
+    ArrayList<Patient> patients = getService().getPatients();
+    Patient patient = patients.get(patients.size() - 1);
+    getPatients().add(patient);
     fireTableRowsInserted(getRowCount() - 1, getRowCount() - 1);
   }
 

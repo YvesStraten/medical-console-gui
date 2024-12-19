@@ -13,7 +13,8 @@ public class MedicalGui extends JFrame {
       System.setProperty("apple.laf.useScreenMenuBar", "true");
     }
 
-    HealthService service = MedicalConsole.generateSampleData();
+    // HealthService service = MedicalConsole.generateSampleData();
+    HealthService service = new HealthService();
 		MedicalGuiFrame medicalFrame = new MedicalGuiFrame(service);
 		medicalFrame.setVisible(true);
   }

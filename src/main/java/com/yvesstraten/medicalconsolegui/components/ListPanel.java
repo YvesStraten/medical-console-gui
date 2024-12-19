@@ -21,13 +21,21 @@ import com.yvesstraten.medicalconsolegui.models.ProcedureTableModel;
 public class ListPanel extends JPanel {
   private JTable currentTable;
   private JScrollPane scrollPane;
+  private HospitalTableModel hospitalTableModel;
+  private ClinicTableModel clinicTableModel;
+  private PatientTableModel patientTableModel;
+  private ProcedureTableModel procedureTableModel;
 
   public ListPanel(HealthService service){
-    setLayout(new GridLayout(1, 2));
+    setLayout(new GridLayout(2, 1));
     HospitalTableModel hospitalTableModel = new HospitalTableModel(service);
     ClinicTableModel clinicTableModel = new ClinicTableModel(service);
     PatientTableModel patientTableModel = new PatientTableModel(service);
     ProcedureTableModel procedureTableModel = new ProcedureTableModel(service);
+    setHospitalTableModel(hospitalTableModel);
+    setClinicTableModel(clinicTableModel);
+    setPatientTableModel(patientTableModel);
+    setProcedureTableModel(procedureTableModel);
 
     JTable listTable = new JTable(hospitalTableModel);
 
@@ -85,6 +93,38 @@ public class ListPanel extends JPanel {
 
   public void setScrollPane(JScrollPane scrollPane) {
     this.scrollPane = scrollPane;
+  }
+
+  public HospitalTableModel getHospitalTableModel() {
+    return hospitalTableModel;
+  }
+
+  public void setHospitalTableModel(HospitalTableModel hospitalTableModel) {
+    this.hospitalTableModel = hospitalTableModel;
+  }
+
+  public ClinicTableModel getClinicTableModel() {
+    return clinicTableModel;
+  }
+
+  public void setClinicTableModel(ClinicTableModel clinicTableModel) {
+    this.clinicTableModel = clinicTableModel;
+  }
+
+  public PatientTableModel getPatientTableModel() {
+    return patientTableModel;
+  }
+
+  public void setPatientTableModel(PatientTableModel patientTableModel) {
+    this.patientTableModel = patientTableModel;
+  }
+
+  public ProcedureTableModel getProcedureTableModel() {
+    return procedureTableModel;
+  }
+
+  public void setProcedureTableModel(ProcedureTableModel procedureTableModel) {
+    this.procedureTableModel = procedureTableModel;
   }
   
 }

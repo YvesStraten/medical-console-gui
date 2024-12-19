@@ -1,41 +1,42 @@
 package com.yvesstraten.medicalconsolegui.models;
 
-import java.util.List;
-
-import javax.swing.JList;
-
 import com.yvesstraten.medicalconsole.HealthService;
 import com.yvesstraten.medicalconsole.facilities.Hospital;
-import com.yvesstraten.medicalconsole.facilities.Procedure;
+import com.yvesstraten.medicalconsole.facilities.MedicalFacility;
+import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class HospitalTableModel extends MedicalTableModel {
-  private List<Hospital> hospitals;
-  private final String[] columns = new String[] { "Id", "Name", "ProbAdmit", "Procedures"};
+  private ArrayList<Hospital> hospitals;
+  private final String[] columns = new String[] {"Id", "Name", "ProbAdmit" };
 
-  public HospitalTableModel(HealthService service){
-    super();
-    setHospitals(service.getHospitals().toList());
+  public HospitalTableModel(HealthService service) {
+    super(service);
+    setHospitals(service.getHospitals().collect(Collectors.toCollection(ArrayList::new)));
   }
 
-  public List<Hospital> getHospitals(){
+  public ArrayList<Hospital> getHospitals() {
     return this.hospitals;
   }
 
-  public void setHospitals(List<Hospital> hospitals){
+  public void setHospitals(ArrayList<Hospital> hospitals) {
     this.hospitals = hospitals;
   }
 
-  public void addHospital(Hospital hospital){
+  public void addHospital(String name) {
+    getService().initializeHospital(name);
+    ArrayList<MedicalFacility> facilities = getService().getMedicalFacilities();
+    Hospital hospital = (Hospital) facilities.get(facilities.size() - 1);
     getHospitals().add(hospital);
     fireTableRowsInserted(getRowCount() - 1, getRowCount() - 1);
   }
 
-  public void deleteHospital(int selectedRow){
+  public void deleteHospital(int selectedRow) {
     getHospitals().remove(selectedRow);
     fireTableRowsDeleted(selectedRow, selectedRow);
   }
 
-  public void setHospital(int selectedRow, Hospital hospital){
+  public void setHospital(int selectedRow, Hospital hospital) {
     getHospitals().set(selectedRow, hospital);
     fireTableRowsUpdated(selectedRow, selectedRow);
   }
@@ -50,31 +51,31 @@ public class HospitalTableModel extends MedicalTableModel {
     return columns.length;
   }
 
-  @Override 
-  public String getColumnName(int column){
+  @Override
+  public String getColumnName(int column) {
     return columns[column];
   }
 
   @Override
   public Object getValueAt(int rowIndex, int columnIndex) {
-    if(getHospitals().isEmpty()){
+    if (getHospitals().isEmpty()) {
       return null;
     }
 
     Hospital selectedHospital = getHospitals().get(rowIndex);
-    switch(columnIndex){
-      case 0: 
+    switch (columnIndex) {
+      case 0:
         return selectedHospital.getId();
-      case 1: 
+      case 1:
         return selectedHospital.getName();
-      case 2: 
+      case 2:
         return selectedHospital.getProbAdmit();
     }
     return null;
   }
 
-  @Override 
-  public Class<?> getColumnClass(int column){
+  @Override
+  public Class<?> getColumnClass(int column) {
     Object value = getValueAt(0, column);
     return value != null ? value.getClass() : Object.class;
   }
