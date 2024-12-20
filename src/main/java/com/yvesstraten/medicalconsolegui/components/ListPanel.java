@@ -2,12 +2,12 @@ package com.yvesstraten.medicalconsolegui.components;
 
 import com.yvesstraten.medicalconsole.HealthService;
 import com.yvesstraten.medicalconsole.facilities.Clinic;
+import com.yvesstraten.medicalconsole.facilities.Hospital;
 import com.yvesstraten.medicalconsole.facilities.MedicalFacility;
 import com.yvesstraten.medicalconsolegui.models.ClinicTableModel;
 import com.yvesstraten.medicalconsolegui.models.HospitalTableModel;
 import com.yvesstraten.medicalconsolegui.models.PatientTableModel;
 import com.yvesstraten.medicalconsolegui.models.ProcedureTableModel;
-import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
@@ -52,10 +52,15 @@ public class ListPanel extends JPanel {
 
             if (getModel() instanceof HospitalTableModel) {
               if (realColumnIndex == 3) {
-                tip =
-                    getProcedureTableModel().getProcedures().stream()
-                        .map(procedure -> procedure.getName() + " " + procedure.getDescription()+ "\n")
-                        .reduce("", (before, next) -> before + next);
+                Hospital hospital = getHospitalTableModel().getHospitals().get(realRowIndex);
+                if (hospital != null) {
+                  tip =
+                      hospital.getProcedures().stream()
+                          .map(
+                              procedure ->
+                                  procedure.getName() + " " + procedure.getDescription() + "\n")
+                          .reduce("", (before, next) -> before + next);
+                }
               }
             } else if (getModel() instanceof PatientTableModel) {
               if (realColumnIndex == 4) {

@@ -11,7 +11,9 @@ public class ProcedureTableModel extends MedicalTableModel {
   private ArrayList<Procedure> procedures;
 
   private final String[] columns =
-      new String[] {"Id", "Name", "Description", "Elective or not", "Base fee"};
+      new String[] {
+        "Id", "Name", "Description", "Elective or not", "Base fee", "Available in hospital"
+      };
 
   public ProcedureTableModel(HealthService service) {
     super(service);
@@ -45,21 +47,7 @@ public class ProcedureTableModel extends MedicalTableModel {
   }
 
   public void deleteProcedure(Procedure selected) {
-    Hospital containsProc =
-        getService()
-            .getHospitals()
-            .filter(
-                hospital -> {
-                  Optional<Procedure> procedureOptional =
-                      hospital
-                          .getProceduresStream()
-                          .filter(procedure -> procedure.equals(selected))
-                          .findFirst();
-
-                  return procedureOptional.isPresent();
-                })
-            .findFirst()
-            .orElse(null);
+    Hospital containsProc = getHospitalWithProcedure(selected);
 
     if (containsProc != null) {
       int index = getProcedures().indexOf(selected);
@@ -87,10 +75,6 @@ public class ProcedureTableModel extends MedicalTableModel {
 
   @Override
   public Object getValueAt(int rowIndex, int columnIndex) {
-    if (getProcedures().isEmpty()) {
-      return null;
-    }
-
     Procedure selectedProcedure = getProcedures().get(rowIndex);
 
     switch (columnIndex) {
@@ -104,6 +88,12 @@ public class ProcedureTableModel extends MedicalTableModel {
         return selectedProcedure.isElective();
       case 4:
         return selectedProcedure.getCost();
+      case 5:
+        Hospital containing = getHospitalWithProcedure(selectedProcedure);
+        if (containing != null) {
+          return containing.getName();
+        }
+        return "Not assigned";
     }
 
     return null;
@@ -125,12 +115,56 @@ public class ProcedureTableModel extends MedicalTableModel {
       case 4:
         row.setCost((Double) aValue);
         break;
+      case 5:
+        int givenId = (Integer) aValue;
+        Hospital contained = getHospitalWithProcedure(row);
+        // Procedure already assigned to hospital
+        if (contained != null) {
+          contained.removeProcedure(row);
+        }
+        Hospital toAddTo =
+            getService()
+                .getHospitals()
+                .filter(hospital -> hospital.getId() == givenId)
+                .findFirst()
+                .orElse(null);
+
+        if (toAddTo != null) toAddTo.getProcedures().add(row);
     }
   }
 
   @Override
   public Class<?> getColumnClass(int column) {
-    Object value = getValueAt(0, column);
-    return value != null ? value.getClass() : Object.class;
+    switch (column) {
+      case 1:
+        return String.class;
+      case 2:
+        return String.class;
+      case 3:
+        return Boolean.class;
+      case 4:
+        return Double.class;
+      case 5:
+        return Integer.class;
+      default:
+        return Object.class;
+    }
+  }
+
+  public Hospital getHospitalWithProcedure(Procedure selected) {
+    return getService()
+        .getHospitals()
+        .filter(
+            hospital -> {
+              Optional<Procedure> procedureOptional =
+                  hospital
+                      .getProceduresStream()
+                      .filter(procedure -> procedure.equals(selected))
+                      .findFirst();
+
+              return procedureOptional.isPresent();
+            })
+        .findFirst()
+        .orElse(null);
   }
 }
