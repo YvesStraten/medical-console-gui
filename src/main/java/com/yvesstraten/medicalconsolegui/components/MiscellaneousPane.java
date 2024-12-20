@@ -17,10 +17,10 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-public class MiscellaniousPane extends JPanel {
+public class MiscellaneousPane extends JPanel {
   private ListPanel listPanel;
 
-  public MiscellaniousPane(ListPanel listPanel) {
+  public MiscellaneousPane(ListPanel listPanel) {
     super();
     setListPanel(listPanel);
     setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));

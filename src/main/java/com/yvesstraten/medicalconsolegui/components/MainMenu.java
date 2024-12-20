@@ -30,7 +30,7 @@ public class MainMenu extends JPanel {
     buttonsPanel.setLayout(gridBagLayout);
     AddButtonsPane addButtonsPane = new AddButtonsPane(listPanel);
     RemoveButtonsPane removeButtonsPane = new RemoveButtonsPane(listPanel);
-    MiscellaniousPane miscellaniousPane = new MiscellaniousPane(listPanel);
+    MiscellaneousPane miscellaniousPane = new MiscellaneousPane(listPanel);
 
     gridBagConstraints.gridx = 0;
     gridBagConstraints.gridy = 0;
