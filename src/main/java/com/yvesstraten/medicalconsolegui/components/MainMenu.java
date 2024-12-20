@@ -18,8 +18,10 @@ public class MainMenu extends JPanel {
     ListPanel listPanel = new ListPanel(service);
     AddButtonsPane addButtonsPane = new AddButtonsPane(listPanel);
     RemoveButtonsPane removeButtonsPane = new RemoveButtonsPane(listPanel);
+    MiscellaniousPane miscellaniousPane = new MiscellaniousPane(listPanel);
     add(addButtonsPane);
     add(removeButtonsPane);
+    add(miscellaniousPane);
     add(listPanel);
   }
 

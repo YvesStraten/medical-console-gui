@@ -158,7 +158,7 @@ public class RemoveButtonsPane extends JPanel {
 
   public static Object getItemToRemove(
       String message, String title, String failureMessage, Object[] objects) {
-    RemoveObjectDialog removeDialog = new RemoveObjectDialog(message, objects);
+    SelectObjectDialog removeDialog = new SelectObjectDialog(message, objects);
     if (objects.length == 0) {
       JOptionPane.showMessageDialog(null, failureMessage, "Failure", JOptionPane.ERROR_MESSAGE);
       return null;
@@ -173,7 +173,7 @@ public class RemoveButtonsPane extends JPanel {
     }
 
     JComboBox<Object> combo = removeDialog.getCombo();
-    Object toRemove = combo.getItemAt(combo.getSelectedIndex());
+    Object toRemove = combo.getSelectedItem();
 
     return toRemove;
   }
