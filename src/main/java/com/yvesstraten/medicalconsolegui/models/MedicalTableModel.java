@@ -1,8 +1,7 @@
 package com.yvesstraten.medicalconsolegui.models;
 
-import javax.swing.table.AbstractTableModel;
-
 import com.yvesstraten.medicalconsole.HealthService;
+import javax.swing.table.AbstractTableModel;
 
 public abstract class MedicalTableModel extends AbstractTableModel {
   private HealthService service;
@@ -14,6 +13,10 @@ public abstract class MedicalTableModel extends AbstractTableModel {
 
   @Override
   public boolean isCellEditable(int rowIndex, int columnIndex) {
+    if (columnIndex != 0) {
+      return true;
+    }
+
     return false;
   }
 

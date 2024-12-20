@@ -101,12 +101,31 @@ public class ProcedureTableModel extends MedicalTableModel {
       case 2:
         return selectedProcedure.getDescription();
       case 3:
-        return selectedProcedure.getCost();
-      case 4:
         return selectedProcedure.isElective();
+      case 4:
+        return selectedProcedure.getCost();
     }
 
     return null;
+  }
+
+  @Override
+  public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+    Procedure row = getProcedures().get(rowIndex);
+    switch (columnIndex) {
+      case 1:
+        row.setName((String) aValue);
+        break;
+      case 2:
+        row.setDescription((String) aValue);
+        break;
+      case 3:
+        row.setIsElective((Boolean) aValue);
+        break;
+      case 4:
+        row.setCost((Double) aValue);
+        break;
+    }
   }
 
   @Override

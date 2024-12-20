@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 public class ClinicTableModel extends MedicalTableModel {
   private ArrayList<Clinic> clinics;
-  private final String[] columns = new String[] {"Id", "Name", "Fee", "Gap percentage"};
+  private final String[] columns = new String[] {"Id", "Name", "Fee", "Gap percentage (%)"};
 
   public ClinicTableModel(HealthService service) {
     super(service);
@@ -83,8 +83,35 @@ public class ClinicTableModel extends MedicalTableModel {
   }
 
   @Override
+  public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+    System.out.println("Editing");
+    Clinic row = getClinics().get(rowIndex);
+    switch (columnIndex) {
+      case 1:
+        row.setName((String) aValue);
+        break;
+      case 2:
+        row.setFee((Double) aValue);
+        break;
+      case 3:
+        row.setGapPercent((Double) aValue);
+        break;
+    }
+  }
+
+  @Override
   public Class<?> getColumnClass(int column) {
-    Object value = getValueAt(0, column);
-    return value != null ? value.getClass() : Object.class;
+    switch (column) {
+      case 0:
+        return Integer.class;
+      case 1:
+        return String.class;
+      case 2:
+        return Double.class;
+      case 3:
+        return Double.class;
+      default: 
+        return Object.class;
+    }
   }
 }

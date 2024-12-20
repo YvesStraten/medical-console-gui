@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 public class HospitalTableModel extends MedicalTableModel {
   private ArrayList<Hospital> hospitals;
-  private final String[] columns = new String[] {"Id", "Name", "ProbAdmit"};
+  private final String[] columns = new String[] {"Id", "Name", "ProbAdmit", "Num procedures"};
 
   public HospitalTableModel(HealthService service) {
     super(service);
@@ -79,8 +79,30 @@ public class HospitalTableModel extends MedicalTableModel {
         return selectedHospital.getName();
       case 2:
         return selectedHospital.getProbAdmit();
+      case 3:
+        return selectedHospital.getProcedures().size();
     }
     return null;
+  }
+
+  @Override
+  public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+    System.out.println("Setting value!");
+    Hospital row = getHospitals().get(rowIndex);
+    if (columnIndex == 1) {
+      row.setName((String) aValue);
+    } else if (columnIndex == 2) {
+      row.setProbAdmit((Double) aValue);
+    }
+  }
+
+  @Override
+  public boolean isCellEditable(int rowIndex, int columnIndex) {
+    if (columnIndex == 0 || columnIndex == 3) {
+      return false;
+    }
+
+    return true;
   }
 
   @Override

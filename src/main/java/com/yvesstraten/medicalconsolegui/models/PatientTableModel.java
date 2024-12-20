@@ -23,8 +23,7 @@ public class PatientTableModel extends MedicalTableModel {
     this.patients = patients;
   }
 
-  public void addPatient(
-      String name, boolean isPrivate) {
+  public void addPatient(String name, boolean isPrivate) {
     getService().initializePatient(name, isPrivate);
     ArrayList<Patient> patients = getService().getPatients();
     Patient patient = patients.get(patients.size() - 1);
@@ -38,15 +37,15 @@ public class PatientTableModel extends MedicalTableModel {
   }
 
   public void deletePatient(int index) {
-    // No need to remove from the service as well 
-    // as we have a direct reference to the collection 
+    // No need to remove from the service as well
+    // as we have a direct reference to the collection
     // not an intermediate list
     getPatients().remove(index);
 
     fireTableRowsDeleted(index, index);
   }
 
-  public void deletePatient(Patient selected){
+  public void deletePatient(Patient selected) {
     deletePatient(getPatients().indexOf(selected));
   }
 
@@ -93,8 +92,49 @@ public class PatientTableModel extends MedicalTableModel {
   }
 
   @Override
+  public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+    Patient row = getPatients().get(rowIndex);
+
+    switch (columnIndex) {
+      case 1:
+        row.setName((String) aValue);
+        break;
+      case 2:
+        row.setPrivate((Boolean) aValue);
+        break;
+      case 3:
+        row.setBalance((Double) aValue);
+        break;
+      case 4:
+        Integer id = (Integer) aValue;
+        MedicalFacility matchedFacility =
+            getService()
+                .getMedicalFacilitiesStream()
+                .filter(facility -> facility.getId() == id)
+                .findFirst()
+                .orElse(null);
+        if (matchedFacility != null) {
+          row.setMedicalFacility(matchedFacility);
+        }
+        break;
+    }
+  }
+
+  @Override
   public Class<?> getColumnClass(int column) {
-    Object value = getValueAt(0, column);
-    return value != null ? value.getClass() : Object.class;
+    switch (column) {
+      case 0:
+        return Integer.class;
+      case 1:
+        return String.class;
+      case 2:
+        return Boolean.class;
+      case 3:
+        return Double.class;
+      case 4:
+        return Integer.class;
+      default:
+        return Object.class;
+    }
   }
 }
