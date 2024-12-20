@@ -1,2 +1,7 @@
 target
 .settings
+merged.docx
+output.docx
+*.DS_Store
+*.bkp
+
