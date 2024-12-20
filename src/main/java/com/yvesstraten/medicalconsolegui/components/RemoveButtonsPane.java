@@ -27,7 +27,7 @@ public class RemoveButtonsPane extends JPanel {
     label.setAlignmentY(CENTER_ALIGNMENT);
 
     JPanel buttonsGrouper = new JPanel();
-    buttonsGrouper.setLayout(new GridLayout(2, 2, 15, 15));
+    buttonsGrouper.setLayout(new GridLayout(2, 2, 5, 5));
 
     JButton removeHospitalButton = new JButton("Remove hospital");
     removeHospitalButton.addActionListener(

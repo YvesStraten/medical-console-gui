@@ -1,28 +1,24 @@
 package com.yvesstraten.medicalconsolegui.components;
 
+import com.yvesstraten.medicalconsole.HealthService;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-
-import com.yvesstraten.medicalconsole.HealthService;
 
 public class MedicalGuiFrame extends JFrame {
   private HealthService service;
 
-  public static String getNewTitle(HealthService service){
-    String titleFormat = "HELP Medical console - currently managing "
-    + "%s" + " facilities and %s patients";
+  public static String getNewTitle(HealthService service) {
+    String titleFormat =
+        "HELP Medical console - currently managing " + "%s" + " facilities and %s patients";
 
-    return String.format(titleFormat,
-                        service.getMedicalFacilities().size()
-                        , service.getPatients().size());
+    return String.format(
+        titleFormat, service.getMedicalFacilities().size(), service.getPatients().size());
   }
 
   public MedicalGuiFrame(HealthService service) {
@@ -68,7 +64,7 @@ public class MedicalGuiFrame extends JFrame {
     customMenu.add(load);
     menuBar.add(customMenu);
     setJMenuBar(menuBar);
-    add(mainMenu);
+    add(mainMenu, BorderLayout.NORTH);
     pack();
   }
 

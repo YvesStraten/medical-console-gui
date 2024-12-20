@@ -2,7 +2,6 @@ package com.yvesstraten.medicalconsolegui.models;
 
 import com.yvesstraten.medicalconsole.HealthService;
 import com.yvesstraten.medicalconsole.facilities.Clinic;
-import com.yvesstraten.medicalconsole.facilities.MedicalFacility;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
@@ -107,7 +106,7 @@ public class ClinicTableModel extends MedicalTableModel {
         return Double.class;
       case 3:
         return Double.class;
-      default: 
+      default:
         return Object.class;
     }
   }

@@ -27,7 +27,6 @@ public class ListPanel extends JPanel {
   private ProcedureTableModel procedureTableModel;
 
   public ListPanel(HealthService service) {
-    setLayout(new GridLayout(2, 1));
     HospitalTableModel hospitalTableModel = new HospitalTableModel(service);
     ClinicTableModel clinicTableModel = new ClinicTableModel(service);
     PatientTableModel patientTableModel = new PatientTableModel(service);
@@ -52,8 +51,8 @@ public class ListPanel extends JPanel {
               if (realColumnIndex == 3) {
                 tip =
                     getProcedureTableModel().getProcedures().stream()
-                        .map(procedure -> procedure.getName() + " " + procedure.getDescription())
-                        .reduce("", (before, next) -> before + next + "\n");
+                        .map(procedure -> procedure.getName() + " " + procedure.getDescription()+ "\n")
+                        .reduce("", (before, next) -> before + next);
               }
             } else if (getModel() instanceof PatientTableModel) {
               if (realColumnIndex == 4) {

@@ -31,7 +31,7 @@ public class AddButtonsPane extends JPanel {
 
     // Add buttons
     JPanel buttonsGrouper = new JPanel();
-    buttonsGrouper.setLayout(new GridLayout(2, 2, 15, 15));
+    buttonsGrouper.setLayout(new GridLayout(2, 2, 5, 5));
     JButton addHospitalButton = new JButton("Add Hospital");
     addHospitalButton.addActionListener(
         new ActionListener() {
