@@ -25,9 +25,6 @@ public class ClinicTableModel extends MedicalTableModel {
 
   public void addClinic(String name, double fee, double gapPercentage) {
     getService().initializeClinic(name, fee, gapPercentage);
-    ArrayList<MedicalFacility> facilities = getService().getMedicalFacilities();
-    Clinic clinic = (Clinic) facilities.get(facilities.size() - 1);
-    getClinics().add(clinic);
     fireTableRowsInserted(getRowCount() - 1, getRowCount() - 1);
   }
 

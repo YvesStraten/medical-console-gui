@@ -1,22 +1,22 @@
 package com.yvesstraten.medicalconsolegui.components;
 
-import java.awt.BorderLayout;
-import java.awt.GridLayout;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.table.TableModel;
-
 import com.yvesstraten.medicalconsole.HealthService;
+import com.yvesstraten.medicalconsole.facilities.Clinic;
+import com.yvesstraten.medicalconsole.facilities.MedicalFacility;
 import com.yvesstraten.medicalconsolegui.models.ClinicTableModel;
 import com.yvesstraten.medicalconsolegui.models.HospitalTableModel;
 import com.yvesstraten.medicalconsolegui.models.PatientTableModel;
 import com.yvesstraten.medicalconsolegui.models.ProcedureTableModel;
+import java.awt.GridLayout;
+import java.awt.Point;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.MouseEvent;
+import javax.swing.JComboBox;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.TableModel;
 
 public class ListPanel extends JPanel {
   private JTable currentTable;
@@ -26,7 +26,7 @@ public class ListPanel extends JPanel {
   private PatientTableModel patientTableModel;
   private ProcedureTableModel procedureTableModel;
 
-  public ListPanel(HealthService service){
+  public ListPanel(HealthService service) {
     setLayout(new GridLayout(2, 1));
     HospitalTableModel hospitalTableModel = new HospitalTableModel(service);
     ClinicTableModel clinicTableModel = new ClinicTableModel(service);
@@ -37,7 +37,48 @@ public class ListPanel extends JPanel {
     setPatientTableModel(patientTableModel);
     setProcedureTableModel(procedureTableModel);
 
-    JTable listTable = new JTable(hospitalTableModel);
+    JTable listTable =
+        new JTable(hospitalTableModel) {
+          @Override
+          public String getToolTipText(MouseEvent e) {
+            String tip = null;
+            Point mouse = e.getPoint();
+            int rowIndex = rowAtPoint(mouse);
+            int columnIndex = columnAtPoint(mouse);
+            int realColumnIndex = convertColumnIndexToModel(columnIndex);
+            int realRowIndex = convertRowIndexToModel(rowIndex);
+
+            if (getModel() instanceof HospitalTableModel) {
+              if (realColumnIndex == 3) {
+                tip =
+                    getProcedureTableModel().getProcedures().stream()
+                        .map(procedure -> procedure.getName() + " " + procedure.getDescription())
+                        .reduce("", (before, next) -> before + next + "\n");
+              }
+            } else if (getModel() instanceof PatientTableModel) {
+              if (realColumnIndex == 4) {
+                MedicalFacility facility =
+                    getPatientTableModel().getPatients().get(realRowIndex).getCurrentFacility();
+                if (facility != null) {
+                  if (facility instanceof Clinic) {
+                    Clinic clinic = (Clinic) facility;
+                    tip =
+                        "Clinic "
+                            + clinic.getId()
+                            + " "
+                            + clinic.getName()
+                            + " with cost "
+                            + clinic.getFee();
+                  } else {
+                    tip = "Hospital" + facility.getId() + " " + facility.getName();
+                  }
+                }
+              }
+            }
+
+            return tip;
+          }
+        };
 
     setCurrentTable(listTable);
     JScrollPane scrollPane = new JScrollPane(getCurrentTable());
@@ -126,5 +167,4 @@ public class ListPanel extends JPanel {
   public void setProcedureTableModel(ProcedureTableModel procedureTableModel) {
     this.procedureTableModel = procedureTableModel;
   }
-  
 }
