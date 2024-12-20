@@ -1,10 +1,11 @@
 package com.yvesstraten.medicalconsolegui.components;
 
 import com.yvesstraten.medicalconsole.HealthService;
+import com.yvesstraten.medicalconsolegui.models.ClinicTableModel;
+import com.yvesstraten.medicalconsolegui.models.HospitalTableModel;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -53,11 +54,12 @@ public class MedicalGuiFrame extends JFrame {
           @Override
           public void actionPerformed(ActionEvent e) {
             MedicalFileChooser fileChooser = new MedicalFileChooser();
-            int returnVal = fileChooser.showOpenDialog(menuBar);
-            if (returnVal == JFileChooser.APPROVE_OPTION) {
-              fileChooser.load(service);
-              setTitle(getNewTitle(service));
-            }
+            fileChooser.load(service);
+            HospitalTableModel hospitalTableModel = new HospitalTableModel(getService());
+            mainMenu.getListPanel().setHospitalTableModel(hospitalTableModel);
+            mainMenu.getListPanel().setClinicTableModel(new ClinicTableModel(getService()));
+            mainMenu.getListPanel().getCurrentTable().setModel(hospitalTableModel);
+            setTitle(getNewTitle(service));
           }
         });
 
