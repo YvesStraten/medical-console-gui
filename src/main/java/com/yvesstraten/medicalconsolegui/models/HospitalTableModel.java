@@ -87,7 +87,6 @@ public class HospitalTableModel extends MedicalTableModel {
 
   @Override
   public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-    System.out.println("Setting value!");
     Hospital row = getHospitals().get(rowIndex);
     if (columnIndex == 1) {
       row.setName((String) aValue);

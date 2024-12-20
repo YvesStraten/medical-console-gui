@@ -1,7 +1,9 @@
 package com.yvesstraten.medicalconsolegui;
 
+import com.yvesstraten.medicalconsole.Patient;
 import com.yvesstraten.medicalconsole.facilities.Clinic;
 import com.yvesstraten.medicalconsole.facilities.MedicalFacility;
+import com.yvesstraten.medicalconsole.facilities.Procedure;
 import java.awt.Component;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JList;
@@ -27,6 +29,27 @@ public class RemoveComboRenderer extends DefaultListCellRenderer {
       builder.append(" ").append(facility.getId()).append(" ").append(facility.getName());
       return super.getListCellRendererComponent(
           list, builder.toString(), index, isSelected, cellHasFocus);
+    } else if (value instanceof Patient) {
+      Patient patient = (Patient) value;
+      return super.getListCellRendererComponent(
+          list,
+          "Patient " + patient.getId() + " named " + patient.getName(),
+          index,
+          isSelected,
+          cellHasFocus);
+    } else if (value instanceof Procedure) {
+      Procedure procedure = (Procedure) value;
+      return super.getListCellRendererComponent(
+          list,
+          "Procedure "
+              + procedure.getId()
+              + " "
+              + procedure.getName()
+              + " and cost "
+              + procedure.getCost(),
+          index,
+          isSelected,
+          cellHasFocus);
     }
 
     return super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);

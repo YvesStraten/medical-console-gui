@@ -73,7 +73,6 @@ public class MedicalFileChooser extends JFileChooser {
   private void saveBinary(HealthService service) throws IOException {
     FileOutputStream chosenFile = new FileOutputStream(getSelectedFile());
     ObjectOutputStream stream = new ObjectOutputStream(chosenFile);
-    System.out.println("Writing!");
 
     stream.writeObject(service.getMedicalFacilities());
     stream.writeObject(service.getPatients());
@@ -111,7 +110,6 @@ public class MedicalFileChooser extends JFileChooser {
                   options[0]);
 
           if (chosenOption == 1 && chosenOption == JOptionPane.CANCEL_OPTION) {
-            System.out.println("Abort saving");
             success = true;
           }
         }

@@ -80,7 +80,6 @@ public class ClinicTableModel extends MedicalTableModel {
 
   @Override
   public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-    System.out.println("Editing");
     Clinic row = getClinics().get(rowIndex);
     switch (columnIndex) {
       case 1:

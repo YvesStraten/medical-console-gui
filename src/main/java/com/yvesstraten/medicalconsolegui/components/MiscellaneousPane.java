@@ -97,7 +97,7 @@ public class MiscellaneousPane extends JPanel {
     MedicalFacility[] facilities =
         patientModel.getService().getMedicalFacilities().toArray(MedicalFacility[]::new);
     SelectObjectDialog facilitySelect =
-        new SelectObjectDialog("Please select facility to visi", facilities);
+        new SelectObjectDialog("Please select facility to visit", facilities);
 
     int facilitySelectResult =
         JOptionPane.showConfirmDialog(
@@ -179,8 +179,6 @@ public class MiscellaneousPane extends JPanel {
       double cost = Hospital.getOperationCost(toOperate, toUndertake);
 
       toOperate.addBalance(cost);
-      System.out.println(toOperate.toString());
-      System.out.println(toOperate.getBalance());
       patientModel.setPatient(patientIndex, toOperate);
     }
   }
