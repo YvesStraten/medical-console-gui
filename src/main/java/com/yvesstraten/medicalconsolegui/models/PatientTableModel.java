@@ -38,8 +38,16 @@ public class PatientTableModel extends MedicalTableModel {
   }
 
   public void deletePatient(int index) {
+    // No need to remove from the service as well 
+    // as we have a direct reference to the collection 
+    // not an intermediate list
     getPatients().remove(index);
+
     fireTableRowsDeleted(index, index);
+  }
+
+  public void deletePatient(Patient selected){
+    deletePatient(getPatients().indexOf(selected));
   }
 
   @Override

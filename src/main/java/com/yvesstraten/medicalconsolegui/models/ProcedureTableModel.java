@@ -3,8 +3,8 @@ package com.yvesstraten.medicalconsolegui.models;
 import com.yvesstraten.medicalconsole.HealthService;
 import com.yvesstraten.medicalconsole.facilities.Hospital;
 import com.yvesstraten.medicalconsole.facilities.Procedure;
-
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class ProcedureTableModel extends MedicalTableModel {
@@ -15,7 +15,11 @@ public class ProcedureTableModel extends MedicalTableModel {
 
   public ProcedureTableModel(HealthService service) {
     super(service);
-    setProcedures(service.getHospitals().flatMap(Hospital::getProceduresStream).collect(Collectors.toCollection(ArrayList::new)));
+    setProcedures(
+        service
+            .getHospitals()
+            .flatMap(Hospital::getProceduresStream)
+            .collect(Collectors.toCollection(ArrayList::new)));
   }
 
   public ArrayList<Procedure> getProcedures() {
@@ -26,18 +30,44 @@ public class ProcedureTableModel extends MedicalTableModel {
     this.procedures = procedures;
   }
 
-  public void addProcedure(Hospital hospital, String name, String description, boolean isElective, double cost){
+  public void addProcedure(
+      Hospital hospital, String name, String description, boolean isElective, double cost) {
     getService().initializeProcedure(hospital, name, description, isElective, cost);
     ArrayList<Procedure> procedures = hospital.getProcedures();
     Procedure procedure = procedures.get(procedures.size() - 1);
     getProcedures().add(procedure);
-    
+
     fireTableRowsInserted(getRowCount() - 1, getRowCount() - 1);
   }
 
-  public void deleteProcedure(int index){
-    getProcedures().remove(index);
-    fireTableRowsDeleted(index, index);
+  public void deleteProcedure(int index) {
+    deleteProcedure(getProcedures().get(index));
+  }
+
+  public void deleteProcedure(Procedure selected) {
+    Hospital containsProc =
+        getService()
+            .getHospitals()
+            .filter(
+                hospital -> {
+                  Optional<Procedure> procedureOptional =
+                      hospital
+                          .getProceduresStream()
+                          .filter(procedure -> procedure.equals(selected))
+                          .findFirst();
+
+                  return procedureOptional.isPresent();
+                })
+            .findFirst()
+            .orElse(null);
+
+    if (containsProc != null) {
+      int index = getProcedures().indexOf(selected);
+
+      getProcedures().remove(index);
+      containsProc.removeProcedure(selected);
+      fireTableRowsDeleted(index, index);
+    }
   }
 
   @Override
@@ -52,12 +82,12 @@ public class ProcedureTableModel extends MedicalTableModel {
 
   @Override
   public String getColumnName(int column) {
-      return columns[column];
+    return columns[column];
   }
 
   @Override
   public Object getValueAt(int rowIndex, int columnIndex) {
-    if(getProcedures().isEmpty()){
+    if (getProcedures().isEmpty()) {
       return null;
     }
 
@@ -68,7 +98,7 @@ public class ProcedureTableModel extends MedicalTableModel {
         return selectedProcedure.getId();
       case 1:
         return selectedProcedure.getName();
-    case 2:
+      case 2:
         return selectedProcedure.getDescription();
       case 3:
         return selectedProcedure.getCost();

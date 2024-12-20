@@ -17,7 +17,9 @@ public class MainMenu extends JPanel {
     // Instantiate components
     ListPanel listPanel = new ListPanel(service);
     AddButtonsPane addButtonsPane = new AddButtonsPane(listPanel);
+    RemoveButtonsPane removeButtonsPane = new RemoveButtonsPane(listPanel);
     add(addButtonsPane);
+    add(removeButtonsPane);
     add(listPanel);
   }
 

@@ -32,8 +32,17 @@ public class ClinicTableModel extends MedicalTableModel {
   }
 
   public void deleteClinic(int index) {
+    Clinic clinic = getClinics().get(index);
     getClinics().remove(index);
+    getService().getMedicalFacilities().remove(clinic);
     fireTableRowsDeleted(index, index);
+  }
+
+  public void deleteClinic(Clinic selected) {
+    int row = getClinics().indexOf(selected);
+    getClinics().remove(selected);
+    getService().getMedicalFacilities().remove(selected);
+    fireTableRowsDeleted(row, row);
   }
 
   @Override

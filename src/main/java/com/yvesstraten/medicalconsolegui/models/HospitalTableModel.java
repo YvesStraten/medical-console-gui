@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 public class HospitalTableModel extends MedicalTableModel {
   private ArrayList<Hospital> hospitals;
-  private final String[] columns = new String[] {"Id", "Name", "ProbAdmit" };
+  private final String[] columns = new String[] {"Id", "Name", "ProbAdmit"};
 
   public HospitalTableModel(HealthService service) {
     super(service);
@@ -32,8 +32,17 @@ public class HospitalTableModel extends MedicalTableModel {
   }
 
   public void deleteHospital(int selectedRow) {
+    Hospital hospital = getHospitals().get(selectedRow);
+    getService().getMedicalFacilities().remove(hospital);
     getHospitals().remove(selectedRow);
     fireTableRowsDeleted(selectedRow, selectedRow);
+  }
+
+  public void deleteHospital(Hospital selected) {
+    int row = getHospitals().indexOf(selected);
+    getService().getMedicalFacilities().remove(selected);
+    getHospitals().remove(selected);
+    fireTableRowsDeleted(row, row);
   }
 
   public void setHospital(int selectedRow, Hospital hospital) {
