@@ -16,6 +16,7 @@ import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 
 public class ListPanel extends JPanel {
@@ -25,6 +26,7 @@ public class ListPanel extends JPanel {
   private ClinicTableModel clinicTableModel;
   private PatientTableModel patientTableModel;
   private ProcedureTableModel procedureTableModel;
+  private TableModel[] tableModels;
 
   public ListPanel(HealthService service) {
     HospitalTableModel hospitalTableModel = new HospitalTableModel(service);
@@ -35,6 +37,7 @@ public class ListPanel extends JPanel {
     setClinicTableModel(clinicTableModel);
     setPatientTableModel(patientTableModel);
     setProcedureTableModel(procedureTableModel);
+    setTableModels(new TableModel[] { hospitalTableModel, clinicTableModel, patientTableModel, procedureTableModel });
 
     JTable listTable =
         new JTable(hospitalTableModel) {
@@ -165,5 +168,19 @@ public class ListPanel extends JPanel {
 
   public void setProcedureTableModel(ProcedureTableModel procedureTableModel) {
     this.procedureTableModel = procedureTableModel;
+  }
+
+  public TableModel[] getTableModels() {
+    return tableModels;
+  }
+
+  public void setTableModels(TableModel[] tableModels) {
+    this.tableModels = tableModels;
+  }
+
+  public void setUpListeners(TableModelListener listener){
+    for(TableModel model: getTableModels()){
+      model.addTableModelListener(listener);
+    }
   }
 }

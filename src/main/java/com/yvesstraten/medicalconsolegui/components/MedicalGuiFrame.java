@@ -9,6 +9,8 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 
 public class MedicalGuiFrame extends JFrame {
   private HealthService service;
@@ -30,6 +32,16 @@ public class MedicalGuiFrame extends JFrame {
 
     // Setup the main menu
     MainMenu mainMenu = new MainMenu(service);
+    mainMenu
+        .getListPanel()
+        .setUpListeners(
+            new TableModelListener() {
+
+              @Override
+              public void tableChanged(TableModelEvent e) {
+                setTitle(getNewTitle(getService()));
+              }
+            });
 
     // Setup menubar
     JMenuBar menuBar = new JMenuBar();
