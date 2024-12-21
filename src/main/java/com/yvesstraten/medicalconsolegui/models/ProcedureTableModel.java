@@ -58,6 +58,20 @@ public class ProcedureTableModel extends MedicalTableModel {
     }
   }
 
+  public void deleteProcedures(Hospital hospital) {
+    ArrayList<Procedure> selected = hospital.getProcedures();
+    // Delete from model
+    for(Procedure procedure: selected){
+      int index = getProcedures().indexOf(procedure);
+      getProcedures().remove(index);
+    }
+
+    // Delete from actual object
+    selected.removeAll(selected);
+
+    fireTableDataChanged();
+  }
+
   @Override
   public int getRowCount() {
     return getProcedures().size();

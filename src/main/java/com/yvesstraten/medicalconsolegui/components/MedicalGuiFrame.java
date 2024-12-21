@@ -3,6 +3,7 @@ package com.yvesstraten.medicalconsolegui.components;
 import com.yvesstraten.medicalconsole.HealthService;
 import com.yvesstraten.medicalconsolegui.models.ClinicTableModel;
 import com.yvesstraten.medicalconsolegui.models.HospitalTableModel;
+import com.yvesstraten.medicalconsolegui.models.ProcedureTableModel;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -37,7 +38,6 @@ public class MedicalGuiFrame extends JFrame {
         .getListPanel()
         .setUpListeners(
             new TableModelListener() {
-
               @Override
               public void tableChanged(TableModelEvent e) {
                 setTitle(getNewTitle(getService()));
@@ -55,7 +55,8 @@ public class MedicalGuiFrame extends JFrame {
           public void actionPerformed(ActionEvent e) {
             MedicalFileChooser fileChooser = new MedicalFileChooser();
             fileChooser.load(service);
-            HospitalTableModel hospitalTableModel = new HospitalTableModel(getService());
+            HospitalTableModel hospitalTableModel =
+                new HospitalTableModel(getService(), new ProcedureTableModel(getService()));
             mainMenu.getListPanel().setHospitalTableModel(hospitalTableModel);
             mainMenu.getListPanel().setClinicTableModel(new ClinicTableModel(getService()));
             mainMenu.getListPanel().getCurrentTable().setModel(hospitalTableModel);

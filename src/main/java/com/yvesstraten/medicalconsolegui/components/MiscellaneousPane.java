@@ -10,24 +10,14 @@ import com.yvesstraten.medicalconsolegui.models.PatientTableModel;
 import com.yvesstraten.medicalconsolegui.models.ProcedureTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-public class MiscellaneousPane extends JPanel {
-  private ListPanel listPanel;
-
+public class MiscellaneousPane extends ButtonPane {
   public MiscellaneousPane(ListPanel listPanel) {
-    super();
-    setListPanel(listPanel);
-    setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-    JLabel label = new JLabel("Miscellanious Operations");
-    label.setAlignmentX(JLabel.CENTER_ALIGNMENT);
-    label.setAlignmentY(JLabel.CENTER_ALIGNMENT);
-
+    super("Miscellaneous Operations", listPanel);
     PatientTableModel patientModel = getListPanel().getPatientTableModel();
     JPanel buttonsGrouper = new JPanel();
     JButton visitButton = new JButton("Simulate a visit");
@@ -61,54 +51,31 @@ public class MiscellaneousPane extends JPanel {
     buttonsGrouper.add(operateButton);
 
     // Add components to panel
-    add(label);
     add(buttonsGrouper);
-  }
-
-  public ListPanel getListPanel() {
-    return listPanel;
-  }
-
-  public void setListPanel(ListPanel service) {
-    this.listPanel = service;
   }
 
   private static void attemptVisit(PatientTableModel patientModel) {
     Patient[] patients = patientModel.getPatients().toArray(Patient[]::new);
-
-    if (patients.length == 0) {
-      JOptionPane.showMessageDialog(
-          null, "Please add a patient first", "Failure", JOptionPane.ERROR_MESSAGE);
+    Patient wantsVisit =
+        (Patient)
+            attemptSelection(
+                "Please select a patient to undertake visit",
+                "Select a patient",
+                "Please add a patient first",
+                patients);
+    if (wantsVisit == null) {
       return;
     }
 
-    SelectObjectDialog patientSelect =
-        new SelectObjectDialog("Please select a patient to undertake visit", patients);
-    int patientSelectResult =
-        JOptionPane.showConfirmDialog(
-            null, patientSelect, "Select a patient", JOptionPane.OK_CANCEL_OPTION);
-    if (patientSelectResult == JOptionPane.CANCEL_OPTION
-        || patientSelectResult == JOptionPane.CLOSED_OPTION) {
-      return;
-    }
-
-    JComboBox<Object> patientCombo = patientSelect.getCombo();
-    Patient wantsVisit = (Patient) patientCombo.getSelectedItem();
     MedicalFacility[] facilities =
         patientModel.getService().getMedicalFacilities().toArray(MedicalFacility[]::new);
-    SelectObjectDialog facilitySelect =
-        new SelectObjectDialog("Please select facility to visit", facilities);
-
-    int facilitySelectResult =
-        JOptionPane.showConfirmDialog(
-            null, facilitySelect, "Select a patient", JOptionPane.OK_CANCEL_OPTION);
-    if (facilitySelectResult == JOptionPane.CANCEL_OPTION
-        || facilitySelectResult == JOptionPane.CLOSED_OPTION) {
-      return;
-    }
-
-    JComboBox<Object> facilityCombo = facilitySelect.getCombo();
-    MedicalFacility toVisit = (MedicalFacility) facilityCombo.getSelectedItem();
+    MedicalFacility toVisit =
+        (MedicalFacility)
+            attemptSelection(
+                "Please select facility to visit",
+                "Select facility",
+                "Please add a facility first",
+                facilities);
 
     boolean successfullVisit = toVisit.visit(wantsVisit);
     if (successfullVisit) {
@@ -129,57 +96,69 @@ public class MiscellaneousPane extends JPanel {
       ProcedureTableModel procedureModel)
       throws WrongHospitalException {
     Hospital[] hospitals = hospitalModel.getHospitals().toArray(Hospital[]::new);
-    SelectObjectDialog hospitalSelect =
-        new SelectObjectDialog("Please select a hospital first", hospitals);
-
-    int hospitalSelectResult =
-        JOptionPane.showConfirmDialog(
-            null, hospitalSelect, "Selecting a patient", JOptionPane.OK_CANCEL_OPTION);
-
-    if (hospitalSelectResult == JOptionPane.CANCEL_OPTION
-        || hospitalSelectResult == JOptionPane.CLOSED_OPTION) {
+    Hospital operateLocation =
+        (Hospital)
+            attemptSelection(
+                "Please select a hospital first",
+                "Selecting a hospital",
+                "Please add a hospital first",
+                hospitals);
+    if (operateLocation == null) {
       return;
     }
-
-    JComboBox<Object> hospitalCombo = hospitalSelect.getCombo();
-    Hospital operateLocation = (Hospital) hospitalCombo.getSelectedItem();
 
     Patient[] patients = patientModel.getPatients().toArray(Patient[]::new);
-    SelectObjectDialog patientSelect =
-        new SelectObjectDialog("Please select a patient first", patients);
-
-    int patientSelectResult =
-        JOptionPane.showConfirmDialog(
-            null, patientSelect, "Selecting a patient", JOptionPane.OK_CANCEL_OPTION);
-
-    if (patientSelectResult == JOptionPane.CANCEL_OPTION
-        || patientSelectResult == JOptionPane.CLOSED_OPTION) {
+    Patient toOperate =
+        (Patient)
+            attemptSelection(
+                "Please select a patient first",
+                "Selecting a patient",
+                "Please add a patient first",
+                patients);
+    if (toOperate == null) {
       return;
     }
 
-    JComboBox<Object> patientCombo = patientSelect.getCombo();
-    int patientIndex = patientCombo.getSelectedIndex();
-    Patient toOperate = (Patient) patientCombo.getSelectedItem();
     if (toOperate.isInThisHospital(operateLocation)) {
       Procedure[] procedures = procedureModel.getProcedures().toArray(Procedure[]::new);
-      SelectObjectDialog procedureSelect =
-          new SelectObjectDialog("Which operation should be undertaken?", procedures);
+      Procedure toUndertake =
+          (Procedure)
+              attemptSelection(
+                  "Which operation should be undertaken?",
+                  "Selecting procedure",
+                  "Please add a procedure first",
+                  procedures);
 
-      int procedureSelectResult =
-          JOptionPane.showConfirmDialog(
-              null, procedureSelect, "Selecting a patient", JOptionPane.OK_CANCEL_OPTION);
-
-      if (procedureSelectResult == JOptionPane.CANCEL_OPTION
-          || procedureSelectResult == JOptionPane.CLOSED_OPTION) {
+      if (toUndertake == null) {
         return;
       }
 
-      JComboBox<Object> procedureCombo = procedureSelect.getCombo();
-      Procedure toUndertake = (Procedure) procedureCombo.getSelectedItem();
       double cost = Hospital.getOperationCost(toOperate, toUndertake);
 
       toOperate.addBalance(cost);
-      patientModel.setPatient(patientIndex, toOperate);
+      patientModel.setPatient(patientModel.getPatients().indexOf(toOperate), toOperate);
     }
+  }
+
+  public static Object attemptSelection(
+      String message, String title, String errorMessage, Object[] options) {
+    if (options.length == 0) {
+      JOptionPane.showMessageDialog(
+          null, errorMessage, "No objects added yet", JOptionPane.ERROR_MESSAGE);
+    }
+    SelectObjectDialog selectionDialog = new SelectObjectDialog(message, options);
+
+    int selectionResult =
+        JOptionPane.showConfirmDialog(null, selectionDialog, title, JOptionPane.OK_CANCEL_OPTION);
+
+    if (selectionResult == JOptionPane.CANCEL_OPTION
+        || selectionResult == JOptionPane.CLOSED_OPTION) {
+      return null;
+    }
+
+    JComboBox<Object> combo = selectionDialog.getCombo();
+    Object selected = combo.getSelectedItem();
+
+    return selected;
   }
 }

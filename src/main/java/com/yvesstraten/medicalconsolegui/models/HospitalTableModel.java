@@ -3,16 +3,20 @@ package com.yvesstraten.medicalconsolegui.models;
 import com.yvesstraten.medicalconsole.HealthService;
 import com.yvesstraten.medicalconsole.facilities.Hospital;
 import com.yvesstraten.medicalconsole.facilities.MedicalFacility;
+import com.yvesstraten.medicalconsole.facilities.Procedure;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class HospitalTableModel extends MedicalTableModel {
   private ArrayList<Hospital> hospitals;
   private final String[] columns = new String[] {"Id", "Name", "ProbAdmit", "Num procedures"};
+  private ProcedureTableModel procedureModel;
 
-  public HospitalTableModel(HealthService service) {
+  public HospitalTableModel(HealthService service, ProcedureTableModel procedureModel) {
     super(service);
     setHospitals(service.getHospitals().collect(Collectors.toCollection(ArrayList::new)));
+    setProcedureModel(procedureModel);
   }
 
   public ArrayList<Hospital> getHospitals() {
@@ -33,21 +37,31 @@ public class HospitalTableModel extends MedicalTableModel {
 
   public void deleteHospital(int selectedRow) {
     Hospital hospital = getHospitals().get(selectedRow);
-    getService().getMedicalFacilities().remove(hospital);
+
+    getProcedureModel().deleteProcedures(hospital);
     getHospitals().remove(selectedRow);
+    getService().getMedicalFacilities().remove(hospital);
+
     fireTableRowsDeleted(selectedRow, selectedRow);
   }
 
   public void deleteHospital(Hospital selected) {
     int row = getHospitals().indexOf(selected);
-    getService().getMedicalFacilities().remove(selected);
-    getHospitals().remove(selected);
+    deleteHospital(row);
     fireTableRowsDeleted(row, row);
   }
 
   public void setHospital(int selectedRow, Hospital hospital) {
     getHospitals().set(selectedRow, hospital);
     fireTableRowsUpdated(selectedRow, selectedRow);
+  }
+
+  public ProcedureTableModel getProcedureModel() {
+    return procedureModel;
+  }
+
+  public void setProcedureModel(ProcedureTableModel procedureModel) {
+    this.procedureModel = procedureModel;
   }
 
   @Override

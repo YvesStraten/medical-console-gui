@@ -7,25 +7,14 @@ import com.yvesstraten.medicalconsole.facilities.Procedure;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-public class RemoveButtonsPane extends JPanel {
-  private ListPanel listPanel;
-
+public class RemoveButtonsPane extends ButtonPane {
   public RemoveButtonsPane(ListPanel listPanel) {
-    super();
-    setListPanel(listPanel);
-    setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-
-    JLabel label = new JLabel("Remove item");
-    label.setAlignmentX(CENTER_ALIGNMENT);
-    label.setAlignmentY(CENTER_ALIGNMENT);
-
+    super("Remove operations", listPanel);
     JPanel buttonsGrouper = new JPanel();
     buttonsGrouper.setLayout(new GridLayout(2, 2, 5, 5));
 
@@ -144,16 +133,7 @@ public class RemoveButtonsPane extends JPanel {
     buttonsGrouper.add(removeProcedure);
 
     // Add components
-    add(label);
     add(buttonsGrouper);
-  }
-
-  public ListPanel getListPanel() {
-    return listPanel;
-  }
-
-  public void setListPanel(ListPanel listPanel) {
-    this.listPanel = listPanel;
   }
 
   public static Object getItemToRemove(
@@ -166,7 +146,7 @@ public class RemoveButtonsPane extends JPanel {
 
     int result =
         JOptionPane.showConfirmDialog(
-            null, removeDialog, "Removing a hospital", JOptionPane.OK_CANCEL_OPTION);
+            null, removeDialog, title, JOptionPane.OK_CANCEL_OPTION);
 
     if (result == JOptionPane.CANCEL_OPTION || result == JOptionPane.CLOSED_OPTION) {
       return null;

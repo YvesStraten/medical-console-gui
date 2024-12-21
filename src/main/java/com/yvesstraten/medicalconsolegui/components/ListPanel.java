@@ -29,15 +29,18 @@ public class ListPanel extends JPanel {
   private TableModel[] tableModels;
 
   public ListPanel(HealthService service) {
-    HospitalTableModel hospitalTableModel = new HospitalTableModel(service);
     ClinicTableModel clinicTableModel = new ClinicTableModel(service);
     PatientTableModel patientTableModel = new PatientTableModel(service);
     ProcedureTableModel procedureTableModel = new ProcedureTableModel(service);
+    HospitalTableModel hospitalTableModel = new HospitalTableModel(service, procedureTableModel);
     setHospitalTableModel(hospitalTableModel);
     setClinicTableModel(clinicTableModel);
     setPatientTableModel(patientTableModel);
     setProcedureTableModel(procedureTableModel);
-    setTableModels(new TableModel[] { hospitalTableModel, clinicTableModel, patientTableModel, procedureTableModel });
+    setTableModels(
+        new TableModel[] {
+          hospitalTableModel, clinicTableModel, patientTableModel, procedureTableModel
+        });
 
     JTable listTable =
         new JTable(hospitalTableModel) {
@@ -183,8 +186,8 @@ public class ListPanel extends JPanel {
     this.tableModels = tableModels;
   }
 
-  public void setUpListeners(TableModelListener listener){
-    for(TableModel model: getTableModels()){
+  public void setUpListeners(TableModelListener listener) {
+    for (TableModel model : getTableModels()) {
       model.addTableModelListener(listener);
     }
   }
