@@ -1,6 +1,7 @@
 \documentclass{article}
 \usepackage{minted}
 \usepackage{graphicx}
+\usepackage{biblatex}
 \usepackage{listings}
 \usepackage{courier}
 \setminted[python]{fontfamily=courier}
@@ -70,7 +71,7 @@ The source code for this assignment can be found below, and it is divided in sec
 \end{itemize}
 
 \subsection{Components}\label{subsec:components} % (fold)
-\textit{MedicalGui.java}
+\textit{MedicalGui.java}\label{MedicalGui.java}
 \inputminted{java}{./src/main/java/com/yvesstraten/medicalconsolegui/MedicalGui.java}
 
 \textit{MainMenu.java}
@@ -358,5 +359,47 @@ This balance is correct as the patient is public, and the procedure is elective,
   1000 + 300 = 1300
 \]
 % subsection Operating (end)
+
+\subsection{Saving}\label{sub:saving} % (fold)
+The saving and loading menu uses the native system bar on MacOS, thanks to the check in \ref{MedicalGui.java}\cite{macos_titlebar}
+\begin{figure}[ht]
+  \begin{center}
+    \includegraphics[width=0.7\textwidth]{figures/Save/Save_1.png}
+  \end{center}
+\end{figure}
+
+\begin{figure}[ht]
+  \begin{center}
+    \includegraphics[width=0.7\textwidth]{figures/Save/Save_2.png}
+  \end{center}
+\end{figure}
+% subsection Saving (end)
+
+\subsection{Loading}\label{sub:loading} % (fold)
+\begin{figure}[ht]
+  \begin{center}
+    \includegraphics[width=0.7\textwidth]{figures/Load/Load_1.png}
+  \end{center}
+\end{figure}
+
+\begin{figure}[ht]
+  \begin{center}
+    \includegraphics[width=0.7\textwidth]{figures/Load/Load_2.png}
+  \end{center}
+\end{figure}
+
+\begin{figure}[ht]
+  \begin{center}
+    \includegraphics[width=0.7\textwidth]{figures/Load/Load_3.png}
+  \end{center}
+\end{figure}
+
+As can be seen from the picture above, this feature works properly as all objects are loaded back into the application, as seen by both the table, and the titlebar showing the right data.
+% subsection Loading (end)
 % section Runtime output (end)
+
+\section{Bibliography}\label{sec:bibliography} % (fold)
+\printbibliography
+
+% section Bibliography (end)
 \end{document}
