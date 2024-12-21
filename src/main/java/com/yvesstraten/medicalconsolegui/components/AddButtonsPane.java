@@ -14,14 +14,13 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
- * This panel contains all the buttons 
- * related to adding
+ * This panel contains all the buttons related to adding
  *
  * @author YvesStraten e2400068
  */
 public class AddButtonsPane extends ButtonPane {
   /**
-   * <p>Constructor for AddButtonsPane.</p>
+   * Constructor for AddButtonsPane.
    *
    * @param listPanel list panel to set
    */
@@ -68,11 +67,6 @@ public class AddButtonsPane extends ButtonPane {
                 addProcedure(getListPanel().getProcedureTableModel());
                 break;
               } catch (NoHospitalsAvailableException nha) {
-                JOptionPane.showMessageDialog(
-                    addProcedureButton,
-                    nha.getMessage(),
-                    "No hospitals added",
-                    JOptionPane.ERROR_MESSAGE);
                 addHospital(getListPanel().getHospitalTableModel());
               }
             }
@@ -135,17 +129,20 @@ public class AddButtonsPane extends ButtonPane {
       throws NoHospitalsAvailableException {
     String dialogTitle = "Adding procedure";
     Hospital[] hospitals = procedureModel.getService().getHospitals().toArray(Hospital[]::new);
-    if (hospitals.length == 0) {
+    Hospital selected =
+        (Hospital)
+            SelectObjectDialog.attemptSelection(
+                "Please select a hospital first",
+                "Adding procedure",
+                "Please add a hospital first",
+                hospitals);
+
+    if(selected == null){
       throw new NoHospitalsAvailableException();
     }
 
-    Hospital selected =
-        (Hospital)
-            getObject("Please select a hospital first", dialogTitle, hospitals, hospitals[0]);
-
     String name = getString("Please input the name of the procedure", dialogTitle);
-    String description =
-        getString("Please input the description of the procedure", dialogTitle);
+    String description = getString("Please input the description of the procedure", dialogTitle);
     boolean isElective = getYesNo("Is the procedure elective?", dialogTitle);
     double cost = getDoubleValue("Please input the base cost of the procedure", dialogTitle);
 
@@ -153,34 +150,7 @@ public class AddButtonsPane extends ButtonPane {
   }
 
   /**
-   * This function prompts the user 
-   * to select an option
-   *
-   * @param message message to show
-   * @param title title of dialog
-   * @param options options available
-   * @param preselected first selected option
-   * @return selected option
-   */
-  private static Object getObject(
-      String message, String title, Object[] options, Object preselected) {
-    while (true) {
-      Object selected =
-          JOptionPane.showInputDialog(
-              null, message, title, JOptionPane.QUESTION_MESSAGE, null, options, preselected);
-
-      if (selected != null) {
-        return selected;
-      } else {
-        JOptionPane.showMessageDialog(
-            null, "Invalid input, please try again", title, JOptionPane.ERROR_MESSAGE);
-      }
-    }
-  }
-
-  /**
-   * This function prompts the user to 
-   * enter a string 
+   * This function prompts the user to enter a string
    *
    * @param message dialog message
    * @param title dialog title
@@ -189,8 +159,7 @@ public class AddButtonsPane extends ButtonPane {
   private static String getString(String message, String title) {
     while (true) {
       String input =
-          (String)
-              JOptionPane.showInputDialog(null, message, title, JOptionPane.QUESTION_MESSAGE);
+          (String) JOptionPane.showInputDialog(null, message, title, JOptionPane.QUESTION_MESSAGE);
       if (input != null && input.length() != 0) {
         return input;
       } else {
@@ -201,8 +170,7 @@ public class AddButtonsPane extends ButtonPane {
   }
 
   /**
-   * This function prompts the user 
-   * for a decimal value
+   * This function prompts the user for a decimal value
    *
    * @param message dialog message
    * @param title dialog title
@@ -222,8 +190,7 @@ public class AddButtonsPane extends ButtonPane {
   }
 
   /**
-   * This function prompts the user for 
-   * yes or no
+   * This function prompts the user for yes or no
    *
    * @param message dialog message
    * @param title dialog title

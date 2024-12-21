@@ -11,7 +11,6 @@ import com.yvesstraten.medicalconsolegui.models.ProcedureTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -75,7 +74,7 @@ public class MiscellaneousPane extends ButtonPane {
     Patient[] patients = patientModel.getPatients().toArray(Patient[]::new);
     Patient wantsVisit =
         (Patient)
-            attemptSelection(
+            SelectObjectDialog.attemptSelection(
                 "Please select a patient to undertake visit",
                 "Select a patient",
                 "Please add a patient first",
@@ -88,7 +87,7 @@ public class MiscellaneousPane extends ButtonPane {
         patientModel.getService().getMedicalFacilities().toArray(MedicalFacility[]::new);
     MedicalFacility toVisit =
         (MedicalFacility)
-            attemptSelection(
+            SelectObjectDialog.attemptSelection(
                 "Please select facility to visit",
                 "Select facility",
                 "Please add a facility first",
@@ -125,7 +124,7 @@ public class MiscellaneousPane extends ButtonPane {
     Hospital[] hospitals = hospitalModel.getHospitals().toArray(Hospital[]::new);
     Hospital operateLocation =
         (Hospital)
-            attemptSelection(
+            SelectObjectDialog.attemptSelection(
                 "Please select a hospital first",
                 "Selecting a hospital",
                 "Please add a hospital first",
@@ -137,7 +136,7 @@ public class MiscellaneousPane extends ButtonPane {
     Patient[] patients = patientModel.getPatients().toArray(Patient[]::new);
     Patient toOperate =
         (Patient)
-            attemptSelection(
+            SelectObjectDialog.attemptSelection(
                 "Please select a patient first",
                 "Selecting a patient",
                 "Please add a patient first",
@@ -150,7 +149,7 @@ public class MiscellaneousPane extends ButtonPane {
       Procedure[] procedures = procedureModel.getProcedures().toArray(Procedure[]::new);
       Procedure toUndertake =
           (Procedure)
-              attemptSelection(
+              SelectObjectDialog.attemptSelection(
                   "Which operation should be undertaken?",
                   "Selecting procedure",
                   "Please add a procedure first",
@@ -165,38 +164,5 @@ public class MiscellaneousPane extends ButtonPane {
       toOperate.addBalance(cost);
       patientModel.setPatient(patientModel.getPatients().indexOf(toOperate), toOperate);
     }
-  }
-
-  /**
-   * This function attempts to show the 
-   * user a dialog from where they can select
-   * an option out of many options
-   *
-   * @param message message to show
-   * @param title title of dialog
-   * @param errorMessage error message for errors
-   * @param options available options
-   * @return selected option
-   */
-  public static Object attemptSelection(
-      String message, String title, String errorMessage, Object[] options) {
-    if (options.length == 0) {
-      JOptionPane.showMessageDialog(
-          null, errorMessage, "No objects added yet", JOptionPane.ERROR_MESSAGE);
-    }
-    SelectObjectDialog selectionDialog = new SelectObjectDialog(message, options);
-
-    int selectionResult =
-        JOptionPane.showConfirmDialog(null, selectionDialog, title, JOptionPane.OK_CANCEL_OPTION);
-
-    if (selectionResult == JOptionPane.CANCEL_OPTION
-        || selectionResult == JOptionPane.CLOSED_OPTION) {
-      return null;
-    }
-
-    JComboBox<Object> combo = selectionDialog.getCombo();
-    Object selected = combo.getSelectedItem();
-
-    return selected;
   }
 }
