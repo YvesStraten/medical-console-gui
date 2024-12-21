@@ -8,25 +8,51 @@ import java.util.ArrayList;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * <p>HospitalTableModel class.</p>
+ *
+ * @author YvesStraten e2400068
+ */
 public class HospitalTableModel extends MedicalTableModel {
   private ArrayList<Hospital> hospitals;
   private final String[] columns = new String[] {"Id", "Name", "ProbAdmit", "Num procedures"};
   private ProcedureTableModel procedureModel;
 
+  /**
+   * <p>Constructor for HospitalTableModel.</p>
+   *
+   * @param service a {@link com.yvesstraten.medicalconsole.HealthService} object
+   * @param procedureModel a {@link com.yvesstraten.medicalconsolegui.models.ProcedureTableModel} object
+   */
   public HospitalTableModel(HealthService service, ProcedureTableModel procedureModel) {
     super(service);
     setHospitals(service.getHospitals().collect(Collectors.toCollection(ArrayList::new)));
     setProcedureModel(procedureModel);
   }
 
+  /**
+   * <p>Getter for the field <code>hospitals</code>.</p>
+   *
+   * @return a {@link java.util.ArrayList} object
+   */
   public ArrayList<Hospital> getHospitals() {
     return this.hospitals;
   }
 
+  /**
+   * <p>Setter for the field <code>hospitals</code>.</p>
+   *
+   * @param hospitals a {@link java.util.ArrayList} object
+   */
   public void setHospitals(ArrayList<Hospital> hospitals) {
     this.hospitals = hospitals;
   }
 
+  /**
+   * <p>addHospital.</p>
+   *
+   * @param name a {@link java.lang.String} object
+   */
   public void addHospital(String name) {
     getService().initializeHospital(name);
     ArrayList<MedicalFacility> facilities = getService().getMedicalFacilities();
@@ -35,6 +61,11 @@ public class HospitalTableModel extends MedicalTableModel {
     fireTableRowsInserted(getRowCount() - 1, getRowCount() - 1);
   }
 
+  /**
+   * <p>deleteHospital.</p>
+   *
+   * @param selectedRow a int
+   */
   public void deleteHospital(int selectedRow) {
     Hospital hospital = getHospitals().get(selectedRow);
 
@@ -45,40 +76,65 @@ public class HospitalTableModel extends MedicalTableModel {
     fireTableRowsDeleted(selectedRow, selectedRow);
   }
 
+  /**
+   * <p>deleteHospital.</p>
+   *
+   * @param selected a {@link com.yvesstraten.medicalconsole.facilities.Hospital} object
+   */
   public void deleteHospital(Hospital selected) {
     int row = getHospitals().indexOf(selected);
     deleteHospital(row);
     fireTableRowsDeleted(row, row);
   }
 
+  /**
+   * <p>setHospital.</p>
+   *
+   * @param selectedRow a int
+   * @param hospital a {@link com.yvesstraten.medicalconsole.facilities.Hospital} object
+   */
   public void setHospital(int selectedRow, Hospital hospital) {
     getHospitals().set(selectedRow, hospital);
     fireTableRowsUpdated(selectedRow, selectedRow);
   }
 
+  /**
+   * <p>Getter for the field <code>procedureModel</code>.</p>
+   *
+   * @return a {@link com.yvesstraten.medicalconsolegui.models.ProcedureTableModel} object
+   */
   public ProcedureTableModel getProcedureModel() {
     return procedureModel;
   }
 
+  /**
+   * <p>Setter for the field <code>procedureModel</code>.</p>
+   *
+   * @param procedureModel a {@link com.yvesstraten.medicalconsolegui.models.ProcedureTableModel} object
+   */
   public void setProcedureModel(ProcedureTableModel procedureModel) {
     this.procedureModel = procedureModel;
   }
 
+  /** {@inheritDoc} */
   @Override
   public int getRowCount() {
     return getHospitals().size();
   }
 
+  /** {@inheritDoc} */
   @Override
   public int getColumnCount() {
     return columns.length;
   }
 
+  /** {@inheritDoc} */
   @Override
   public String getColumnName(int column) {
     return columns[column];
   }
 
+  /** {@inheritDoc} */
   @Override
   public Object getValueAt(int rowIndex, int columnIndex) {
     if (getHospitals().isEmpty()) {
@@ -99,6 +155,7 @@ public class HospitalTableModel extends MedicalTableModel {
     return null;
   }
 
+  /** {@inheritDoc} */
   @Override
   public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
     Hospital row = getHospitals().get(rowIndex);
@@ -109,6 +166,7 @@ public class HospitalTableModel extends MedicalTableModel {
     }
   }
 
+  /** {@inheritDoc} */
   @Override
   public boolean isCellEditable(int rowIndex, int columnIndex) {
     if (columnIndex == 0 || columnIndex == 3) {
@@ -118,6 +176,7 @@ public class HospitalTableModel extends MedicalTableModel {
     return true;
   }
 
+  /** {@inheritDoc} */
   @Override
   public Class<?> getColumnClass(int column) {
     Object value = getValueAt(0, column);

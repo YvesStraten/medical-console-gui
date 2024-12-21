@@ -5,24 +5,50 @@ import com.yvesstraten.medicalconsole.Patient;
 import com.yvesstraten.medicalconsole.facilities.MedicalFacility;
 import java.util.ArrayList;
 
+/**
+ * <p>PatientTableModel class.</p>
+ *
+ * @author YvesStraten e2400068
+ */
 public class PatientTableModel extends MedicalTableModel {
   private ArrayList<Patient> patients;
   private final String[] columns =
       new String[] {"Id", "Name", "Private patient", "Balance", "Current facility"};
 
+  /**
+   * <p>Constructor for PatientTableModel.</p>
+   *
+   * @param service a {@link com.yvesstraten.medicalconsole.HealthService} object
+   */
   public PatientTableModel(HealthService service) {
     super(service);
     setPatients(service.getPatients());
   }
 
+  /**
+   * <p>Getter for the field <code>patients</code>.</p>
+   *
+   * @return a {@link java.util.ArrayList} object
+   */
   public ArrayList<Patient> getPatients() {
     return this.patients;
   }
 
+  /**
+   * <p>Setter for the field <code>patients</code>.</p>
+   *
+   * @param patients a {@link java.util.ArrayList} object
+   */
   public void setPatients(ArrayList<Patient> patients) {
     this.patients = patients;
   }
 
+  /**
+   * <p>addPatient.</p>
+   *
+   * @param name a {@link java.lang.String} object
+   * @param isPrivate a boolean
+   */
   public void addPatient(String name, boolean isPrivate) {
     getService().initializePatient(name, isPrivate);
     ArrayList<Patient> patients = getService().getPatients();
@@ -31,11 +57,22 @@ public class PatientTableModel extends MedicalTableModel {
     fireTableRowsInserted(getRowCount() - 1, getRowCount() - 1);
   }
 
+  /**
+   * <p>setPatient.</p>
+   *
+   * @param index a int
+   * @param pat a {@link com.yvesstraten.medicalconsole.Patient} object
+   */
   public void setPatient(int index, Patient pat) {
     getPatients().set(index, pat);
     fireTableRowsUpdated(index, index);
   }
 
+  /**
+   * <p>deletePatient.</p>
+   *
+   * @param index a int
+   */
   public void deletePatient(int index) {
     // No need to remove from the service as well
     // as we have a direct reference to the collection
@@ -45,25 +82,34 @@ public class PatientTableModel extends MedicalTableModel {
     fireTableRowsDeleted(index, index);
   }
 
+  /**
+   * <p>deletePatient.</p>
+   *
+   * @param selected a {@link com.yvesstraten.medicalconsole.Patient} object
+   */
   public void deletePatient(Patient selected) {
     deletePatient(getPatients().indexOf(selected));
   }
 
+  /** {@inheritDoc} */
   @Override
   public int getRowCount() {
     return getPatients().size();
   }
 
+  /** {@inheritDoc} */
   @Override
   public int getColumnCount() {
     return columns.length;
   }
 
+  /** {@inheritDoc} */
   @Override
   public String getColumnName(int column) {
     return columns[column];
   }
 
+  /** {@inheritDoc} */
   @Override
   public Object getValueAt(int rowIndex, int columnIndex) {
     if (getPatients().isEmpty()) {
@@ -91,6 +137,7 @@ public class PatientTableModel extends MedicalTableModel {
     return null;
   }
 
+  /** {@inheritDoc} */
   @Override
   public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
     Patient row = getPatients().get(rowIndex);
@@ -120,6 +167,7 @@ public class PatientTableModel extends MedicalTableModel {
     }
   }
 
+  /** {@inheritDoc} */
   @Override
   public Class<?> getColumnClass(int column) {
     switch (column) {

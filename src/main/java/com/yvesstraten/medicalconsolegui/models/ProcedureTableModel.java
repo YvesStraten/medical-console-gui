@@ -7,6 +7,11 @@ import java.util.ArrayList;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * <p>ProcedureTableModel class.</p>
+ *
+ * @author YvesStraten e2400068
+ */
 public class ProcedureTableModel extends MedicalTableModel {
   private ArrayList<Procedure> procedures;
 
@@ -15,6 +20,11 @@ public class ProcedureTableModel extends MedicalTableModel {
         "Id", "Name", "Description", "Elective or not", "Base fee", "Available in hospital"
       };
 
+  /**
+   * <p>Constructor for ProcedureTableModel.</p>
+   *
+   * @param service a {@link com.yvesstraten.medicalconsole.HealthService} object
+   */
   public ProcedureTableModel(HealthService service) {
     super(service);
     setProcedures(
@@ -24,14 +34,33 @@ public class ProcedureTableModel extends MedicalTableModel {
             .collect(Collectors.toCollection(ArrayList::new)));
   }
 
+  /**
+   * <p>Getter for the field <code>procedures</code>.</p>
+   *
+   * @return a {@link java.util.ArrayList} object
+   */
   public ArrayList<Procedure> getProcedures() {
     return procedures;
   }
 
+  /**
+   * <p>Setter for the field <code>procedures</code>.</p>
+   *
+   * @param procedures a {@link java.util.ArrayList} object
+   */
   public void setProcedures(ArrayList<Procedure> procedures) {
     this.procedures = procedures;
   }
 
+  /**
+   * <p>addProcedure.</p>
+   *
+   * @param hospital a {@link com.yvesstraten.medicalconsole.facilities.Hospital} object
+   * @param name a {@link java.lang.String} object
+   * @param description a {@link java.lang.String} object
+   * @param isElective a boolean
+   * @param cost a double
+   */
   public void addProcedure(
       Hospital hospital, String name, String description, boolean isElective, double cost) {
     getService().initializeProcedure(hospital, name, description, isElective, cost);
@@ -42,10 +71,20 @@ public class ProcedureTableModel extends MedicalTableModel {
     fireTableRowsInserted(getRowCount() - 1, getRowCount() - 1);
   }
 
+  /**
+   * <p>deleteProcedure.</p>
+   *
+   * @param index a int
+   */
   public void deleteProcedure(int index) {
     deleteProcedure(getProcedures().get(index));
   }
 
+  /**
+   * <p>deleteProcedure.</p>
+   *
+   * @param selected a {@link com.yvesstraten.medicalconsole.facilities.Procedure} object
+   */
   public void deleteProcedure(Procedure selected) {
     Hospital containsProc = getHospitalWithProcedure(selected);
 
@@ -58,6 +97,11 @@ public class ProcedureTableModel extends MedicalTableModel {
     }
   }
 
+  /**
+   * <p>deleteProcedures.</p>
+   *
+   * @param hospital a {@link com.yvesstraten.medicalconsole.facilities.Hospital} object
+   */
   public void deleteProcedures(Hospital hospital) {
     ArrayList<Procedure> selected = hospital.getProcedures();
     // Delete from model
@@ -72,21 +116,25 @@ public class ProcedureTableModel extends MedicalTableModel {
     fireTableDataChanged();
   }
 
+  /** {@inheritDoc} */
   @Override
   public int getRowCount() {
     return getProcedures().size();
   }
 
+  /** {@inheritDoc} */
   @Override
   public int getColumnCount() {
     return columns.length;
   }
 
+  /** {@inheritDoc} */
   @Override
   public String getColumnName(int column) {
     return columns[column];
   }
 
+  /** {@inheritDoc} */
   @Override
   public Object getValueAt(int rowIndex, int columnIndex) {
     Procedure selectedProcedure = getProcedures().get(rowIndex);
@@ -113,6 +161,7 @@ public class ProcedureTableModel extends MedicalTableModel {
     return null;
   }
 
+  /** {@inheritDoc} */
   @Override
   public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
     Procedure row = getProcedures().get(rowIndex);
@@ -147,6 +196,7 @@ public class ProcedureTableModel extends MedicalTableModel {
     }
   }
 
+  /** {@inheritDoc} */
   @Override
   public Class<?> getColumnClass(int column) {
     switch (column) {
@@ -165,6 +215,12 @@ public class ProcedureTableModel extends MedicalTableModel {
     }
   }
 
+  /**
+   * <p>getHospitalWithProcedure.</p>
+   *
+   * @param selected a {@link com.yvesstraten.medicalconsole.facilities.Procedure} object
+   * @return a {@link com.yvesstraten.medicalconsole.facilities.Hospital} object
+   */
   public Hospital getHospitalWithProcedure(Procedure selected) {
     return getService()
         .getHospitals()

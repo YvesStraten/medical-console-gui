@@ -19,6 +19,11 @@ import javax.swing.JTable;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 
+/**
+ * <p>ListPanel class.</p>
+ *
+ * @author YvesStraten e2400068
+ */
 public class ListPanel extends JPanel {
   private JTable currentTable;
   private JScrollPane scrollPane;
@@ -28,6 +33,11 @@ public class ListPanel extends JPanel {
   private ProcedureTableModel procedureTableModel;
   private TableModel[] tableModels;
 
+  /**
+   * <p>Constructor for ListPanel.</p>
+   *
+   * @param service a {@link com.yvesstraten.medicalconsole.HealthService} object
+   */
   public ListPanel(HealthService service) {
     ClinicTableModel clinicTableModel = new ClinicTableModel(service);
     PatientTableModel patientTableModel = new PatientTableModel(service);
@@ -130,62 +140,137 @@ public class ListPanel extends JPanel {
     add(scrollPane);
   }
 
+  /**
+   * <p>Getter for the field <code>currentTable</code>.</p>
+   *
+   * @return a {@link javax.swing.JTable} object
+   */
   public JTable getCurrentTable() {
     return this.currentTable;
   }
 
+  /**
+   * <p>Getter for the field <code>scrollPane</code>.</p>
+   *
+   * @return a {@link javax.swing.JScrollPane} object
+   */
   public JScrollPane getScrollPane() {
     return this.scrollPane;
   }
 
+  /**
+   * <p>Setter for the field <code>currentTable</code>.</p>
+   *
+   * @param table a {@link javax.swing.JTable} object
+   */
   public void setCurrentTable(JTable table) {
     this.currentTable = table;
   }
 
+  /**
+   * <p>Setter for the field <code>scrollPane</code>.</p>
+   *
+   * @param scrollPane a {@link javax.swing.JScrollPane} object
+   */
   public void setScrollPane(JScrollPane scrollPane) {
     this.scrollPane = scrollPane;
   }
 
+  /**
+   * <p>Getter for the field <code>hospitalTableModel</code>.</p>
+   *
+   * @return a {@link com.yvesstraten.medicalconsolegui.models.HospitalTableModel} object
+   */
   public HospitalTableModel getHospitalTableModel() {
     return hospitalTableModel;
   }
 
+  /**
+   * <p>Setter for the field <code>hospitalTableModel</code>.</p>
+   *
+   * @param hospitalTableModel a {@link com.yvesstraten.medicalconsolegui.models.HospitalTableModel} object
+   */
   public void setHospitalTableModel(HospitalTableModel hospitalTableModel) {
     this.hospitalTableModel = hospitalTableModel;
   }
 
+  /**
+   * <p>Getter for the field <code>clinicTableModel</code>.</p>
+   *
+   * @return a {@link com.yvesstraten.medicalconsolegui.models.ClinicTableModel} object
+   */
   public ClinicTableModel getClinicTableModel() {
     return clinicTableModel;
   }
 
+  /**
+   * <p>Setter for the field <code>clinicTableModel</code>.</p>
+   *
+   * @param clinicTableModel a {@link com.yvesstraten.medicalconsolegui.models.ClinicTableModel} object
+   */
   public void setClinicTableModel(ClinicTableModel clinicTableModel) {
     this.clinicTableModel = clinicTableModel;
   }
 
+  /**
+   * <p>Getter for the field <code>patientTableModel</code>.</p>
+   *
+   * @return a {@link com.yvesstraten.medicalconsolegui.models.PatientTableModel} object
+   */
   public PatientTableModel getPatientTableModel() {
     return patientTableModel;
   }
 
+  /**
+   * <p>Setter for the field <code>patientTableModel</code>.</p>
+   *
+   * @param patientTableModel a {@link com.yvesstraten.medicalconsolegui.models.PatientTableModel} object
+   */
   public void setPatientTableModel(PatientTableModel patientTableModel) {
     this.patientTableModel = patientTableModel;
   }
 
+  /**
+   * <p>Getter for the field <code>procedureTableModel</code>.</p>
+   *
+   * @return a {@link com.yvesstraten.medicalconsolegui.models.ProcedureTableModel} object
+   */
   public ProcedureTableModel getProcedureTableModel() {
     return procedureTableModel;
   }
 
+  /**
+   * <p>Setter for the field <code>procedureTableModel</code>.</p>
+   *
+   * @param procedureTableModel a {@link com.yvesstraten.medicalconsolegui.models.ProcedureTableModel} object
+   */
   public void setProcedureTableModel(ProcedureTableModel procedureTableModel) {
     this.procedureTableModel = procedureTableModel;
   }
 
+  /**
+   * <p>Getter for the field <code>tableModels</code>.</p>
+   *
+   * @return an array of {@link javax.swing.table.TableModel} objects
+   */
   public TableModel[] getTableModels() {
     return tableModels;
   }
 
+  /**
+   * <p>Setter for the field <code>tableModels</code>.</p>
+   *
+   * @param tableModels an array of {@link javax.swing.table.TableModel} objects
+   */
   public void setTableModels(TableModel[] tableModels) {
     this.tableModels = tableModels;
   }
 
+  /**
+   * <p>setUpListeners.</p>
+   *
+   * @param listener a {@link javax.swing.event.TableModelListener} object
+   */
   public void setUpListeners(TableModelListener listener) {
     for (TableModel model : getTableModels()) {
       model.addTableModelListener(listener);

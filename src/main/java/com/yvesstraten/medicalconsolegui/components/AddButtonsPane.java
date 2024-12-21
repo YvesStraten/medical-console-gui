@@ -14,7 +14,17 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+/**
+ * <p>AddButtonsPane class.</p>
+ *
+ * @author YvesStraten e2400068
+ */
 public class AddButtonsPane extends ButtonPane {
+  /**
+   * <p>Constructor for AddButtonsPane.</p>
+   *
+   * @param listPanel a {@link com.yvesstraten.medicalconsolegui.components.ListPanel} object
+   */
   public AddButtonsPane(ListPanel listPanel) {
     super("Add Item", listPanel);
 

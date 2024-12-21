@@ -15,7 +15,17 @@ import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+/**
+ * <p>MiscellaneousPane class.</p>
+ *
+ * @author YvesStraten e2400068
+ */
 public class MiscellaneousPane extends ButtonPane {
+  /**
+   * <p>Constructor for MiscellaneousPane.</p>
+   *
+   * @param listPanel a {@link com.yvesstraten.medicalconsolegui.components.ListPanel} object
+   */
   public MiscellaneousPane(ListPanel listPanel) {
     super("Miscellaneous Operations", listPanel);
     PatientTableModel patientModel = getListPanel().getPatientTableModel();
@@ -140,6 +150,15 @@ public class MiscellaneousPane extends ButtonPane {
     }
   }
 
+  /**
+   * <p>attemptSelection.</p>
+   *
+   * @param message a {@link java.lang.String} object
+   * @param title a {@link java.lang.String} object
+   * @param errorMessage a {@link java.lang.String} object
+   * @param options an array of {@link java.lang.Object} objects
+   * @return a {@link java.lang.Object} object
+   */
   public static Object attemptSelection(
       String message, String title, String errorMessage, Object[] options) {
     if (options.length == 0) {

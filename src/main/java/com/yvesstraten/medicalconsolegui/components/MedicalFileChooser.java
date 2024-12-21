@@ -14,6 +14,11 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+/**
+ * <p>MedicalFileChooser class.</p>
+ *
+ * @author YvesStraten e2400068
+ */
 public class MedicalFileChooser extends JFileChooser {
   /** Extension filter for binary files */
   private static FileNameExtensionFilter binaryExtFilter =
@@ -31,8 +36,8 @@ public class MedicalFileChooser extends JFileChooser {
   /**
    * Alternate constructor Sets the save type to input type
    *
-   * @param saveType type of save wanted
    * @see SaveType
+   * @param fileFilter a {@link javax.swing.filechooser.FileNameExtensionFilter} object
    */
   public MedicalFileChooser(FileNameExtensionFilter fileFilter) {
     super();

@@ -14,9 +14,20 @@ import javax.swing.JMenuItem;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
+/**
+ * <p>MedicalGuiFrame class.</p>
+ *
+ * @author YvesStraten e2400068
+ */
 public class MedicalGuiFrame extends JFrame {
   private HealthService service;
 
+  /**
+   * <p>getNewTitle.</p>
+   *
+   * @param service a {@link com.yvesstraten.medicalconsole.HealthService} object
+   * @return a {@link java.lang.String} object
+   */
   public static String getNewTitle(HealthService service) {
     String titleFormat =
         "HELP Medical console - currently managing " + "%s" + " facilities and %s patients";
@@ -25,6 +36,11 @@ public class MedicalGuiFrame extends JFrame {
         titleFormat, service.getMedicalFacilities().size(), service.getPatients().size());
   }
 
+  /**
+   * <p>Constructor for MedicalGuiFrame.</p>
+   *
+   * @param service a {@link com.yvesstraten.medicalconsole.HealthService} object
+   */
   public MedicalGuiFrame(HealthService service) {
     // Frame setup
     super(getNewTitle(service));
@@ -83,10 +99,20 @@ public class MedicalGuiFrame extends JFrame {
     pack();
   }
 
+  /**
+   * <p>Getter for the field <code>service</code>.</p>
+   *
+   * @return a {@link com.yvesstraten.medicalconsole.HealthService} object
+   */
   public HealthService getService() {
     return this.service;
   }
 
+  /**
+   * <p>Setter for the field <code>service</code>.</p>
+   *
+   * @param service a {@link com.yvesstraten.medicalconsole.HealthService} object
+   */
   public void setService(HealthService service) {
     this.service = service;
   }

@@ -8,11 +8,20 @@ import java.awt.Component;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JList;
 
+/**
+ * <p>RemoveComboRenderer class.</p>
+ *
+ * @author YvesStraten e2400068
+ */
 public class RemoveComboRenderer extends DefaultListCellRenderer {
+  /**
+   * <p>Constructor for RemoveComboRenderer.</p>
+   */
   public RemoveComboRenderer() {
     super();
   }
 
+  /** {@inheritDoc} */
   @Override
   public Component getListCellRendererComponent(
       JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {

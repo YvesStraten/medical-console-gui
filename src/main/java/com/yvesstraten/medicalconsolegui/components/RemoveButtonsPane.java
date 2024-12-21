@@ -12,7 +12,17 @@ import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+/**
+ * <p>RemoveButtonsPane class.</p>
+ *
+ * @author YvesStraten e2400068
+ */
 public class RemoveButtonsPane extends ButtonPane {
+  /**
+   * <p>Constructor for RemoveButtonsPane.</p>
+   *
+   * @param listPanel a {@link com.yvesstraten.medicalconsolegui.components.ListPanel} object
+   */
   public RemoveButtonsPane(ListPanel listPanel) {
     super("Remove operations", listPanel);
     JPanel buttonsGrouper = new JPanel();
@@ -136,6 +146,15 @@ public class RemoveButtonsPane extends ButtonPane {
     add(buttonsGrouper);
   }
 
+  /**
+   * <p>getItemToRemove.</p>
+   *
+   * @param message a {@link java.lang.String} object
+   * @param title a {@link java.lang.String} object
+   * @param failureMessage a {@link java.lang.String} object
+   * @param objects an array of {@link java.lang.Object} objects
+   * @return a {@link java.lang.Object} object
+   */
   public static Object getItemToRemove(
       String message, String title, String failureMessage, Object[] objects) {
     SelectObjectDialog removeDialog = new SelectObjectDialog(message, objects);
@@ -158,6 +177,11 @@ public class RemoveButtonsPane extends ButtonPane {
     return toRemove;
   }
 
+  /**
+   * <p>showSuccessMessage.</p>
+   *
+   * @param message a {@link java.lang.String} object
+   */
   public static void showSuccessMessage(String message) {
     JOptionPane.showMessageDialog(null, message, "Success!", JOptionPane.INFORMATION_MESSAGE);
   }
