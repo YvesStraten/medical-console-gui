@@ -10,6 +10,8 @@ import java.util.stream.Collectors;
 /**
  * <p>ProcedureTableModel class.</p>
  *
+ * This table model models a table for 
+ * procedures present in the service
  * @author YvesStraten e2400068
  */
 public class ProcedureTableModel extends MedicalTableModel {

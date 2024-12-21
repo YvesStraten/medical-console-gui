@@ -4,7 +4,9 @@ import com.yvesstraten.medicalconsole.HealthService;
 import javax.swing.table.AbstractTableModel;
 
 /**
- * <p>Abstract MedicalTableModel class.</p>
+ * This class represents a default 
+ * medical table model. The first column 
+ * should never be editable as it is the id
  *
  * @author YvesStraten e2400068
  */
@@ -34,7 +36,7 @@ public abstract class MedicalTableModel extends AbstractTableModel {
   /**
    * <p>Getter for the field <code>service</code>.</p>
    *
-   * @return a {@link com.yvesstraten.medicalconsole.HealthService} object
+   * @return set service
    */
   public HealthService getService() {
     return service;
@@ -43,7 +45,7 @@ public abstract class MedicalTableModel extends AbstractTableModel {
   /**
    * <p>Setter for the field <code>service</code>.</p>
    *
-   * @param service a {@link com.yvesstraten.medicalconsole.HealthService} object
+   * @param service service to set
    */
   public void setService(HealthService service) {
     this.service = service;

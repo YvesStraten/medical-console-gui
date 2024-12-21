@@ -17,6 +17,9 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 /**
  * <p>MedicalFileChooser class.</p>
  *
+ * This class acts as a custom file chooser 
+ * for saving and loading data to and fro 
+ * this application
  * @author YvesStraten e2400068
  */
 public class MedicalFileChooser extends JFileChooser {

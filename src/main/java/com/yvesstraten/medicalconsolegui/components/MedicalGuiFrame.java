@@ -23,10 +23,11 @@ public class MedicalGuiFrame extends JFrame {
   private HealthService service;
 
   /**
-   * <p>getNewTitle.</p>
+   * This function returns a new title 
+   * which can be used for this frame
    *
-   * @param service a {@link com.yvesstraten.medicalconsole.HealthService} object
-   * @return a {@link java.lang.String} object
+   * @param service service to query 
+   * @return title 
    */
   public static String getNewTitle(HealthService service) {
     String titleFormat =
@@ -39,7 +40,7 @@ public class MedicalGuiFrame extends JFrame {
   /**
    * <p>Constructor for MedicalGuiFrame.</p>
    *
-   * @param service a {@link com.yvesstraten.medicalconsole.HealthService} object
+   * @param service service to use 
    */
   public MedicalGuiFrame(HealthService service) {
     // Frame setup

@@ -9,7 +9,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- * <p>HospitalTableModel class.</p>
+ * This model represents a list of 
+ * hospitals in tabular form
  *
  * @author YvesStraten e2400068
  */
@@ -21,8 +22,8 @@ public class HospitalTableModel extends MedicalTableModel {
   /**
    * <p>Constructor for HospitalTableModel.</p>
    *
-   * @param service a {@link com.yvesstraten.medicalconsole.HealthService} object
-   * @param procedureModel a {@link com.yvesstraten.medicalconsolegui.models.ProcedureTableModel} object
+   * @param service service to use
+   * @param procedureModel procedure model to use
    */
   public HospitalTableModel(HealthService service, ProcedureTableModel procedureModel) {
     super(service);
@@ -33,7 +34,7 @@ public class HospitalTableModel extends MedicalTableModel {
   /**
    * <p>Getter for the field <code>hospitals</code>.</p>
    *
-   * @return a {@link java.util.ArrayList} object
+   * @return a list of hospitals
    */
   public ArrayList<Hospital> getHospitals() {
     return this.hospitals;
@@ -42,16 +43,17 @@ public class HospitalTableModel extends MedicalTableModel {
   /**
    * <p>Setter for the field <code>hospitals</code>.</p>
    *
-   * @param hospitals a {@link java.util.ArrayList} object
+   * @param hospitals a list of hospitals
    */
   public void setHospitals(ArrayList<Hospital> hospitals) {
     this.hospitals = hospitals;
   }
 
   /**
-   * <p>addHospital.</p>
+   * Adds a hospital to the table 
+   * and service
    *
-   * @param name a {@link java.lang.String} object
+   * @param name name of hospital
    */
   public void addHospital(String name) {
     getService().initializeHospital(name);
@@ -62,9 +64,10 @@ public class HospitalTableModel extends MedicalTableModel {
   }
 
   /**
-   * <p>deleteHospital.</p>
+   * Deletes a hospital from table 
+   * and service
    *
-   * @param selectedRow a int
+   * @param selectedRow row to delete from
    */
   public void deleteHospital(int selectedRow) {
     Hospital hospital = getHospitals().get(selectedRow);
@@ -77,9 +80,10 @@ public class HospitalTableModel extends MedicalTableModel {
   }
 
   /**
-   * <p>deleteHospital.</p>
+   * Deletes a hospital from table 
+   * and service
    *
-   * @param selected a {@link com.yvesstraten.medicalconsole.facilities.Hospital} object
+   * @param selected selected hospital
    */
   public void deleteHospital(Hospital selected) {
     int row = getHospitals().indexOf(selected);
@@ -88,20 +92,9 @@ public class HospitalTableModel extends MedicalTableModel {
   }
 
   /**
-   * <p>setHospital.</p>
-   *
-   * @param selectedRow a int
-   * @param hospital a {@link com.yvesstraten.medicalconsole.facilities.Hospital} object
-   */
-  public void setHospital(int selectedRow, Hospital hospital) {
-    getHospitals().set(selectedRow, hospital);
-    fireTableRowsUpdated(selectedRow, selectedRow);
-  }
-
-  /**
    * <p>Getter for the field <code>procedureModel</code>.</p>
    *
-   * @return a {@link com.yvesstraten.medicalconsolegui.models.ProcedureTableModel} object
+   * @return a procedure model
    */
   public ProcedureTableModel getProcedureModel() {
     return procedureModel;
@@ -110,7 +103,7 @@ public class HospitalTableModel extends MedicalTableModel {
   /**
    * <p>Setter for the field <code>procedureModel</code>.</p>
    *
-   * @param procedureModel a {@link com.yvesstraten.medicalconsolegui.models.ProcedureTableModel} object
+   * @param procedureModel procedure model to set
    */
   public void setProcedureModel(ProcedureTableModel procedureModel) {
     this.procedureModel = procedureModel;

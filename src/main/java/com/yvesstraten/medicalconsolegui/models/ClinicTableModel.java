@@ -6,7 +6,8 @@ import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 /**
- * <p>ClinicTableModel class.</p>
+ * This model represents a list of clinics 
+ * in tabular form
  *
  * @author YvesStraten e2400068
  */
@@ -17,7 +18,7 @@ public class ClinicTableModel extends MedicalTableModel {
   /**
    * <p>Constructor for ClinicTableModel.</p>
    *
-   * @param service a {@link com.yvesstraten.medicalconsole.HealthService} object
+   * @param service service to use
    */
   public ClinicTableModel(HealthService service) {
     super(service);
@@ -43,11 +44,12 @@ public class ClinicTableModel extends MedicalTableModel {
   }
 
   /**
-   * <p>addClinic.</p>
+   * Adds a Clinic to the table
+   * and service
    *
-   * @param name a {@link java.lang.String} object
-   * @param fee a double
-   * @param gapPercentage a double
+   * @param name name of clinic
+   * @param fee fee of clinic
+   * @param gapPercentage gap percentage
    */
   public void addClinic(String name, double fee, double gapPercentage) {
     getService().initializeClinic(name, fee, gapPercentage);
@@ -55,9 +57,10 @@ public class ClinicTableModel extends MedicalTableModel {
   }
 
   /**
-   * <p>deleteClinic.</p>
+   * Deletes a clinic from the table 
+   * and service
    *
-   * @param index a int
+   * @param index row index to delete
    */
   public void deleteClinic(int index) {
     Clinic clinic = getClinics().get(index);
@@ -67,9 +70,11 @@ public class ClinicTableModel extends MedicalTableModel {
   }
 
   /**
-   * <p>deleteClinic.</p>
    *
-   * @param selected a {@link com.yvesstraten.medicalconsole.facilities.Clinic} object
+   * Deletes a clinic from the table 
+   * and service
+   *
+   * @param selected clinic to delete
    */
   public void deleteClinic(Clinic selected) {
     int row = getClinics().indexOf(selected);

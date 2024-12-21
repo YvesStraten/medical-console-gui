@@ -18,6 +18,9 @@ import javax.swing.JPanel;
 /**
  * <p>MiscellaneousPane class.</p>
  *
+ * This pane contains all the buttons 
+ * which can undertake miscellaneous
+ * operations such as visiting and operating
  * @author YvesStraten e2400068
  */
 public class MiscellaneousPane extends ButtonPane {

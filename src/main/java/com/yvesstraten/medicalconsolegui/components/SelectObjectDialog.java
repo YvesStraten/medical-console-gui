@@ -8,6 +8,9 @@ import javax.swing.JPanel;
 
 /**
  * <p>SelectObjectDialog class.</p>
+ * This panel acts as the object selector 
+ * to be used when asking the user 
+ * to select for an object
  *
  * @author YvesStraten e2400068
  */
@@ -20,8 +23,8 @@ public class SelectObjectDialog extends JPanel {
   /**
    * <p>Constructor for SelectObjectDialog.</p>
    *
-   * @param message a {@link java.lang.String} object
-   * @param objects an array of {@link java.lang.Object} objects
+   * @param message message to show
+   * @param objects list of selectable options
    */
   public SelectObjectDialog(String message, Object[] objects) {
     super(new GridLayout(2, 1));

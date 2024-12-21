@@ -11,6 +11,8 @@ import com.yvesstraten.medicalconsole.HealthService;
 /**
  * <p>MainMenu class.</p>
  *
+ * This class acts as the main menu 
+ * for the application
  * @author YvesStraten e2400068
  */
 public class MainMenu extends JPanel {

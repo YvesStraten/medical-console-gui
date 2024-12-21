@@ -15,13 +15,15 @@ import javax.swing.JPanel;
 /**
  * <p>RemoveButtonsPane class.</p>
  *
+ * This pane contains all the buttons 
+ * related to removal operations
  * @author YvesStraten e2400068
  */
 public class RemoveButtonsPane extends ButtonPane {
   /**
    * <p>Constructor for RemoveButtonsPane.</p>
    *
-   * @param listPanel a {@link com.yvesstraten.medicalconsolegui.components.ListPanel} object
+   * @param listPanel listPanel to use
    */
   public RemoveButtonsPane(ListPanel listPanel) {
     super("Remove operations", listPanel);
@@ -147,13 +149,15 @@ public class RemoveButtonsPane extends ButtonPane {
   }
 
   /**
-   * <p>getItemToRemove.</p>
+   * This function queries the user 
+   * for an item that they wish to remove 
+   * from a list of items
    *
-   * @param message a {@link java.lang.String} object
-   * @param title a {@link java.lang.String} object
-   * @param failureMessage a {@link java.lang.String} object
-   * @param objects an array of {@link java.lang.Object} objects
-   * @return a {@link java.lang.Object} object
+   * @param message message to show in dialog 
+   * @param title title of dialog
+   * @param failureMessage message in case of failure
+   * @param objects list of options
+   * @return selected option
    */
   public static Object getItemToRemove(
       String message, String title, String failureMessage, Object[] objects) {
@@ -178,9 +182,11 @@ public class RemoveButtonsPane extends ButtonPane {
   }
 
   /**
-   * <p>showSuccessMessage.</p>
+   * This functions 
+   * shows a success titled 
+   * dialog to the user
    *
-   * @param message a {@link java.lang.String} object
+   * @param message main message of dialog
    */
   public static void showSuccessMessage(String message) {
     JOptionPane.showMessageDialog(null, message, "Success!", JOptionPane.INFORMATION_MESSAGE);

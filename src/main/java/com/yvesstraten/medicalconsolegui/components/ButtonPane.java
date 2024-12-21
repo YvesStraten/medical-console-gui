@@ -5,7 +5,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
- * <p>ButtonPane class.</p>
+ * ButtonPane class. This panel groups all buttons and their functions together
  *
  * @author YvesStraten e2400068
  */
@@ -13,12 +13,14 @@ public class ButtonPane extends JPanel {
   private ListPanel listPanel;
 
   /**
-   * <p>Constructor for ButtonPane.</p>
+   * Constructor for ButtonPane.
    *
-   * @param labelText a {@link java.lang.String} object
-   * @param listPanel a {@link com.yvesstraten.medicalconsolegui.components.ListPanel} object
+   * @param labelText the text that will be present 
+   * in the label
+   * @param listPanel the listPanel component in this
+   * application
    */
-  public ButtonPane(String labelText, ListPanel listPanel){
+  public ButtonPane(String labelText, ListPanel listPanel) {
     super();
     setListPanel(listPanel);
     setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -31,15 +33,16 @@ public class ButtonPane extends JPanel {
   }
 
   /**
-   * <p>Getter for the field <code>listPanel</code>.</p>
+   * Getter for the field <code>listPanel</code>.
    *
    * @return a {@link com.yvesstraten.medicalconsolegui.components.ListPanel} object
    */
   public ListPanel getListPanel() {
     return listPanel;
   }
+
   /**
-   * <p>Setter for the field <code>listPanel</code>.</p>
+   * Setter for the field <code>listPanel</code>.
    *
    * @param listPanel a {@link com.yvesstraten.medicalconsolegui.components.ListPanel} object
    */

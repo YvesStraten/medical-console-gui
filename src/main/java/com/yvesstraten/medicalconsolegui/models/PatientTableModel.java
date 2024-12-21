@@ -6,7 +6,8 @@ import com.yvesstraten.medicalconsole.facilities.MedicalFacility;
 import java.util.ArrayList;
 
 /**
- * <p>PatientTableModel class.</p>
+ * This model represents a list of patients 
+ * in a tabular manner
  *
  * @author YvesStraten e2400068
  */
@@ -18,7 +19,7 @@ public class PatientTableModel extends MedicalTableModel {
   /**
    * <p>Constructor for PatientTableModel.</p>
    *
-   * @param service a {@link com.yvesstraten.medicalconsole.HealthService} object
+   * @param service service to use
    */
   public PatientTableModel(HealthService service) {
     super(service);
@@ -28,7 +29,7 @@ public class PatientTableModel extends MedicalTableModel {
   /**
    * <p>Getter for the field <code>patients</code>.</p>
    *
-   * @return a {@link java.util.ArrayList} object
+   * @return list of patients
    */
   public ArrayList<Patient> getPatients() {
     return this.patients;
@@ -37,17 +38,18 @@ public class PatientTableModel extends MedicalTableModel {
   /**
    * <p>Setter for the field <code>patients</code>.</p>
    *
-   * @param patients a {@link java.util.ArrayList} object
+   * @param patients list of patients
    */
   public void setPatients(ArrayList<Patient> patients) {
     this.patients = patients;
   }
 
   /**
-   * <p>addPatient.</p>
+   * Adds a patient to table 
+   * and service
    *
-   * @param name a {@link java.lang.String} object
-   * @param isPrivate a boolean
+   * @param name name of patients
+   * @param isPrivate whether the patient is private
    */
   public void addPatient(String name, boolean isPrivate) {
     getService().initializePatient(name, isPrivate);
@@ -58,10 +60,10 @@ public class PatientTableModel extends MedicalTableModel {
   }
 
   /**
-   * <p>setPatient.</p>
+   * Update patient row
    *
-   * @param index a int
-   * @param pat a {@link com.yvesstraten.medicalconsole.Patient} object
+   * @param index row index
+   * @param pat patient to update with
    */
   public void setPatient(int index, Patient pat) {
     getPatients().set(index, pat);
@@ -69,9 +71,10 @@ public class PatientTableModel extends MedicalTableModel {
   }
 
   /**
-   * <p>deletePatient.</p>
+   * Deletes a patient from table
+   * and service
    *
-   * @param index a int
+   * @param index row to delete
    */
   public void deletePatient(int index) {
     // No need to remove from the service as well
@@ -83,9 +86,10 @@ public class PatientTableModel extends MedicalTableModel {
   }
 
   /**
-   * <p>deletePatient.</p>
+   * Deletes a patient from table
+   * and service
    *
-   * @param selected a {@link com.yvesstraten.medicalconsole.Patient} object
+   * @param selected patient object
    */
   public void deletePatient(Patient selected) {
     deletePatient(getPatients().indexOf(selected));

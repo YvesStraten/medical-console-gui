@@ -4,6 +4,8 @@ import com.yvesstraten.medicalconsole.Patient;
 import com.yvesstraten.medicalconsole.facilities.Clinic;
 import com.yvesstraten.medicalconsole.facilities.MedicalFacility;
 import com.yvesstraten.medicalconsole.facilities.Procedure;
+import com.yvesstraten.medicalconsolegui.components.SelectObjectDialog;
+
 import java.awt.Component;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JList;
@@ -11,7 +13,12 @@ import javax.swing.JList;
 /**
  * <p>RemoveComboRenderer class.</p>
  *
+ * This custom render overrides the 
+ * combox box renderer for JOptionPane 
+ * to allow for shorter descriptions of objects 
+ * in this application
  * @author YvesStraten e2400068
+ * @see SelectObjectDialog
  */
 public class RemoveComboRenderer extends DefaultListCellRenderer {
   /**

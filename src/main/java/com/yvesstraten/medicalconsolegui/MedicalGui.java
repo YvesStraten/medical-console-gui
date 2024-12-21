@@ -8,6 +8,8 @@ import com.yvesstraten.medicalconsolegui.components.MedicalGuiFrame;
 
 /**
  * <p>MedicalGui class.</p>
+ * This class acts as the main entry point for 
+ * this program
  *
  * @author YvesStraten e2400068
  */

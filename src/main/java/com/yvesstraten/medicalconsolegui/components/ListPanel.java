@@ -22,6 +22,10 @@ import javax.swing.table.TableModel;
 /**
  * <p>ListPanel class.</p>
  *
+ * This panel acts is used for listing 
+ * all and allow for the editing of
+ * the objects in this application in 
+ * a tabular manner
  * @author YvesStraten e2400068
  */
 public class ListPanel extends JPanel {

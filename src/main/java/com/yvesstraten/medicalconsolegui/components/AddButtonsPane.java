@@ -6,7 +6,6 @@ import com.yvesstraten.medicalconsolegui.models.ClinicTableModel;
 import com.yvesstraten.medicalconsolegui.models.HospitalTableModel;
 import com.yvesstraten.medicalconsolegui.models.PatientTableModel;
 import com.yvesstraten.medicalconsolegui.models.ProcedureTableModel;
-import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,6 +15,8 @@ import javax.swing.JPanel;
 
 /**
  * <p>AddButtonsPane class.</p>
+ * This panel contains all the buttons 
+ * related to adding
  *
  * @author YvesStraten e2400068
  */
