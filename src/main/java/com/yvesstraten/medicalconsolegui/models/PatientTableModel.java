@@ -13,10 +13,6 @@ import java.util.ArrayList;
  */
 public class PatientTableModel extends MedicalTableModel {
   /**
-   * List of patients
-   */
-  private ArrayList<Patient> patients;
-  /**
    * List of columns
    */
   private final String[] columns =
@@ -29,25 +25,6 @@ public class PatientTableModel extends MedicalTableModel {
    */
   public PatientTableModel(HealthService service) {
     super(service);
-    setPatients(service.getPatients());
-  }
-
-  /**
-   * <p>Getter for the field <code>patients</code>.</p>
-   *
-   * @return list of patients
-   */
-  public ArrayList<Patient> getPatients() {
-    return this.patients;
-  }
-
-  /**
-   * <p>Setter for the field <code>patients</code>.</p>
-   *
-   * @param patients list of patients
-   */
-  public void setPatients(ArrayList<Patient> patients) {
-    this.patients = patients;
   }
 
   /**
@@ -59,10 +36,7 @@ public class PatientTableModel extends MedicalTableModel {
    */
   public void addPatient(String name, boolean isPrivate) {
     getService().initializePatient(name, isPrivate);
-    ArrayList<Patient> patients = getService().getPatients();
-    Patient patient = patients.get(patients.size() - 1);
-    getPatients().add(patient);
-    fireTableRowsInserted(getRowCount() - 1, getRowCount() - 1);
+    fireTableRowsInserted(getRowCount(), getRowCount());
   }
 
   /**
@@ -72,7 +46,7 @@ public class PatientTableModel extends MedicalTableModel {
    * @param pat patient to update with
    */
   public void setPatient(int index, Patient pat) {
-    getPatients().set(index, pat);
+    getService().getPatients().set(index, pat);
     fireTableRowsUpdated(index, index);
   }
 
@@ -86,7 +60,7 @@ public class PatientTableModel extends MedicalTableModel {
     // No need to remove from the service as well
     // as we have a direct reference to the collection
     // not an intermediate list
-    getPatients().remove(index);
+    getService().getPatients().remove(index);
 
     fireTableRowsDeleted(index, index);
   }
@@ -98,13 +72,13 @@ public class PatientTableModel extends MedicalTableModel {
    * @param selected patient object
    */
   public void deletePatient(Patient selected) {
-    deletePatient(getPatients().indexOf(selected));
+    deletePatient(getService().getPatients().indexOf(selected));
   }
 
   /** {@inheritDoc} */
   @Override
   public int getRowCount() {
-    return getPatients().size();
+    return getService().getPatients().size();
   }
 
   /** {@inheritDoc} */
@@ -122,11 +96,12 @@ public class PatientTableModel extends MedicalTableModel {
   /** {@inheritDoc} */
   @Override
   public Object getValueAt(int rowIndex, int columnIndex) {
-    if (getPatients().isEmpty()) {
+    ArrayList<Patient> patients = getService().getPatients();
+    if (patients.isEmpty()) {
       return null;
     }
 
-    Patient selectedPatient = getPatients().get(rowIndex);
+    Patient selectedPatient = patients.get(rowIndex);
     switch (columnIndex) {
       case 0:
         return selectedPatient.getId();
@@ -150,7 +125,7 @@ public class PatientTableModel extends MedicalTableModel {
   /** {@inheritDoc} */
   @Override
   public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-    Patient row = getPatients().get(rowIndex);
+    Patient row = getService().getPatients().get(rowIndex);
 
     switch (columnIndex) {
       case 1:

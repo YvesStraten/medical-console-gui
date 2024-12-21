@@ -101,7 +101,7 @@ public class ListPanel extends JPanel {
             } else if (getModel() instanceof PatientTableModel) {
               if (realColumnIndex == 4) {
                 MedicalFacility facility =
-                    getPatientTableModel().getPatients().get(realRowIndex).getCurrentFacility();
+                    getPatientTableModel().getService().getPatients().get(realRowIndex).getCurrentFacility();
                 if (facility != null) {
                   if (facility instanceof Clinic) {
                     Clinic clinic = (Clinic) facility;

@@ -13,13 +13,13 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
- * This pane contains all the buttons 
- * related to removal operations
+ * This pane contains all the buttons related to removal operations
+ *
  * @author YvesStraten e2400068
  */
 public class RemoveButtonsPane extends ButtonPane {
   /**
-   * <p>Constructor for RemoveButtonsPane.</p>
+   * Constructor for RemoveButtonsPane.
    *
    * @param listPanel listPanel to use
    */
@@ -95,8 +95,7 @@ public class RemoveButtonsPane extends ButtonPane {
         new ActionListener() {
           @Override
           public void actionPerformed(ActionEvent e) {
-            Patient[] patients =
-                getListPanel().getPatientTableModel().getPatients().toArray(Patient[]::new);
+            Patient[] patients = getListPanel().getPatientTableModel().getService().getPatients().toArray(Patient[]::new);
 
             Patient toRemove =
                 (Patient)
@@ -147,11 +146,9 @@ public class RemoveButtonsPane extends ButtonPane {
   }
 
   /**
-   * This function queries the user 
-   * for an item that they wish to remove 
-   * from a list of items
+   * This function queries the user for an item that they wish to remove from a list of items
    *
-   * @param message message to show in dialog 
+   * @param message message to show in dialog
    * @param title title of dialog
    * @param failureMessage message in case of failure
    * @param objects list of options
@@ -166,8 +163,7 @@ public class RemoveButtonsPane extends ButtonPane {
     }
 
     int result =
-        JOptionPane.showConfirmDialog(
-            null, removeDialog, title, JOptionPane.OK_CANCEL_OPTION);
+        JOptionPane.showConfirmDialog(null, removeDialog, title, JOptionPane.OK_CANCEL_OPTION);
 
     if (result == JOptionPane.CANCEL_OPTION || result == JOptionPane.CLOSED_OPTION) {
       return null;
@@ -180,9 +176,7 @@ public class RemoveButtonsPane extends ButtonPane {
   }
 
   /**
-   * This functions 
-   * shows a success titled 
-   * dialog to the user
+   * This functions shows a success titled dialog to the user
    *
    * @param message main message of dialog
    */

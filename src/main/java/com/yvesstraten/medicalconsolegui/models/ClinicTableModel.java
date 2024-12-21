@@ -3,6 +3,7 @@ package com.yvesstraten.medicalconsolegui.models;
 import com.yvesstraten.medicalconsole.HealthService;
 import com.yvesstraten.medicalconsole.facilities.Clinic;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -59,6 +60,8 @@ public class ClinicTableModel extends MedicalTableModel {
    */
   public void addClinic(String name, double fee, double gapPercentage) {
     getService().initializeClinic(name, fee, gapPercentage);
+    List<Clinic> clinics = getService().getClinics().toList();
+    getClinics().add(clinics.get(clinics.size() - 1));
     fireTableRowsInserted(getRowCount() - 1, getRowCount() - 1);
   }
 

@@ -71,7 +71,7 @@ public class MiscellaneousPane extends ButtonPane {
    * @param patientModel patient model
    */
   private static void attemptVisit(PatientTableModel patientModel) {
-    Patient[] patients = patientModel.getPatients().toArray(Patient[]::new);
+    Patient[] patients = patientModel.getService().getPatients().toArray(Patient[]::new);
     Patient wantsVisit =
         (Patient)
             SelectObjectDialog.attemptSelection(
@@ -133,7 +133,7 @@ public class MiscellaneousPane extends ButtonPane {
       return;
     }
 
-    Patient[] patients = patientModel.getPatients().toArray(Patient[]::new);
+    Patient[] patients = patientModel.getService().getPatients().toArray(Patient[]::new);
     Patient toOperate =
         (Patient)
             SelectObjectDialog.attemptSelection(
@@ -162,7 +162,7 @@ public class MiscellaneousPane extends ButtonPane {
       double cost = Hospital.getOperationCost(toOperate, toUndertake);
 
       toOperate.addBalance(cost);
-      patientModel.setPatient(patientModel.getPatients().indexOf(toOperate), toOperate);
+      patientModel.setPatient(patientModel.getService().getPatients().indexOf(toOperate), toOperate);
     }
   }
 }
