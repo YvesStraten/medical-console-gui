@@ -74,7 +74,9 @@ public class SelectObjectDialog extends JPanel {
     if (options.length == 0) {
       JOptionPane.showMessageDialog(
           null, errorMessage, "No objects added yet", JOptionPane.ERROR_MESSAGE);
+      return null;
     }
+
     SelectObjectDialog selectionDialog = new SelectObjectDialog(message, options);
 
     int selectionResult =
@@ -82,7 +84,7 @@ public class SelectObjectDialog extends JPanel {
 
     if (selectionResult == JOptionPane.CANCEL_OPTION
         || selectionResult == JOptionPane.CLOSED_OPTION) {
-      return null;
+      return selectionResult;
     }
 
     JComboBox<Object> combo = selectionDialog.getCombo();

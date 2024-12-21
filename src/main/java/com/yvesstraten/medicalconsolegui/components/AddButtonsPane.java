@@ -62,14 +62,8 @@ public class AddButtonsPane extends ButtonPane {
         new ActionListener() {
           @Override
           public void actionPerformed(ActionEvent e) {
-            while (true) {
-              try {
-                addProcedure(getListPanel().getProcedureTableModel());
-                break;
-              } catch (NoHospitalsAvailableException nha) {
-                addHospital(getListPanel().getHospitalTableModel());
-              }
-            }
+            ListPanel listPanel = getListPanel();
+            addProcedure(listPanel.getHospitalTableModel(), listPanel.getProcedureTableModel());
           }
         });
 
@@ -89,6 +83,9 @@ public class AddButtonsPane extends ButtonPane {
    */
   private void addHospital(HospitalTableModel hospitalModel) {
     String name = getString("Please input the name for the hospital", "Adding a hospital");
+    if (name == null) {
+      return;
+    }
 
     hospitalModel.addHospital(name);
   }
@@ -101,9 +98,17 @@ public class AddButtonsPane extends ButtonPane {
   private void addClinic(ClinicTableModel clinicModel) {
     String dialogTitle = "Adding a clinic";
     String name = getString("Please input the name for the clinic", dialogTitle);
+    if (name == null) {
+      return;
+    }
+
     Double fee = getDoubleValue("Please input the fee for the clinic", dialogTitle);
+    if (fee == null) return;
+
     Double gapPercent =
         getDoubleValue("Please input the gap percentage for the clinic", dialogTitle);
+    if (gapPercent == null) return;
+
     clinicModel.addClinic(name, fee, gapPercent);
   }
 
@@ -115,7 +120,14 @@ public class AddButtonsPane extends ButtonPane {
   private void addPatient(PatientTableModel patientModel) {
     String dialogTitle = "Adding a patient";
     String name = getString("Please input the name for the patient", dialogTitle);
-    boolean isPrivate = getYesNo("Is the patient private?", dialogTitle);
+    if (name == null) {
+      return;
+    }
+
+    Boolean isPrivate = getYesNo("Is the patient private?", dialogTitle);
+    if (isPrivate == null) {
+      return;
+    }
 
     patientModel.addPatient(name, isPrivate);
   }
@@ -125,28 +137,53 @@ public class AddButtonsPane extends ButtonPane {
    *
    * @param procedureModel given model
    */
-  private void addProcedure(ProcedureTableModel procedureModel)
-      throws NoHospitalsAvailableException {
+  private void addProcedure(HospitalTableModel hospitalModel, ProcedureTableModel procedureModel) {
     String dialogTitle = "Adding procedure";
-    Hospital[] hospitals = procedureModel.getService().getHospitals().toArray(Hospital[]::new);
-    Hospital selected =
-        (Hospital)
+    while (true) {
+      try {
+        Hospital[] hospitals = procedureModel.getService().getHospitals().toArray(Hospital[]::new);
+        Object selected =
             SelectObjectDialog.attemptSelection(
                 "Please select a hospital first",
-                "Adding procedure",
+                dialogTitle,
                 "Please add a hospital first",
                 hospitals);
 
-    if(selected == null){
-      throw new NoHospitalsAvailableException();
+        if (selected == null) {
+          throw new NoHospitalsAvailableException();
+        } else if (selected instanceof Integer) {
+          break;
+        }
+
+        Hospital hospital = (Hospital) selected;
+
+        String name = getString("Please input the name of the procedure", dialogTitle);
+        if (name == null) {
+          return;
+        }
+
+        String description =
+            getString("Please input the description of the procedure", dialogTitle);
+        if (description == null) {
+          return;
+        }
+
+        Boolean isElective = getYesNo("Is the procedure elective?", dialogTitle);
+        if (isElective == null) {
+          return;
+        }
+
+        Double cost = getDoubleValue("Please input the base cost of the procedure", dialogTitle);
+        if (cost == null) {
+          return;
+        }
+
+        procedureModel.addProcedure(hospital, name, description, isElective, cost);
+        break;
+      } catch (NoHospitalsAvailableException nfe) {
+        addHospital(hospitalModel);
+      }
     }
-
-    String name = getString("Please input the name of the procedure", dialogTitle);
-    String description = getString("Please input the description of the procedure", dialogTitle);
-    boolean isElective = getYesNo("Is the procedure elective?", dialogTitle);
-    double cost = getDoubleValue("Please input the base cost of the procedure", dialogTitle);
-
-    procedureModel.addProcedure(selected, name, description, isElective, cost);
   }
 
   /**
@@ -157,16 +194,9 @@ public class AddButtonsPane extends ButtonPane {
    * @return input string
    */
   private static String getString(String message, String title) {
-    while (true) {
-      String input =
-          (String) JOptionPane.showInputDialog(null, message, title, JOptionPane.QUESTION_MESSAGE);
-      if (input != null && input.length() != 0) {
-        return input;
-      } else {
-        JOptionPane.showMessageDialog(
-            null, "Invalid input, please try again", title, JOptionPane.ERROR_MESSAGE);
-      }
-    }
+    String input =
+        (String) JOptionPane.showInputDialog(null, message, title, JOptionPane.QUESTION_MESSAGE);
+    return input;
   }
 
   /**
@@ -180,6 +210,10 @@ public class AddButtonsPane extends ButtonPane {
     while (true) {
       String input = getString(message, title);
       try {
+        if (input == null) {
+          return null;
+        }
+
         Double value = Double.parseDouble(input);
         return value;
       } catch (NumberFormatException nfe) {
@@ -196,15 +230,16 @@ public class AddButtonsPane extends ButtonPane {
    * @param title dialog title
    * @return true if yes, no otherwise
    */
-  private static boolean getYesNo(String message, String title) {
-    while (true) {
-      int status = JOptionPane.showConfirmDialog(null, message, title, JOptionPane.YES_NO_OPTION);
+  private static Boolean getYesNo(String message, String title) {
+    int status =
+        JOptionPane.showConfirmDialog(null, message, title, JOptionPane.YES_NO_CANCEL_OPTION);
 
-      // The optionPane was closed
-      if (status != JOptionPane.CLOSED_OPTION) {
-        boolean isYes = status == JOptionPane.YES_OPTION ? true : false;
-        return isYes;
-      }
+    // The optionPane was closed
+    if (status != JOptionPane.CLOSED_OPTION) {
+      boolean isYes = status == JOptionPane.YES_OPTION ? true : false;
+      return isYes;
     }
+
+    return null;
   }
 }
