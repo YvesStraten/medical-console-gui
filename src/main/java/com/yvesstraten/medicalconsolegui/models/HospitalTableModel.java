@@ -20,7 +20,14 @@ public class HospitalTableModel extends MedicalTableModel {
   /**
    * Column names
    */
-  private final String[] columns = new String[] {"Id", "Name", "ProbAdmit", "Num procedures"};
+  private final String[] columns =
+    new String[] {
+      "Id",
+      "Name",
+      "ProbAdmit",
+      "Num procedures"
+    };
+
   /**
    * Procedure model
    */
@@ -32,9 +39,14 @@ public class HospitalTableModel extends MedicalTableModel {
    * @param service service to use
    * @param procedureModel procedure model to use
    */
-  public HospitalTableModel(HealthService service, ProcedureTableModel procedureModel) {
+  public HospitalTableModel(HealthService service,
+    ProcedureTableModel procedureModel) {
+
     super(service);
-    setHospitals(service.getHospitals().collect(Collectors.toCollection(ArrayList::new)));
+    setHospitals(service
+      .getHospitals()
+      .collect(Collectors
+        .toCollection(ArrayList::new)));
     setProcedureModel(procedureModel);
   }
 
@@ -64,8 +76,13 @@ public class HospitalTableModel extends MedicalTableModel {
    */
   public void addHospital(String name) {
     getService().initializeHospital(name);
-    ArrayList<MedicalFacility> facilities = getService().getMedicalFacilities();
-    Hospital hospital = (Hospital) facilities.get(facilities.size() - 1);
+    ArrayList<MedicalFacility> facilities =
+      getService()
+      .getMedicalFacilities();
+    Hospital hospital = 
+      (Hospital) facilities
+        .get(facilities.size() - 1);
+
     getHospitals().add(hospital);
     fireTableRowsInserted(getRowCount() - 1, getRowCount() - 1);
   }

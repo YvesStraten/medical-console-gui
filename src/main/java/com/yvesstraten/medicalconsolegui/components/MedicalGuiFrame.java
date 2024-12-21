@@ -15,8 +15,7 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
 /**
- * This class acts as the main {@link JFrame} for 
- * the application
+ * This class acts as the main {@link JFrame} for the application
  *
  * @author YvesStraten e2400068
  */
@@ -27,24 +26,27 @@ public class MedicalGuiFrame extends JFrame {
   private HealthService service;
 
   /**
-   * This function returns a new title 
-   * which can be used for this frame
+   * This function returns a new title which can be used for this frame
    *
-   * @param service service to query 
-   * @return title 
+   * @param service service to query
+   * @return title
    */
   public static String getNewTitle(HealthService service) {
     String titleFormat =
-        "HELP Medical console - currently managing " + "%s" + " facilities and %s patients";
+        "HELP Medical console - currently managing "
+        + "%s" +
+        " facilities and %s patients";
 
     return String.format(
-        titleFormat, service.getMedicalFacilities().size(), service.getPatients().size());
+        titleFormat,
+        service.getMedicalFacilities().size(),
+        service.getPatients().size());
   }
 
   /**
-   * <p>Constructor for MedicalGuiFrame.</p>
+   * Constructor for MedicalGuiFrame.
    *
-   * @param service service to use 
+   * @param service service to use
    */
   public MedicalGuiFrame(HealthService service) {
     // Frame setup
@@ -76,11 +78,17 @@ public class MedicalGuiFrame extends JFrame {
           public void actionPerformed(ActionEvent e) {
             MedicalFileChooser fileChooser = new MedicalFileChooser();
             fileChooser.load(service);
+            HealthService service = getService();
+
             HospitalTableModel hospitalTableModel =
-                new HospitalTableModel(getService(), new ProcedureTableModel(getService()));
-            mainMenu.getListPanel().setHospitalTableModel(hospitalTableModel);
-            mainMenu.getListPanel().setClinicTableModel(new ClinicTableModel(getService()));
-            mainMenu.getListPanel().getCurrentTable().setModel(hospitalTableModel);
+                new HospitalTableModel(service,
+                  new ProcedureTableModel(service));
+            mainMenu.getListPanel()
+              .setHospitalTableModel(hospitalTableModel);
+            mainMenu.getListPanel()
+              .setClinicTableModel(new ClinicTableModel(service));
+            mainMenu.getListPanel()
+              .getCurrentTable().setModel(hospitalTableModel);
             setTitle(getNewTitle(service));
           }
         });
@@ -105,7 +113,7 @@ public class MedicalGuiFrame extends JFrame {
   }
 
   /**
-   * <p>Getter for the field <code>service</code>.</p>
+   * Getter for the field <code>service</code>.
    *
    * @return service
    */
@@ -114,7 +122,7 @@ public class MedicalGuiFrame extends JFrame {
   }
 
   /**
-   * <p>Setter for the field <code>service</code>.</p>
+   * Setter for the field <code>service</code>.
    *
    * @param service service to set
    */

@@ -13,7 +13,12 @@ import java.util.ArrayList;
 public class PatientTableModel extends MedicalTableModel {
   /** List of columns */
   private final String[] columns =
-      new String[] {"Id", "Name", "Private patient", "Balance", "Current facility"};
+      new String[] {
+        "Id",
+        "Name",
+        "Private patient",
+        "Balance",
+        "Current facility"};
 
   /**
    * Constructor for PatientTableModel.

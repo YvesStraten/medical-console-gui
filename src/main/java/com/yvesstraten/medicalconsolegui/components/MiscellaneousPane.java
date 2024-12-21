@@ -39,8 +39,12 @@ public class MiscellaneousPane extends ButtonPane {
           }
         });
 
-    HospitalTableModel hospitalModel = getListPanel().getHospitalTableModel();
-    ProcedureTableModel procedureModel = getListPanel().getProcedureTableModel();
+    HospitalTableModel hospitalModel =
+      getListPanel()
+        .getHospitalTableModel();
+    ProcedureTableModel procedureModel = 
+      getListPanel()
+        .getProcedureTableModel();
 
     JButton operateButton = new JButton("Simulate operation");
     operateButton.addActionListener(
@@ -48,7 +52,9 @@ public class MiscellaneousPane extends ButtonPane {
           @Override
           public void actionPerformed(ActionEvent e) {
             try {
-              attemptOperation(hospitalModel, patientModel, procedureModel);
+              attemptOperation(hospitalModel,
+              patientModel,
+              procedureModel);
             } catch (WrongHospitalException whe) {
               JOptionPane.showMessageDialog(
                   null, whe.getMessage(), "Failure", JOptionPane.ERROR_MESSAGE);
@@ -71,7 +77,12 @@ public class MiscellaneousPane extends ButtonPane {
    * @param patientModel patient model
    */
   private static void attemptVisit(PatientTableModel patientModel) {
-    Patient[] patients = patientModel.getService().getPatients().toArray(Patient[]::new);
+    Patient[] patients = 
+      patientModel
+      .getService()
+      .getPatients()
+      .toArray(Patient[]::new);
+
     Patient wantsVisit =
         (Patient)
             SelectObjectDialog.attemptSelection(
@@ -84,7 +95,11 @@ public class MiscellaneousPane extends ButtonPane {
     }
 
     MedicalFacility[] facilities =
-        patientModel.getService().getMedicalFacilities().toArray(MedicalFacility[]::new);
+        patientModel
+        .getService()
+        .getMedicalFacilities()
+        .toArray(MedicalFacility[]::new);
+
     MedicalFacility toVisit =
         (MedicalFacility)
             SelectObjectDialog.attemptSelection(
@@ -102,7 +117,10 @@ public class MiscellaneousPane extends ButtonPane {
           JOptionPane.INFORMATION_MESSAGE);
     } else {
       JOptionPane.showMessageDialog(
-          null, "Patient failed to visit facility", "Success", JOptionPane.ERROR_MESSAGE);
+          null,
+          "Patient failed to visit facility",
+          "Failure",
+        JOptionPane.ERROR_MESSAGE);
     }
   }
 
@@ -121,7 +139,11 @@ public class MiscellaneousPane extends ButtonPane {
       PatientTableModel patientModel,
       ProcedureTableModel procedureModel)
       throws WrongHospitalException {
-    Hospital[] hospitals = hospitalModel.getHospitals().toArray(Hospital[]::new);
+    Hospital[] hospitals =
+        hospitalModel
+        .getHospitals()
+        .toArray(Hospital[]::new);
+
     Hospital operateLocation =
         (Hospital)
             SelectObjectDialog.attemptSelection(
@@ -133,7 +155,12 @@ public class MiscellaneousPane extends ButtonPane {
       return;
     }
 
-    Patient[] patients = patientModel.getService().getPatients().toArray(Patient[]::new);
+    Patient[] patients =
+      patientModel
+      .getService()
+      .getPatients()
+      .toArray(Patient[]::new);
+
     Patient toOperate =
         (Patient)
             SelectObjectDialog.attemptSelection(
@@ -146,7 +173,11 @@ public class MiscellaneousPane extends ButtonPane {
     }
 
     if (toOperate.isInThisHospital(operateLocation)) {
-      Procedure[] procedures = procedureModel.getProcedures().toArray(Procedure[]::new);
+      Procedure[] procedures = 
+        procedureModel
+        .getProcedures()
+        .toArray(Procedure[]::new);
+
       Procedure toUndertake =
           (Procedure)
               SelectObjectDialog.attemptSelection(
@@ -162,7 +193,11 @@ public class MiscellaneousPane extends ButtonPane {
       double cost = Hospital.getOperationCost(toOperate, toUndertake);
 
       toOperate.addBalance(cost);
-      patientModel.setPatient(patientModel.getService().getPatients().indexOf(toOperate), toOperate);
+      patientModel
+        .setPatient(patientModel
+          .getService()
+          .getPatients()
+          .indexOf(toOperate), toOperate);
     }
   }
 }

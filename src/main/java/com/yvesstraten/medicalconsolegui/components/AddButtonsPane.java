@@ -63,7 +63,9 @@ public class AddButtonsPane extends ButtonPane {
           @Override
           public void actionPerformed(ActionEvent e) {
             ListPanel listPanel = getListPanel();
-            addProcedure(listPanel.getHospitalTableModel(), listPanel.getProcedureTableModel());
+            addProcedure(
+              listPanel.getHospitalTableModel(),
+              listPanel.getProcedureTableModel());
           }
         });
 
@@ -82,7 +84,9 @@ public class AddButtonsPane extends ButtonPane {
    * @param hospitalModel given model
    */
   private void addHospital(HospitalTableModel hospitalModel) {
-    String name = getString("Please input the name for the hospital", "Adding a hospital");
+    String name = getString("Please input the name for the hospital",
+      "Adding a hospital");
+
     if (name == null) {
       return;
     }
@@ -97,16 +101,22 @@ public class AddButtonsPane extends ButtonPane {
    */
   private void addClinic(ClinicTableModel clinicModel) {
     String dialogTitle = "Adding a clinic";
-    String name = getString("Please input the name for the clinic", dialogTitle);
+    String name = getString("Please input the name for the clinic",
+      dialogTitle);
+
     if (name == null) {
       return;
     }
 
-    Double fee = getDoubleValue("Please input the fee for the clinic", dialogTitle);
+    Double fee = getDoubleValue("Please input the fee for the clinic",
+      dialogTitle);
+
     if (fee == null) return;
 
     Double gapPercent =
-        getDoubleValue("Please input the gap percentage for the clinic", dialogTitle);
+        getDoubleValue("Please input the gap percentage for the clinic",
+      dialogTitle);
+
     if (gapPercent == null) return;
 
     clinicModel.addClinic(name, fee, gapPercent);
@@ -119,12 +129,16 @@ public class AddButtonsPane extends ButtonPane {
    */
   private void addPatient(PatientTableModel patientModel) {
     String dialogTitle = "Adding a patient";
-    String name = getString("Please input the name for the patient", dialogTitle);
+    String name = getString("Please input the name for the patient",
+      dialogTitle);
+
     if (name == null) {
       return;
     }
 
-    Boolean isPrivate = getYesNo("Is the patient private?", dialogTitle);
+    Boolean isPrivate = getYesNo("Is the patient private?",
+      dialogTitle);
+
     if (isPrivate == null) {
       return;
     }
@@ -141,7 +155,11 @@ public class AddButtonsPane extends ButtonPane {
     String dialogTitle = "Adding procedure";
     while (true) {
       try {
-        Hospital[] hospitals = procedureModel.getService().getHospitals().toArray(Hospital[]::new);
+        Hospital[] hospitals = procedureModel
+          .getService()
+          .getHospitals()
+          .toArray(Hospital[]::new);
+
         Object selected =
             SelectObjectDialog.attemptSelection(
                 "Please select a hospital first",
@@ -157,28 +175,41 @@ public class AddButtonsPane extends ButtonPane {
 
         Hospital hospital = (Hospital) selected;
 
-        String name = getString("Please input the name of the procedure", dialogTitle);
+        String name = getString("Please input the name of the procedure",
+          dialogTitle);
+
         if (name == null) {
           return;
         }
 
         String description =
-            getString("Please input the description of the procedure", dialogTitle);
+            getString("Please input the description of the procedure",
+          dialogTitle);
+        
         if (description == null) {
           return;
         }
 
-        Boolean isElective = getYesNo("Is the procedure elective?", dialogTitle);
+        Boolean isElective = getYesNo("Is the procedure elective?",
+          dialogTitle);
+
         if (isElective == null) {
           return;
         }
 
-        Double cost = getDoubleValue("Please input the base cost of the procedure", dialogTitle);
+        Double cost = getDoubleValue("Please input the base cost of the procedure",
+          dialogTitle);
+
         if (cost == null) {
           return;
         }
 
-        procedureModel.addProcedure(hospital, name, description, isElective, cost);
+        procedureModel.addProcedure(hospital,
+          name,
+          description,
+          isElective,
+          cost);
+
         break;
       } catch (NoHospitalsAvailableException nfe) {
         addHospital(hospitalModel);
@@ -195,7 +226,11 @@ public class AddButtonsPane extends ButtonPane {
    */
   private static String getString(String message, String title) {
     String input =
-        (String) JOptionPane.showInputDialog(null, message, title, JOptionPane.QUESTION_MESSAGE);
+        (String) JOptionPane
+          .showInputDialog(null,
+                           message,
+                           title,
+          JOptionPane.QUESTION_MESSAGE);
     return input;
   }
 
@@ -218,7 +253,11 @@ public class AddButtonsPane extends ButtonPane {
         return value;
       } catch (NumberFormatException nfe) {
         JOptionPane.showMessageDialog(
-            null, input + " is not a decimal number!", "Failure", JOptionPane.ERROR_MESSAGE);
+            null,
+            input
+            + " is not a decimal number!",
+            "Failure",
+          JOptionPane.ERROR_MESSAGE);
       }
     }
   }
@@ -232,7 +271,11 @@ public class AddButtonsPane extends ButtonPane {
    */
   private static Boolean getYesNo(String message, String title) {
     int status =
-        JOptionPane.showConfirmDialog(null, message, title, JOptionPane.YES_NO_CANCEL_OPTION);
+        JOptionPane
+          .showConfirmDialog(null,
+                             message,
+                             title,
+          JOptionPane.YES_NO_CANCEL_OPTION);
 
     // The optionPane was closed
     if (status != JOptionPane.CLOSED_OPTION) {

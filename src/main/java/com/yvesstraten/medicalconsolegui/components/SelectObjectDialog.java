@@ -73,17 +73,26 @@ public class SelectObjectDialog extends JPanel {
       String message, String title, String errorMessage, Object[] options) {
     if (options.length == 0) {
       JOptionPane.showMessageDialog(
-          null, errorMessage, "No objects added yet", JOptionPane.ERROR_MESSAGE);
+          null,
+          errorMessage,
+          "No objects added yet",
+      JOptionPane.ERROR_MESSAGE);
       return null;
     }
 
-    SelectObjectDialog selectionDialog = new SelectObjectDialog(message, options);
+    SelectObjectDialog selectionDialog =
+      new SelectObjectDialog(message,
+                             options);
 
     int selectionResult =
-        JOptionPane.showConfirmDialog(null, selectionDialog, title, JOptionPane.OK_CANCEL_OPTION);
+        JOptionPane
+          .showConfirmDialog(null,
+            selectionDialog,
+            title,
+        JOptionPane.OK_CANCEL_OPTION);
 
-    if (selectionResult == JOptionPane.CANCEL_OPTION
-        || selectionResult == JOptionPane.CLOSED_OPTION) {
+    if (selectionResult == JOptionPane.CANCEL_OPTION 
+    || selectionResult == JOptionPane.CLOSED_OPTION) {
       return selectionResult;
     }
 

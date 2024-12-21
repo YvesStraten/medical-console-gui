@@ -60,8 +60,10 @@ public class MedicalFileChooser extends JFileChooser {
     ObjectInputStream inputStream = new ObjectInputStream(chosenFile);
     Object read = inputStream.readObject();
 
-    ArrayList<MedicalFacility> facilities = (ArrayList<MedicalFacility>) read;
-    ArrayList<Patient> patients = (ArrayList<Patient>) read;
+    ArrayList<MedicalFacility> facilities = 
+      (ArrayList<MedicalFacility>) read;
+    ArrayList<Patient> patients = 
+      (ArrayList<Patient>) read;
     service.setMedicalFacilities(facilities);
     service.setPatients(patients);
 
@@ -106,7 +108,7 @@ public class MedicalFileChooser extends JFileChooser {
           int chosenOption =
               JOptionPane.showOptionDialog(
                   this,
-                  "Could not write to file!, Please choose another location!",
+                  "Could not write to file!"                   + " Please choose another location!",
                   "Warning",
                   JOptionPane.DEFAULT_OPTION,
                   JOptionPane.WARNING_MESSAGE,
@@ -114,7 +116,8 @@ public class MedicalFileChooser extends JFileChooser {
                   options,
                   options[0]);
 
-          if (chosenOption == 1 && chosenOption == JOptionPane.CANCEL_OPTION) {
+          if (chosenOption == 1
+            && chosenOption == JOptionPane.CANCEL_OPTION) {
             success = true;
           }
         }
@@ -125,8 +128,8 @@ public class MedicalFileChooser extends JFileChooser {
   }
 
   /**
-   * This function will try to load the file stored in a binary or textual manner into the specified
-   * service
+   * This function will try to load the file stored in a binary
+   * or textual manner into the specified service
    *
    * @param service HealthService to load data into
    */
@@ -137,12 +140,15 @@ public class MedicalFileChooser extends JFileChooser {
         loadBinary(service);
 
         // Loaded data successfully, we are done here
-        JOptionPane.showMessageDialog(this, "Data has been loaded successfully!");
+        JOptionPane.showMessageDialog(this,
+          "Data has been loaded successfully!");
       } catch (IOException ioe) {
         System.err.println(ioe.toString());
-        JOptionPane.showMessageDialog(this, "Error when loading file");
+        JOptionPane.showMessageDialog(this,
+          "Error when loading file");
       } catch (ClassNotFoundException cnfe) {
-        JOptionPane.showMessageDialog(this, "The file has invalid data!");
+        JOptionPane.showMessageDialog(this,
+          "The file has invalid data!");
       }
     }
   }

@@ -25,8 +25,8 @@ public class MedicalGui extends JFrame {
 
     HealthService service = MedicalConsole.generateSampleData();
     // HealthService service = new HealthService();
-		MedicalGuiFrame medicalFrame = new MedicalGuiFrame(service);
-		medicalFrame.setVisible(true);
+    MedicalGuiFrame medicalFrame = new MedicalGuiFrame(service);
+    medicalFrame.setVisible(true);
   }
 
   private MedicalGui(){}

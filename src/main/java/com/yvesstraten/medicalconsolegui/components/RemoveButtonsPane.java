@@ -73,7 +73,10 @@ public class RemoveButtonsPane extends ButtonPane {
           @Override
           public void actionPerformed(ActionEvent e) {
             Clinic[] clinics =
-                getListPanel().getClinicTableModel().getClinics().toArray(Clinic[]::new);
+                getListPanel()
+                .getClinicTableModel()
+                .getClinics()
+                .toArray(Clinic[]::new);
 
             Clinic toRemove =
                 (Clinic)
@@ -95,7 +98,12 @@ public class RemoveButtonsPane extends ButtonPane {
         new ActionListener() {
           @Override
           public void actionPerformed(ActionEvent e) {
-            Patient[] patients = getListPanel().getPatientTableModel().getService().getPatients().toArray(Patient[]::new);
+            Patient[] patients = 
+              getListPanel()
+              .getPatientTableModel()
+              .getService()
+              .getPatients()
+              .toArray(Patient[]::new);
 
             Patient toRemove =
                 (Patient)
@@ -118,7 +126,10 @@ public class RemoveButtonsPane extends ButtonPane {
           @Override
           public void actionPerformed(ActionEvent e) {
             Procedure[] patients =
-                getListPanel().getProcedureTableModel().getProcedures().toArray(Procedure[]::new);
+                getListPanel()
+                .getProcedureTableModel()
+                .getProcedures()
+                .toArray(Procedure[]::new);
 
             Procedure toRemove =
                 (Procedure)
@@ -158,14 +169,21 @@ public class RemoveButtonsPane extends ButtonPane {
       String message, String title, String failureMessage, Object[] objects) {
     SelectObjectDialog removeDialog = new SelectObjectDialog(message, objects);
     if (objects.length == 0) {
-      JOptionPane.showMessageDialog(null, failureMessage, "Failure", JOptionPane.ERROR_MESSAGE);
+      JOptionPane.showMessageDialog(null,
+        failureMessage,
+        "Failure",
+        JOptionPane.ERROR_MESSAGE);
       return null;
     }
 
     int result =
-        JOptionPane.showConfirmDialog(null, removeDialog, title, JOptionPane.OK_CANCEL_OPTION);
+        JOptionPane.showConfirmDialog(null,
+          removeDialog,
+          title,
+        JOptionPane.OK_CANCEL_OPTION);
 
-    if (result == JOptionPane.CANCEL_OPTION || result == JOptionPane.CLOSED_OPTION) {
+    if (result == JOptionPane.CANCEL_OPTION
+    || result == JOptionPane.CLOSED_OPTION) {
       return null;
     }
 
@@ -181,6 +199,9 @@ public class RemoveButtonsPane extends ButtonPane {
    * @param message main message of dialog
    */
   public static void showSuccessMessage(String message) {
-    JOptionPane.showMessageDialog(null, message, "Success!", JOptionPane.INFORMATION_MESSAGE);
+    JOptionPane.showMessageDialog(null,
+      message,
+      "Success!",
+      JOptionPane.INFORMATION_MESSAGE);
   }
 }

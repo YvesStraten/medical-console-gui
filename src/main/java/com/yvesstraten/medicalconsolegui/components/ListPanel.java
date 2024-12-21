@@ -21,8 +21,8 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 
 /**
- * This panel acts is used for listing all and allow for the editing of the objects in this
- * application in a tabular manner
+ * This panel acts is used for listing all and allow for the editing
+ * of the objects in this application in a tabular manner
  *
  * @author YvesStraten e2400068
  */
@@ -56,15 +56,20 @@ public class ListPanel extends JPanel {
   public ListPanel(HealthService service) {
     ClinicTableModel clinicTableModel = new ClinicTableModel(service);
     PatientTableModel patientTableModel = new PatientTableModel(service);
-    ProcedureTableModel procedureTableModel = new ProcedureTableModel(service);
-    HospitalTableModel hospitalTableModel = new HospitalTableModel(service, procedureTableModel);
+    ProcedureTableModel procedureTableModel =
+      new ProcedureTableModel(service);
+    HospitalTableModel hospitalTableModel =
+      new HospitalTableModel(service, procedureTableModel);
     setHospitalTableModel(hospitalTableModel);
     setClinicTableModel(clinicTableModel);
     setPatientTableModel(patientTableModel);
     setProcedureTableModel(procedureTableModel);
     setTableModels(
         new TableModel[] {
-          hospitalTableModel, clinicTableModel, patientTableModel, procedureTableModel
+          hospitalTableModel,
+          clinicTableModel,
+          patientTableModel,
+          procedureTableModel
         });
 
     JTable listTable =
@@ -80,14 +85,25 @@ public class ListPanel extends JPanel {
 
             if (getModel() instanceof HospitalTableModel) {
               if (realColumnIndex == 3) {
-                Hospital hospital = getHospitalTableModel().getHospitals().get(realRowIndex);
+                Hospital hospital =
+                  getHospitalTableModel()
+                  .getHospitals()
+                  .get(realRowIndex);
+
                 if (hospital != null) {
                   tip =
                       hospital.getProcedures().stream()
                           .map(
                               procedure ->
-                                  procedure.getName() + " " + procedure.getDescription() + "\n")
-                          .reduce("", (before, next) -> before + next);
+                                  procedure
+                                  .getName()
+                                  + " "
+                                  + procedure
+                                  .getDescription() 
+                                  + "\n")
+                          .reduce("",
+                          (before, next) ->
+                          before + next);
                 }
               }
             } else if (getModel() instanceof PatientTableModel) {
@@ -115,7 +131,11 @@ public class ListPanel extends JPanel {
               }
             } else if (getModel() instanceof ProcedureTableModel) {
               if (realColumnIndex == 2) {
-                Procedure procedure = getProcedureTableModel().getProcedures().get(realRowIndex);
+                Procedure procedure =
+                  getProcedureTableModel()
+                  .getProcedures()
+                  .get(realRowIndex);
+
                 tip = procedure.getDescription();
               }
             }
@@ -131,7 +151,13 @@ public class ListPanel extends JPanel {
     JPanel selectorPanel = new JPanel();
     // ComboxBox to select between lists
     JComboBox<String> comboBox =
-        new JComboBox<String>(new String[] {"Hospitals", "Clinics", "Patients", "Procedures"});
+        new JComboBox<String>(
+          new String[] {
+                      "Hospitals",
+                      "Clinics",
+                      "Patients",
+                      "Procedures"
+      });
 
     comboBox.addItemListener(
         new ItemListener() {
@@ -291,7 +317,8 @@ public class ListPanel extends JPanel {
   }
 
   /**
-   * This function adds given TableModelListener to all registered table models
+   * This function adds given TableModelListener 
+   * to all registered table models
    *
    * @param listener listenr to add
    */

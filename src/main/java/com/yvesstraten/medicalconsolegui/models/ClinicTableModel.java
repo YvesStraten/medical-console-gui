@@ -20,7 +20,12 @@ public class ClinicTableModel extends MedicalTableModel {
   /**
    * Column names
    */
-  private final String[] columns = new String[] {"Id", "Name", "Fee", "Gap percentage (%)"};
+  private final String[] columns = 
+    new String[] {
+    "Id",
+    "Name",
+    "Fee",
+    "Gap percentage (%)"};
 
   /**
    * <p>Constructor for ClinicTableModel.</p>
@@ -29,7 +34,10 @@ public class ClinicTableModel extends MedicalTableModel {
    */
   public ClinicTableModel(HealthService service) {
     super(service);
-    setClinics(service.getClinics().collect(Collectors.toCollection(ArrayList::new)));
+    setClinics(service
+      .getClinics()
+      .collect(Collectors
+        .toCollection(ArrayList::new)));
   }
 
   /**

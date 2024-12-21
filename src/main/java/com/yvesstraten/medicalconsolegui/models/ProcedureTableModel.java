@@ -23,7 +23,12 @@ public class ProcedureTableModel extends MedicalTableModel {
    */
   private final String[] columns =
       new String[] {
-        "Id", "Name", "Description", "Elective or not", "Base fee", "Available in hospital"
+        "Id",
+        "Name",
+        "Description",
+        "Elective or not",
+        "Base fee",
+        "Available in hospital"
       };
 
   /**
@@ -69,7 +74,13 @@ public class ProcedureTableModel extends MedicalTableModel {
    */
   public void addProcedure(
       Hospital hospital, String name, String description, boolean isElective, double cost) {
-    getService().initializeProcedure(hospital, name, description, isElective, cost);
+    getService()
+      .initializeProcedure(hospital,
+        name,
+        description,
+        isElective,
+        cost);
+    
     ArrayList<Procedure> procedures = hospital.getProcedures();
     Procedure procedure = procedures.get(procedures.size() - 1);
     getProcedures().add(procedure);
