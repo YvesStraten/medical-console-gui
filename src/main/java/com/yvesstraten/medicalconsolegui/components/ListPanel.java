@@ -4,6 +4,7 @@ import com.yvesstraten.medicalconsole.HealthService;
 import com.yvesstraten.medicalconsole.facilities.Clinic;
 import com.yvesstraten.medicalconsole.facilities.Hospital;
 import com.yvesstraten.medicalconsole.facilities.MedicalFacility;
+import com.yvesstraten.medicalconsole.facilities.Procedure;
 import com.yvesstraten.medicalconsolegui.models.ClinicTableModel;
 import com.yvesstraten.medicalconsolegui.models.HospitalTableModel;
 import com.yvesstraten.medicalconsolegui.models.PatientTableModel;
@@ -20,46 +21,37 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 
 /**
- * This panel acts is used for listing 
- * all and allow for the editing of
- * the objects in this application in 
- * a tabular manner
+ * This panel acts is used for listing all and allow for the editing of the objects in this
+ * application in a tabular manner
+ *
  * @author YvesStraten e2400068
  */
 public class ListPanel extends JPanel {
-  /**
-   * Current selected table
-   */
+  /** Current selected table */
   private JTable currentTable;
-  /**
-   * Scroll pane for table
-   */
+
+  /** Scroll pane for table */
   private JScrollPane scrollPane;
-  /**
-   * hospital table model
-   */
+
+  /** hospital table model */
   private HospitalTableModel hospitalTableModel;
-  /**
-   * clinic table model
-   */
+
+  /** clinic table model */
   private ClinicTableModel clinicTableModel;
-  /**
-   * patient table model
-   */
+
+  /** patient table model */
   private PatientTableModel patientTableModel;
-  /**
-   * procedure table model
-   */
+
+  /** procedure table model */
   private ProcedureTableModel procedureTableModel;
-  /**
-   * list of registered table models 
-   */
+
+  /** list of registered table models */
   private TableModel[] tableModels;
 
   /**
-   * <p>Constructor for ListPanel.</p>
+   * Constructor for ListPanel.
    *
-   * @param service service to use 
+   * @param service service to use
    */
   public ListPanel(HealthService service) {
     ClinicTableModel clinicTableModel = new ClinicTableModel(service);
@@ -101,7 +93,11 @@ public class ListPanel extends JPanel {
             } else if (getModel() instanceof PatientTableModel) {
               if (realColumnIndex == 4) {
                 MedicalFacility facility =
-                    getPatientTableModel().getService().getPatients().get(realRowIndex).getCurrentFacility();
+                    getPatientTableModel()
+                        .getService()
+                        .getPatients()
+                        .get(realRowIndex)
+                        .getCurrentFacility();
                 if (facility != null) {
                   if (facility instanceof Clinic) {
                     Clinic clinic = (Clinic) facility;
@@ -116,6 +112,11 @@ public class ListPanel extends JPanel {
                     tip = "Hospital" + facility.getId() + " " + facility.getName();
                   }
                 }
+              }
+            } else if (getModel() instanceof ProcedureTableModel) {
+              if (realColumnIndex == 2) {
+                Procedure procedure = getProcedureTableModel().getProcedures().get(realRowIndex);
+                tip = procedure.getDescription();
               }
             }
 
@@ -164,7 +165,7 @@ public class ListPanel extends JPanel {
   }
 
   /**
-   * <p>Getter for the field <code>currentTable</code>.</p>
+   * Getter for the field <code>currentTable</code>.
    *
    * @return current table
    */
@@ -173,7 +174,7 @@ public class ListPanel extends JPanel {
   }
 
   /**
-   * <p>Getter for the field <code>scrollPane</code>.</p>
+   * Getter for the field <code>scrollPane</code>.
    *
    * @return scrollpane of table
    */
@@ -182,7 +183,7 @@ public class ListPanel extends JPanel {
   }
 
   /**
-   * <p>Setter for the field <code>currentTable</code>.</p>
+   * Setter for the field <code>currentTable</code>.
    *
    * @param table table to set
    */
@@ -191,7 +192,7 @@ public class ListPanel extends JPanel {
   }
 
   /**
-   * <p>Setter for the field <code>scrollPane</code>.</p>
+   * Setter for the field <code>scrollPane</code>.
    *
    * @param scrollPane scroll pane to set
    */
@@ -200,7 +201,7 @@ public class ListPanel extends JPanel {
   }
 
   /**
-   * <p>Getter for the field <code>hospitalTableModel</code>.</p>
+   * Getter for the field <code>hospitalTableModel</code>.
    *
    * @return hospital model
    */
@@ -209,7 +210,7 @@ public class ListPanel extends JPanel {
   }
 
   /**
-   * <p>Setter for the field <code>hospitalTableModel</code>.</p>
+   * Setter for the field <code>hospitalTableModel</code>.
    *
    * @param hospitalTableModel hospital model to set
    */
@@ -218,7 +219,7 @@ public class ListPanel extends JPanel {
   }
 
   /**
-   * <p>Getter for the field <code>clinicTableModel</code>.</p>
+   * Getter for the field <code>clinicTableModel</code>.
    *
    * @return clinic model
    */
@@ -227,7 +228,7 @@ public class ListPanel extends JPanel {
   }
 
   /**
-   * <p>Setter for the field <code>clinicTableModel</code>.</p>
+   * Setter for the field <code>clinicTableModel</code>.
    *
    * @param clinicTableModel clinic model to set
    */
@@ -236,7 +237,7 @@ public class ListPanel extends JPanel {
   }
 
   /**
-   * <p>Getter for the field <code>patientTableModel</code>.</p>
+   * Getter for the field <code>patientTableModel</code>.
    *
    * @return patient model
    */
@@ -245,7 +246,7 @@ public class ListPanel extends JPanel {
   }
 
   /**
-   * <p>Setter for the field <code>patientTableModel</code>.</p>
+   * Setter for the field <code>patientTableModel</code>.
    *
    * @param patientTableModel patient model to set
    */
@@ -254,7 +255,7 @@ public class ListPanel extends JPanel {
   }
 
   /**
-   * <p>Getter for the field <code>procedureTableModel</code>.</p>
+   * Getter for the field <code>procedureTableModel</code>.
    *
    * @return procedure model
    */
@@ -263,7 +264,7 @@ public class ListPanel extends JPanel {
   }
 
   /**
-   * <p>Setter for the field <code>procedureTableModel</code>.</p>
+   * Setter for the field <code>procedureTableModel</code>.
    *
    * @param procedureTableModel procedure model to set
    */
@@ -272,7 +273,7 @@ public class ListPanel extends JPanel {
   }
 
   /**
-   * <p>Getter for the field <code>tableModels</code>.</p>
+   * Getter for the field <code>tableModels</code>.
    *
    * @return table models currently present
    */
@@ -281,7 +282,7 @@ public class ListPanel extends JPanel {
   }
 
   /**
-   * <p>Setter for the field <code>tableModels</code>.</p>
+   * Setter for the field <code>tableModels</code>.
    *
    * @param tableModels tableModels to set
    */
@@ -290,8 +291,7 @@ public class ListPanel extends JPanel {
   }
 
   /**
-   * This function adds given TableModelListener to 
-   * all registered table models
+   * This function adds given TableModelListener to all registered table models
    *
    * @param listener listenr to add
    */

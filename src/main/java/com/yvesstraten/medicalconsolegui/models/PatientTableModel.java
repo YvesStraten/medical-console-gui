@@ -6,20 +6,17 @@ import com.yvesstraten.medicalconsole.facilities.MedicalFacility;
 import java.util.ArrayList;
 
 /**
- * This model represents a list of patients 
- * in a tabular manner
+ * This model represents a list of patients in a tabular manner
  *
  * @author YvesStraten e2400068
  */
 public class PatientTableModel extends MedicalTableModel {
-  /**
-   * List of columns
-   */
+  /** List of columns */
   private final String[] columns =
       new String[] {"Id", "Name", "Private patient", "Balance", "Current facility"};
 
   /**
-   * <p>Constructor for PatientTableModel.</p>
+   * Constructor for PatientTableModel.
    *
    * @param service service to use
    */
@@ -28,8 +25,7 @@ public class PatientTableModel extends MedicalTableModel {
   }
 
   /**
-   * Adds a patient to table 
-   * and service
+   * Adds a patient to table and service
    *
    * @param name name of patients
    * @param isPrivate whether the patient is private
@@ -51,8 +47,7 @@ public class PatientTableModel extends MedicalTableModel {
   }
 
   /**
-   * Deletes a patient from table
-   * and service
+   * Deletes a patient from table and service
    *
    * @param index row to delete
    */
@@ -66,8 +61,7 @@ public class PatientTableModel extends MedicalTableModel {
   }
 
   /**
-   * Deletes a patient from table
-   * and service
+   * Deletes a patient from table and service
    *
    * @param selected patient object
    */
@@ -139,6 +133,10 @@ public class PatientTableModel extends MedicalTableModel {
         break;
       case 4:
         Integer id = (Integer) aValue;
+        if (id.equals(0)) {
+          row.setMedicalFacility(null);
+        }
+
         MedicalFacility matchedFacility =
             getService()
                 .getMedicalFacilitiesStream()

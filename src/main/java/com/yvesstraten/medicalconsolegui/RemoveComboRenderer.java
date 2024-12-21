@@ -5,23 +5,19 @@ import com.yvesstraten.medicalconsole.facilities.Clinic;
 import com.yvesstraten.medicalconsole.facilities.MedicalFacility;
 import com.yvesstraten.medicalconsole.facilities.Procedure;
 import com.yvesstraten.medicalconsolegui.components.SelectObjectDialog;
-
 import java.awt.Component;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JList;
 
 /**
- * This custom render overrides the 
- * combox box renderer for JOptionPane 
- * to allow for shorter descriptions of objects 
- * in this application
+ * This custom render overrides the combox box renderer for JOptionPane to allow for shorter
+ * descriptions of objects in this application
+ *
  * @author YvesStraten e2400068
  * @see SelectObjectDialog
  */
 public class RemoveComboRenderer extends DefaultListCellRenderer {
-  /**
-   * <p>Constructor for RemoveComboRenderer.</p>
-   */
+  /** Constructor for RemoveComboRenderer. */
   public RemoveComboRenderer() {
     super();
   }
@@ -53,9 +49,11 @@ public class RemoveComboRenderer extends DefaultListCellRenderer {
           cellHasFocus);
     } else if (value instanceof Procedure) {
       Procedure procedure = (Procedure) value;
+      String status = procedure.isElective() ? "Elective" : "Not elective";
       return super.getListCellRendererComponent(
           list,
-          "Procedure "
+          status
+              + " Procedure "
               + procedure.getId()
               + " "
               + procedure.getName()
