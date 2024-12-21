@@ -108,10 +108,6 @@ The source code for this assignment can be found below, and it is divided in sec
 \textit{MedicalTableModel.java}
 \inputminted{java}{./src/main/java/com/yvesstraten/medicalconsolegui/models/MedicalTableModel.java}
 
-
-\textit{FacilityTableModel.java}
-\inputminted{java}{./src/main/java/com/yvesstraten/medicalconsolegui/models/FacilityTableModel.java}
-
 \textit{HospitalTableModel.java}
 \inputminted{java}{./src/main/java/com/yvesstraten/medicalconsolegui/models/HospitalTableModel.java}
 
@@ -122,9 +118,245 @@ The source code for this assignment can be found below, and it is divided in sec
 \inputminted{java}{./src/main/java/com/yvesstraten/medicalconsolegui/models/ClinicTableModel.java}
 % subsection Models (end)
 
+\newpage 
+
 \section{Runtime output}\label{sec:runtime_output} % (fold)
-Several tests were undertaken to ensure that this application works as intended.
+The following images showcase the output at runtime for the application, and its general, realized look.
 
+\subsection{Adding}\label{sub:adding} % (fold)
+\begin{figure}
+  \begin{center}
+    \includegraphics[width=0.5\textwidth]{./figures/Add/Clinic_1.png}
+  \end{center}
+\end{figure}
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[width=0.5\textwidth]{./figures/Add/Clinic_2.png}
+  \end{center}
+\end{figure}
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[width=0.5\textwidth]{./figures/Add/Clinic_3.png}
+  \end{center}
+\end{figure}
+
+As can be seen from the picture above, the application prevents invalid inputs by the user. Furthermore, the user can also cancel their inputs anytime during the input process. This validation is true for all that can be input.
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[width=0.5\textwidth]{./figures/Add/Clinic_4.png}
+  \end{center}
+\end{figure}
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[width=0.5\textwidth]{./figures/Add/Clinic_5.png}
+  \end{center}
+\end{figure}
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[width=0.5\textwidth]{./figures/Add/Clinic_6.png}
+  \end{center}
+\end{figure}
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[width=0.5\textwidth]{./figures/Add/Hospital_1.png}
+  \end{center}
+\end{figure}
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[width=0.5\textwidth]{./figures/Add/Hospital_2.png}
+  \end{center}
+\end{figure}
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[width=0.5\textwidth]{./figures/Add/Patient_1.png}
+  \end{center}
+\end{figure}
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[width=0.5\textwidth]{./figures/Add/Patient_2.png}
+  \end{center}
+\end{figure}
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[width=0.5\textwidth]{./figures/Add/Patient_3.png}
+  \end{center}
+\end{figure}
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[width=0.5\textwidth]{./figures/Add/Procedure_1.png}
+  \end{center}
+\end{figure}
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[width=0.5\textwidth]{./figures/Add/Procedure_2.png}
+  \end{center}
+\end{figure}
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[width=0.5\textwidth]{./figures/Add/Procedure_3.png}
+  \end{center}
+\end{figure}
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[width=0.5\textwidth]{./figures/Add/Procedure_4.png}
+  \end{center}
+\end{figure}
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[width=0.5\textwidth]{./figures/Add/Procedure_5.png}
+  \end{center}
+\end{figure}
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[width=0.8\textwidth]{./figures/Add/Procedure_6.png}
+  \end{center}
+\end{figure}
+% subsection Adding (end)
+
+\subsection{Removing}\label{sub:removing}
+\begin{figure}
+  \begin{center}
+  \includegraphics[width=0.5\textwidth]{./figures/Remove/Hospital_1.png}
+  \end{center}
+\end{figure}
+
+\begin{figure}
+  \begin{center}
+  \includegraphics[width=0.5\textwidth]{./figures/Remove/Hospital_2.png}
+  \end{center}
+\end{figure}
+
+\begin{figure}
+  \begin{center}
+  \includegraphics[width=0.5\textwidth]{./figures/Remove/Hospital_3.png}
+  \end{center}
+\end{figure}
+
+\begin{figure}
+  \begin{center}
+  \includegraphics[width=0.5\textwidth]{./figures/Remove/Patient_1.png}
+  \end{center}
+\end{figure}
+
+\begin{figure}
+  \begin{center}
+  \includegraphics[width=0.5\textwidth]{./figures/Remove/Patient_2.png}
+  \end{center}
+\end{figure}
+
+\begin{figure}
+  \begin{center}
+  \includegraphics[width=0.5\textwidth]{./figures/Remove/Patient_3.png}
+  \end{center}
+\end{figure}
+
+\begin{figure}
+  \begin{center}
+  \includegraphics[width=0.5\textwidth]{./figures/Remove/Clinic_1.png}
+  \end{center}
+\end{figure}
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[width=0.5\textwidth]{./figures/Remove/Clinic_2.png}
+  \end{center}
+\end{figure}
+
+\begin{figure}
+  \begin{center}
+  \includegraphics[width=0.5\textwidth]{./figures/Remove/Clinic_3.png}
+  \end{center}
+\end{figure}
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[width=0.5\textwidth]{./figures/Remove/Procedures_1.png}
+  \end{center}
+\end{figure}
+
+The application also warns us if objects of a certain type have not been added yet. As is the case in the picture above.
+% subsection Removing (end)
+
+\subsection{Visiting}\label{sub:visiting} % (fold)
+\begin{figure}
+  \begin{center}
+    \includegraphics[width=0.5\textwidth]{./figures/Visit/Visit_1.png}
+  \end{center}
+\end{figure}
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[width=0.5\textwidth]{./figures/Visit/Visit_2.png}
+  \end{center}
+\end{figure}
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[width=0.5\textwidth]{./figures/Visit/Visit_3.png}
+  \end{center}
+\end{figure}
+% subsection Visiting (end)
+
+\subsection{Operating}\label{sub:operating} % (fold)
+\begin{figure}
+  \begin{center}
+    \includegraphics[width=0.5\textwidth]{./figures/Operation/Operation_1.png}
+  \end{center}
+\end{figure}
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[width=0.5\textwidth]{./figures/Operation/Operation_2.png}
+  \end{center}
+\end{figure}
+
+As can be seen from the $2$ previous pictures, the current facility of a patient can be directly edited. All records (except id) of all objects can be edited directly as well. Furthermore, if input is incorrect, the cell will prevent changes.
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[width=0.5\textwidth]{./figures/Operation/Operation_3.png}
+  \end{center}
+\end{figure}
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[width=0.5\textwidth]{./figures/Operation/Operation_4.png}
+  \end{center}
+\end{figure}
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[width=0.5\textwidth]{./figures/Operation/Operation_5.png}
+  \end{center}
+\end{figure}
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[width=0.5\textwidth]{./figures/Operation/Operation_6.png}
+  \end{center}
+\end{figure}
+
+This balance is correct as the patient is public, and the procedure is elective, only the cost of the procedure is added to the balance, that is: 
+
+\[
+  1000 + 300 = 1300
+\]
+% subsection Operating (end)
 % section Runtime output (end)
-
 \end{document}
