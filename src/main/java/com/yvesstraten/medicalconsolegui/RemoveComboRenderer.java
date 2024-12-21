@@ -11,8 +11,6 @@ import javax.swing.DefaultListCellRenderer;
 import javax.swing.JList;
 
 /**
- * <p>RemoveComboRenderer class.</p>
- *
  * This custom render overrides the 
  * combox box renderer for JOptionPane 
  * to allow for shorter descriptions of objects 

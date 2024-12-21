@@ -7,7 +7,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
- * <p>SelectObjectDialog class.</p>
  * This panel acts as the object selector 
  * to be used when asking the user 
  * to select for an object
@@ -15,6 +14,9 @@ import javax.swing.JPanel;
  * @author YvesStraten e2400068
  */
 public class SelectObjectDialog extends JPanel {
+  /**
+   * Combo Box to select objects from
+   */
   private JComboBox<Object> combo;
 
   private SelectObjectDialog() {
@@ -39,7 +41,7 @@ public class SelectObjectDialog extends JPanel {
   /**
    * <p>Getter for the field <code>combo</code>.</p>
    *
-   * @return a {@link javax.swing.JComboBox} object
+   * @return set combo
    */
   public JComboBox<Object> getCombo() {
     return combo;
@@ -48,7 +50,7 @@ public class SelectObjectDialog extends JPanel {
   /**
    * <p>Setter for the field <code>combo</code>.</p>
    *
-   * @param options a {@link javax.swing.JComboBox} object
+   * @param options combo to set
    */
   public void setCombo(JComboBox<Object> options) {
     this.combo = options;

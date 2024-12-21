@@ -15,11 +15,15 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
 /**
- * <p>MedicalGuiFrame class.</p>
+ * This class acts as the main {@link JFrame} for 
+ * the application
  *
  * @author YvesStraten e2400068
  */
 public class MedicalGuiFrame extends JFrame {
+  /**
+   * Service used
+   */
   private HealthService service;
 
   /**
@@ -103,7 +107,7 @@ public class MedicalGuiFrame extends JFrame {
   /**
    * <p>Getter for the field <code>service</code>.</p>
    *
-   * @return a {@link com.yvesstraten.medicalconsole.HealthService} object
+   * @return service
    */
   public HealthService getService() {
     return this.service;
@@ -112,7 +116,7 @@ public class MedicalGuiFrame extends JFrame {
   /**
    * <p>Setter for the field <code>service</code>.</p>
    *
-   * @param service a {@link com.yvesstraten.medicalconsole.HealthService} object
+   * @param service service to set
    */
   public void setService(HealthService service) {
     this.service = service;

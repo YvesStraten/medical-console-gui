@@ -9,21 +9,29 @@ import javax.swing.JPanel;
 import com.yvesstraten.medicalconsole.HealthService;
 
 /**
- * <p>MainMenu class.</p>
- *
  * This class acts as the main menu 
  * for the application
  * @author YvesStraten e2400068
  */
 public class MainMenu extends JPanel {
+  /**
+   * Service used
+   */
   private HealthService service;
+  /**
+   * Panel containing utility buttons
+   */
   private JPanel buttonsPanel;
+  /**
+   * Panel containg tabular representation 
+   * of all objects in the service
+   */
   private ListPanel listPanel;
 
   /**
    * <p>Constructor for MainMenu.</p>
    *
-   * @param service a {@link com.yvesstraten.medicalconsole.HealthService} object
+   * @param service service to use
    */
   public MainMenu(HealthService service) {
     super();
@@ -63,7 +71,7 @@ public class MainMenu extends JPanel {
   /**
    * <p>Getter for the field <code>service</code>.</p>
    *
-   * @return a {@link com.yvesstraten.medicalconsole.HealthService} object
+   * @return set service
    */
   public HealthService getService() {
     return service;
@@ -72,7 +80,7 @@ public class MainMenu extends JPanel {
   /**
    * <p>Setter for the field <code>service</code>.</p>
    *
-   * @param service a {@link com.yvesstraten.medicalconsole.HealthService} object
+   * @param service to set
    */
   public void setService(HealthService service) {
     this.service = service;
@@ -81,7 +89,7 @@ public class MainMenu extends JPanel {
   /**
    * <p>Getter for the field <code>listPanel</code>.</p>
    *
-   * @return a {@link com.yvesstraten.medicalconsolegui.components.ListPanel} object
+   * @return list panel
    */
   public ListPanel getListPanel() {
     return listPanel;
@@ -90,7 +98,7 @@ public class MainMenu extends JPanel {
   /**
    * <p>Setter for the field <code>listPanel</code>.</p>
    *
-   * @param listPanel a {@link com.yvesstraten.medicalconsolegui.components.ListPanel} object
+   * @param listPanel list panel to set
    */
   public void setListPanel(ListPanel listPanel) {
     this.listPanel = listPanel;
@@ -99,7 +107,7 @@ public class MainMenu extends JPanel {
   /**
    * <p>Getter for the field <code>buttonsPanel</code>.</p>
    *
-   * @return a {@link javax.swing.JPanel} object
+   * @return buttons panel
    */
   public JPanel getButtonsPanel() {
     return buttonsPanel;
@@ -108,7 +116,8 @@ public class MainMenu extends JPanel {
   /**
    * <p>Setter for the field <code>buttonsPanel</code>.</p>
    *
-   * @param buttonsPanel a {@link javax.swing.JPanel} object
+   * @param buttonsPanel panel to set as buttons 
+   * panel
    */
   public void setButtonsPanel(JPanel buttonsPanel) {
     this.buttonsPanel = buttonsPanel;

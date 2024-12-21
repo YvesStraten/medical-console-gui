@@ -13,8 +13,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
- * <p>RemoveButtonsPane class.</p>
- *
  * This pane contains all the buttons 
  * related to removal operations
  * @author YvesStraten e2400068

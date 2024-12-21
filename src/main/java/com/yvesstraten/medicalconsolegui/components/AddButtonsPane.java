@@ -14,7 +14,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
- * <p>AddButtonsPane class.</p>
  * This panel contains all the buttons 
  * related to adding
  *
@@ -24,7 +23,7 @@ public class AddButtonsPane extends ButtonPane {
   /**
    * <p>Constructor for AddButtonsPane.</p>
    *
-   * @param listPanel a {@link com.yvesstraten.medicalconsolegui.components.ListPanel} object
+   * @param listPanel list panel to set
    */
   public AddButtonsPane(ListPanel listPanel) {
     super("Add Item", listPanel);
@@ -89,12 +88,22 @@ public class AddButtonsPane extends ButtonPane {
     add(buttonsGrouper);
   }
 
+  /**
+   * Add a hospital to the model
+   *
+   * @param hospitalModel given model
+   */
   private void addHospital(HospitalTableModel hospitalModel) {
     String name = getString("Please input the name for the hospital", "Adding a hospital");
 
     hospitalModel.addHospital(name);
   }
 
+  /**
+   * Add a clinic to the model
+   *
+   * @param clinicModel given model
+   */
   private void addClinic(ClinicTableModel clinicModel) {
     String dialogTitle = "Adding a clinic";
     String name = getString("Please input the name for the clinic", dialogTitle);
@@ -104,6 +113,11 @@ public class AddButtonsPane extends ButtonPane {
     clinicModel.addClinic(name, fee, gapPercent);
   }
 
+  /**
+   * Add a patient to the model
+   *
+   * @param patientModel given model
+   */
   private void addPatient(PatientTableModel patientModel) {
     String dialogTitle = "Adding a patient";
     String name = getString("Please input the name for the patient", dialogTitle);
@@ -112,6 +126,11 @@ public class AddButtonsPane extends ButtonPane {
     patientModel.addPatient(name, isPrivate);
   }
 
+  /**
+   * Add a procedure to the model
+   *
+   * @param procedureModel given model
+   */
   private void addProcedure(ProcedureTableModel procedureModel)
       throws NoHospitalsAvailableException {
     String dialogTitle = "Adding procedure";
@@ -133,6 +152,16 @@ public class AddButtonsPane extends ButtonPane {
     procedureModel.addProcedure(selected, name, description, isElective, cost);
   }
 
+  /**
+   * This function prompts the user 
+   * to select an option
+   *
+   * @param message message to show
+   * @param title title of dialog
+   * @param options options available
+   * @param preselected first selected option
+   * @return selected option
+   */
   private static Object getObject(
       String message, String title, Object[] options, Object preselected) {
     while (true) {
@@ -149,6 +178,14 @@ public class AddButtonsPane extends ButtonPane {
     }
   }
 
+  /**
+   * This function prompts the user to 
+   * enter a string 
+   *
+   * @param message dialog message
+   * @param title dialog title
+   * @return input string
+   */
   private static String getString(String message, String title) {
     while (true) {
       String input =
@@ -163,6 +200,14 @@ public class AddButtonsPane extends ButtonPane {
     }
   }
 
+  /**
+   * This function prompts the user 
+   * for a decimal value
+   *
+   * @param message dialog message
+   * @param title dialog title
+   * @return input decimal
+   */
   private static Double getDoubleValue(String message, String title) {
     while (true) {
       String input = getString(message, title);
@@ -176,6 +221,14 @@ public class AddButtonsPane extends ButtonPane {
     }
   }
 
+  /**
+   * This function prompts the user for 
+   * yes or no
+   *
+   * @param message dialog message
+   * @param title dialog title
+   * @return true if yes, no otherwise
+   */
   private static boolean getYesNo(String message, String title) {
     while (true) {
       int status = JOptionPane.showConfirmDialog(null, message, title, JOptionPane.YES_NO_OPTION);

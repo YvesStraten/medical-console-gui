@@ -12,7 +12,13 @@ import java.util.stream.Collectors;
  * @author YvesStraten e2400068
  */
 public class ClinicTableModel extends MedicalTableModel {
+  /**
+   * List of clinics
+   */
   private ArrayList<Clinic> clinics;
+  /**
+   * Column names
+   */
   private final String[] columns = new String[] {"Id", "Name", "Fee", "Gap percentage (%)"};
 
   /**
@@ -28,7 +34,7 @@ public class ClinicTableModel extends MedicalTableModel {
   /**
    * <p>Getter for the field <code>clinics</code>.</p>
    *
-   * @return a {@link java.util.ArrayList} object
+   * @return list of clinics
    */
   public ArrayList<Clinic> getClinics() {
     return this.clinics;
@@ -37,7 +43,7 @@ public class ClinicTableModel extends MedicalTableModel {
   /**
    * <p>Setter for the field <code>clinics</code>.</p>
    *
-   * @param clinics a {@link java.util.ArrayList} object
+   * @param clinics list of clinics
    */
   public void setClinics(ArrayList<Clinic> clinics) {
     this.clinics = clinics;

@@ -5,11 +5,14 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
- * ButtonPane class. This panel groups all buttons and their functions together
+ * This panel groups all buttons and their functions together
  *
  * @author YvesStraten e2400068
  */
 public class ButtonPane extends JPanel {
+  /**
+   * list panel to manipulate
+   */
   private ListPanel listPanel;
 
   /**
@@ -35,7 +38,7 @@ public class ButtonPane extends JPanel {
   /**
    * Getter for the field <code>listPanel</code>.
    *
-   * @return a {@link com.yvesstraten.medicalconsolegui.components.ListPanel} object
+   * @return list panel
    */
   public ListPanel getListPanel() {
     return listPanel;
@@ -44,7 +47,7 @@ public class ButtonPane extends JPanel {
   /**
    * Setter for the field <code>listPanel</code>.
    *
-   * @param listPanel a {@link com.yvesstraten.medicalconsolegui.components.ListPanel} object
+   * @param listPanel list panel to set
    */
   public void setListPanel(ListPanel listPanel) {
     this.listPanel = listPanel;

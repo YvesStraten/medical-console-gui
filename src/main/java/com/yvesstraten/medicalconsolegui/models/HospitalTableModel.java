@@ -3,10 +3,8 @@ package com.yvesstraten.medicalconsolegui.models;
 import com.yvesstraten.medicalconsole.HealthService;
 import com.yvesstraten.medicalconsole.facilities.Hospital;
 import com.yvesstraten.medicalconsole.facilities.MedicalFacility;
-import com.yvesstraten.medicalconsole.facilities.Procedure;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * This model represents a list of 
@@ -15,8 +13,17 @@ import java.util.stream.Stream;
  * @author YvesStraten e2400068
  */
 public class HospitalTableModel extends MedicalTableModel {
+  /**
+   * List of hospitals
+   */
   private ArrayList<Hospital> hospitals;
+  /**
+   * Column names
+   */
   private final String[] columns = new String[] {"Id", "Name", "ProbAdmit", "Num procedures"};
+  /**
+   * Procedure model
+   */
   private ProcedureTableModel procedureModel;
 
   /**

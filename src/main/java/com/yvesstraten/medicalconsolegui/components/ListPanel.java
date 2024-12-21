@@ -20,8 +20,6 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 
 /**
- * <p>ListPanel class.</p>
- *
  * This panel acts is used for listing 
  * all and allow for the editing of
  * the objects in this application in 
@@ -29,18 +27,39 @@ import javax.swing.table.TableModel;
  * @author YvesStraten e2400068
  */
 public class ListPanel extends JPanel {
+  /**
+   * Current selected table
+   */
   private JTable currentTable;
+  /**
+   * Scroll pane for table
+   */
   private JScrollPane scrollPane;
+  /**
+   * hospital table model
+   */
   private HospitalTableModel hospitalTableModel;
+  /**
+   * clinic table model
+   */
   private ClinicTableModel clinicTableModel;
+  /**
+   * patient table model
+   */
   private PatientTableModel patientTableModel;
+  /**
+   * procedure table model
+   */
   private ProcedureTableModel procedureTableModel;
+  /**
+   * list of registered table models 
+   */
   private TableModel[] tableModels;
 
   /**
    * <p>Constructor for ListPanel.</p>
    *
-   * @param service a {@link com.yvesstraten.medicalconsole.HealthService} object
+   * @param service service to use 
    */
   public ListPanel(HealthService service) {
     ClinicTableModel clinicTableModel = new ClinicTableModel(service);
@@ -147,7 +166,7 @@ public class ListPanel extends JPanel {
   /**
    * <p>Getter for the field <code>currentTable</code>.</p>
    *
-   * @return a {@link javax.swing.JTable} object
+   * @return current table
    */
   public JTable getCurrentTable() {
     return this.currentTable;
@@ -156,7 +175,7 @@ public class ListPanel extends JPanel {
   /**
    * <p>Getter for the field <code>scrollPane</code>.</p>
    *
-   * @return a {@link javax.swing.JScrollPane} object
+   * @return scrollpane of table
    */
   public JScrollPane getScrollPane() {
     return this.scrollPane;
@@ -165,7 +184,7 @@ public class ListPanel extends JPanel {
   /**
    * <p>Setter for the field <code>currentTable</code>.</p>
    *
-   * @param table a {@link javax.swing.JTable} object
+   * @param table table to set
    */
   public void setCurrentTable(JTable table) {
     this.currentTable = table;
@@ -174,7 +193,7 @@ public class ListPanel extends JPanel {
   /**
    * <p>Setter for the field <code>scrollPane</code>.</p>
    *
-   * @param scrollPane a {@link javax.swing.JScrollPane} object
+   * @param scrollPane scroll pane to set
    */
   public void setScrollPane(JScrollPane scrollPane) {
     this.scrollPane = scrollPane;
@@ -183,7 +202,7 @@ public class ListPanel extends JPanel {
   /**
    * <p>Getter for the field <code>hospitalTableModel</code>.</p>
    *
-   * @return a {@link com.yvesstraten.medicalconsolegui.models.HospitalTableModel} object
+   * @return hospital model
    */
   public HospitalTableModel getHospitalTableModel() {
     return hospitalTableModel;
@@ -192,7 +211,7 @@ public class ListPanel extends JPanel {
   /**
    * <p>Setter for the field <code>hospitalTableModel</code>.</p>
    *
-   * @param hospitalTableModel a {@link com.yvesstraten.medicalconsolegui.models.HospitalTableModel} object
+   * @param hospitalTableModel hospital model to set
    */
   public void setHospitalTableModel(HospitalTableModel hospitalTableModel) {
     this.hospitalTableModel = hospitalTableModel;
@@ -201,7 +220,7 @@ public class ListPanel extends JPanel {
   /**
    * <p>Getter for the field <code>clinicTableModel</code>.</p>
    *
-   * @return a {@link com.yvesstraten.medicalconsolegui.models.ClinicTableModel} object
+   * @return clinic model
    */
   public ClinicTableModel getClinicTableModel() {
     return clinicTableModel;
@@ -210,7 +229,7 @@ public class ListPanel extends JPanel {
   /**
    * <p>Setter for the field <code>clinicTableModel</code>.</p>
    *
-   * @param clinicTableModel a {@link com.yvesstraten.medicalconsolegui.models.ClinicTableModel} object
+   * @param clinicTableModel clinic model to set
    */
   public void setClinicTableModel(ClinicTableModel clinicTableModel) {
     this.clinicTableModel = clinicTableModel;
@@ -219,7 +238,7 @@ public class ListPanel extends JPanel {
   /**
    * <p>Getter for the field <code>patientTableModel</code>.</p>
    *
-   * @return a {@link com.yvesstraten.medicalconsolegui.models.PatientTableModel} object
+   * @return patient model
    */
   public PatientTableModel getPatientTableModel() {
     return patientTableModel;
@@ -228,7 +247,7 @@ public class ListPanel extends JPanel {
   /**
    * <p>Setter for the field <code>patientTableModel</code>.</p>
    *
-   * @param patientTableModel a {@link com.yvesstraten.medicalconsolegui.models.PatientTableModel} object
+   * @param patientTableModel patient model to set
    */
   public void setPatientTableModel(PatientTableModel patientTableModel) {
     this.patientTableModel = patientTableModel;
@@ -237,7 +256,7 @@ public class ListPanel extends JPanel {
   /**
    * <p>Getter for the field <code>procedureTableModel</code>.</p>
    *
-   * @return a {@link com.yvesstraten.medicalconsolegui.models.ProcedureTableModel} object
+   * @return procedure model
    */
   public ProcedureTableModel getProcedureTableModel() {
     return procedureTableModel;
@@ -246,7 +265,7 @@ public class ListPanel extends JPanel {
   /**
    * <p>Setter for the field <code>procedureTableModel</code>.</p>
    *
-   * @param procedureTableModel a {@link com.yvesstraten.medicalconsolegui.models.ProcedureTableModel} object
+   * @param procedureTableModel procedure model to set
    */
   public void setProcedureTableModel(ProcedureTableModel procedureTableModel) {
     this.procedureTableModel = procedureTableModel;
@@ -255,7 +274,7 @@ public class ListPanel extends JPanel {
   /**
    * <p>Getter for the field <code>tableModels</code>.</p>
    *
-   * @return an array of {@link javax.swing.table.TableModel} objects
+   * @return table models currently present
    */
   public TableModel[] getTableModels() {
     return tableModels;
@@ -264,16 +283,17 @@ public class ListPanel extends JPanel {
   /**
    * <p>Setter for the field <code>tableModels</code>.</p>
    *
-   * @param tableModels an array of {@link javax.swing.table.TableModel} objects
+   * @param tableModels tableModels to set
    */
   public void setTableModels(TableModel[] tableModels) {
     this.tableModels = tableModels;
   }
 
   /**
-   * <p>setUpListeners.</p>
+   * This function adds given TableModelListener to 
+   * all registered table models
    *
-   * @param listener a {@link javax.swing.event.TableModelListener} object
+   * @param listener listenr to add
    */
   public void setUpListeners(TableModelListener listener) {
     for (TableModel model : getTableModels()) {

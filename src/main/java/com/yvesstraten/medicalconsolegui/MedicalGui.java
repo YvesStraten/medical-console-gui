@@ -7,7 +7,6 @@ import com.yvesstraten.medicalconsole.MedicalConsole;
 import com.yvesstraten.medicalconsolegui.components.MedicalGuiFrame;
 
 /**
- * <p>MedicalGui class.</p>
  * This class acts as the main entry point for 
  * this program
  *
@@ -15,9 +14,8 @@ import com.yvesstraten.medicalconsolegui.components.MedicalGuiFrame;
  */
 public class MedicalGui extends JFrame {
   /**
-   * <p>main.</p>
-   *
-   * @param args an array of {@link java.lang.String} objects
+   * Main entry point for this program
+   * @param args passed arguments
    */
   public static void main(String[] args) {
     String currentOS = System.getProperty("os.name");
@@ -30,4 +28,6 @@ public class MedicalGui extends JFrame {
 		MedicalGuiFrame medicalFrame = new MedicalGuiFrame(service);
 		medicalFrame.setVisible(true);
   }
+
+  private MedicalGui(){}
 }

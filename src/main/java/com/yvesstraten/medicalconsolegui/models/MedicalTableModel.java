@@ -11,12 +11,15 @@ import javax.swing.table.AbstractTableModel;
  * @author YvesStraten e2400068
  */
 public abstract class MedicalTableModel extends AbstractTableModel {
+  /**
+   * Service used
+   */
   private HealthService service;
 
   /**
    * <p>Constructor for MedicalTableModel.</p>
    *
-   * @param service a {@link com.yvesstraten.medicalconsole.HealthService} object
+   * @param service service to use
    */
   public MedicalTableModel(HealthService service) {
     super();

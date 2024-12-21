@@ -16,8 +16,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
- * <p>MiscellaneousPane class.</p>
- *
  * This pane contains all the buttons 
  * which can undertake miscellaneous
  * operations such as visiting and operating
@@ -27,7 +25,7 @@ public class MiscellaneousPane extends ButtonPane {
   /**
    * <p>Constructor for MiscellaneousPane.</p>
    *
-   * @param listPanel a {@link com.yvesstraten.medicalconsolegui.components.ListPanel} object
+   * @param listPanel list panel to use
    */
   public MiscellaneousPane(ListPanel listPanel) {
     super("Miscellaneous Operations", listPanel);
@@ -67,6 +65,12 @@ public class MiscellaneousPane extends ButtonPane {
     add(buttonsGrouper);
   }
 
+  /**
+   * This function gives the user prompts 
+   * to attemp a visit 
+   *
+   * @param patientModel patient model
+   */
   private static void attemptVisit(PatientTableModel patientModel) {
     Patient[] patients = patientModel.getPatients().toArray(Patient[]::new);
     Patient wantsVisit =
@@ -103,6 +107,16 @@ public class MiscellaneousPane extends ButtonPane {
     }
   }
 
+  /**
+   * This function gives prompts to the user 
+   * to undertake an operation
+   *
+   * @param hospitalModel hospital model
+   * @param patientModel patient model
+   * @param procedureModel procedure model
+   * @throws WrongHospitalException if no hospitals 
+   * have been added yet
+   */
   private static void attemptOperation(
       HospitalTableModel hospitalModel,
       PatientTableModel patientModel,
@@ -154,13 +168,15 @@ public class MiscellaneousPane extends ButtonPane {
   }
 
   /**
-   * <p>attemptSelection.</p>
+   * This function attempts to show the 
+   * user a dialog from where they can select
+   * an option out of many options
    *
-   * @param message a {@link java.lang.String} object
-   * @param title a {@link java.lang.String} object
-   * @param errorMessage a {@link java.lang.String} object
-   * @param options an array of {@link java.lang.Object} objects
-   * @return a {@link java.lang.Object} object
+   * @param message message to show
+   * @param title title of dialog
+   * @param errorMessage error message for errors
+   * @param options available options
+   * @return selected option
    */
   public static Object attemptSelection(
       String message, String title, String errorMessage, Object[] options) {

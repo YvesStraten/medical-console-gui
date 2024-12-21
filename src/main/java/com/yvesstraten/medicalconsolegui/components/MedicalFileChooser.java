@@ -15,8 +15,6 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
- * <p>MedicalFileChooser class.</p>
- *
  * This class acts as a custom file chooser 
  * for saving and loading data to and fro 
  * this application
@@ -24,23 +22,22 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  */
 public class MedicalFileChooser extends JFileChooser {
   /** Extension filter for binary files */
-  private static FileNameExtensionFilter binaryExtFilter =
+  public static FileNameExtensionFilter binaryExtFilter =
       new FileNameExtensionFilter("Only meddat files", "meddat");
 
   /**
-   * Default constructor Sets the save type as binary
+   * Default constructor, sets file filter 
+   * to {@link binaryExtFilter}
    *
-   * @see SaveType
    */
   public MedicalFileChooser() {
     this(binaryExtFilter);
   }
 
   /**
-   * Alternate constructor Sets the save type to input type
+   * Alternate constructor sets the save type to input type
    *
-   * @see SaveType
-   * @param fileFilter a {@link javax.swing.filechooser.FileNameExtensionFilter} object
+   * @param fileFilter file filter to set
    */
   public MedicalFileChooser(FileNameExtensionFilter fileFilter) {
     super();

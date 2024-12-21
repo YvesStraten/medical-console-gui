@@ -8,15 +8,19 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
- * <p>ProcedureTableModel class.</p>
- *
  * This table model models a table for 
  * procedures present in the service
  * @author YvesStraten e2400068
  */
 public class ProcedureTableModel extends MedicalTableModel {
+  /**
+   * List of procedures
+   */
   private ArrayList<Procedure> procedures;
 
+  /**
+   * Column names
+   */
   private final String[] columns =
       new String[] {
         "Id", "Name", "Description", "Elective or not", "Base fee", "Available in hospital"
@@ -25,7 +29,7 @@ public class ProcedureTableModel extends MedicalTableModel {
   /**
    * <p>Constructor for ProcedureTableModel.</p>
    *
-   * @param service a {@link com.yvesstraten.medicalconsole.HealthService} object
+   * @param service service to use
    */
   public ProcedureTableModel(HealthService service) {
     super(service);
@@ -39,7 +43,7 @@ public class ProcedureTableModel extends MedicalTableModel {
   /**
    * <p>Getter for the field <code>procedures</code>.</p>
    *
-   * @return a {@link java.util.ArrayList} object
+   * @return a list of procedures
    */
   public ArrayList<Procedure> getProcedures() {
     return procedures;
@@ -48,20 +52,20 @@ public class ProcedureTableModel extends MedicalTableModel {
   /**
    * <p>Setter for the field <code>procedures</code>.</p>
    *
-   * @param procedures a {@link java.util.ArrayList} object
+   * @param procedures list of procedures to set
    */
   public void setProcedures(ArrayList<Procedure> procedures) {
     this.procedures = procedures;
   }
 
   /**
-   * <p>addProcedure.</p>
+   * Adds a procedure to the model
    *
-   * @param hospital a {@link com.yvesstraten.medicalconsole.facilities.Hospital} object
-   * @param name a {@link java.lang.String} object
-   * @param description a {@link java.lang.String} object
-   * @param isElective a boolean
-   * @param cost a double
+   * @param hospital hospital to add procedure to
+   * @param name procedure name
+   * @param description procedure description
+   * @param isElective procedure elective status
+   * @param cost procedure base cost
    */
   public void addProcedure(
       Hospital hospital, String name, String description, boolean isElective, double cost) {
@@ -74,18 +78,20 @@ public class ProcedureTableModel extends MedicalTableModel {
   }
 
   /**
-   * <p>deleteProcedure.</p>
+   * Deletes a procedure from model 
+   * and service
    *
-   * @param index a int
+   * @param index row index
    */
   public void deleteProcedure(int index) {
     deleteProcedure(getProcedures().get(index));
   }
 
   /**
-   * <p>deleteProcedure.</p>
+   * Deletes a procedure from model 
+   * and service
    *
-   * @param selected a {@link com.yvesstraten.medicalconsole.facilities.Procedure} object
+   * @param selected procedure to delete
    */
   public void deleteProcedure(Procedure selected) {
     Hospital containsProc = getHospitalWithProcedure(selected);
@@ -100,9 +106,11 @@ public class ProcedureTableModel extends MedicalTableModel {
   }
 
   /**
-   * <p>deleteProcedures.</p>
+   * Deletes a list of procedures from the model 
+   * and service
    *
-   * @param hospital a {@link com.yvesstraten.medicalconsole.facilities.Hospital} object
+   * @param hospital hospital to delete all  
+   * procedures from
    */
   public void deleteProcedures(Hospital hospital) {
     ArrayList<Procedure> selected = hospital.getProcedures();
@@ -218,10 +226,11 @@ public class ProcedureTableModel extends MedicalTableModel {
   }
 
   /**
-   * <p>getHospitalWithProcedure.</p>
+   * This function gets the Hospital containing 
+   * input procedure
    *
-   * @param selected a {@link com.yvesstraten.medicalconsole.facilities.Procedure} object
-   * @return a {@link com.yvesstraten.medicalconsole.facilities.Hospital} object
+   * @param selected Procedure to query hospital from
+   * @return hospital that contains this procedure
    */
   public Hospital getHospitalWithProcedure(Procedure selected) {
     return getService()
