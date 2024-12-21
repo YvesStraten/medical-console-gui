@@ -62,6 +62,7 @@ public class MedicalFileChooser extends JFileChooser {
 
     ArrayList<MedicalFacility> facilities = 
       (ArrayList<MedicalFacility>) read;
+    read = inputStream.readObject();
     ArrayList<Patient> patients = 
       (ArrayList<Patient>) read;
     service.setMedicalFacilities(facilities);

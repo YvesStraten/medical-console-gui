@@ -61,6 +61,7 @@ public class ProcedureTableModel extends MedicalTableModel {
    */
   public void setProcedures(ArrayList<Procedure> procedures) {
     this.procedures = procedures;
+    fireTableDataChanged();
   }
 
   /**

@@ -1,12 +1,17 @@
 package com.yvesstraten.medicalconsolegui.components;
 
 import com.yvesstraten.medicalconsole.HealthService;
+import com.yvesstraten.medicalconsole.facilities.Hospital;
 import com.yvesstraten.medicalconsolegui.models.ClinicTableModel;
 import com.yvesstraten.medicalconsolegui.models.HospitalTableModel;
+import com.yvesstraten.medicalconsolegui.models.PatientTableModel;
 import com.yvesstraten.medicalconsolegui.models.ProcedureTableModel;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.stream.Collectors;
+
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -78,17 +83,40 @@ public class MedicalGuiFrame extends JFrame {
           public void actionPerformed(ActionEvent e) {
             MedicalFileChooser fileChooser = new MedicalFileChooser();
             fileChooser.load(service);
-            HealthService service = getService();
 
+            HealthService service = getService();
+            ListPanel listPanel = 
+              mainMenu.getListPanel();
+
+            // Update all models
             HospitalTableModel hospitalTableModel =
-                new HospitalTableModel(service,
-                  new ProcedureTableModel(service));
-            mainMenu.getListPanel()
-              .setHospitalTableModel(hospitalTableModel);
-            mainMenu.getListPanel()
-              .setClinicTableModel(new ClinicTableModel(service));
-            mainMenu.getListPanel()
-              .getCurrentTable().setModel(hospitalTableModel);
+              listPanel.getHospitalTableModel();
+
+            ClinicTableModel clinicTableModel = 
+              listPanel.getClinicTableModel();
+
+            ProcedureTableModel procedureTableModel = 
+              listPanel.getProcedureTableModel();
+
+            hospitalTableModel.setHospitals(
+              service.getHospitals()
+                .collect(Collectors
+                  .toCollection(ArrayList::new))
+            ); 
+
+            clinicTableModel.setClinics(
+              service.getClinics()
+                .collect(Collectors
+                  .toCollection(ArrayList::new))
+            ); 
+
+            procedureTableModel.setProcedures(
+              service.getHospitals()
+                .flatMap(Hospital::getProceduresStream)
+                .collect(Collectors
+                  .toCollection(ArrayList::new))
+            ); 
+
             setTitle(getNewTitle(service));
           }
         });

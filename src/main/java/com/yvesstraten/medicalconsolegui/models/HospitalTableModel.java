@@ -66,6 +66,7 @@ public class HospitalTableModel extends MedicalTableModel {
    */
   public void setHospitals(ArrayList<Hospital> hospitals) {
     this.hospitals = hospitals;
+    fireTableDataChanged();
   }
 
   /**
