@@ -225,13 +225,24 @@ public class AddButtonsPane extends ButtonPane {
    * @return input string
    */
   private static String getString(String message, String title) {
-    String input =
+    while(true){
+      String input =
         (String) JOptionPane
           .showInputDialog(null,
-                           message,
-                           title,
-          JOptionPane.QUESTION_MESSAGE);
-    return input;
+            message,
+            title,
+            JOptionPane.QUESTION_MESSAGE);
+      if(input != null && input.length() == 0){
+        JOptionPane.showMessageDialog(
+            null,
+            "Empty input is not allowed!",
+            "Failure",
+          JOptionPane.ERROR_MESSAGE);
+
+      } else {
+        return input;
+      }
+    }
   }
 
   /**
