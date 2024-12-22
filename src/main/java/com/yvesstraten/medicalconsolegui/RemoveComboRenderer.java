@@ -10,7 +10,8 @@ import javax.swing.DefaultListCellRenderer;
 import javax.swing.JList;
 
 /**
- * This custom render overrides the combox box renderer for JOptionPane to allow for shorter
+ * This custom render overrides the combox box renderer
+ * for JOptionPane to allow for shorter
  * descriptions of objects in this application
  *
  * @author YvesStraten e2400068
@@ -25,7 +26,12 @@ public class RemoveComboRenderer extends DefaultListCellRenderer {
   /** {@inheritDoc} */
   @Override
   public Component getListCellRendererComponent(
-      JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+      JList<?> list,
+      Object value,
+      int index,
+      boolean isSelected,
+      boolean cellHasFocus) {
+
     if (value instanceof MedicalFacility) {
       StringBuilder builder = new StringBuilder();
       MedicalFacility facility = (MedicalFacility) value;
@@ -36,7 +42,12 @@ public class RemoveComboRenderer extends DefaultListCellRenderer {
         builder.append("Hospital");
       }
 
-      builder.append(" ").append(facility.getId()).append(" ").append(facility.getName());
+      builder
+        .append(" ")
+        .append(facility.getId())
+        .append(" ")
+        .append(facility.getName());
+
       return super.getListCellRendererComponent(
           list, builder.toString(), index, isSelected, cellHasFocus);
     } else if (value instanceof Patient) {
@@ -64,6 +75,10 @@ public class RemoveComboRenderer extends DefaultListCellRenderer {
           cellHasFocus);
     }
 
-    return super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+    return super.getListCellRendererComponent(list,
+      value,
+      index,
+      isSelected,
+      cellHasFocus);
   }
 }
