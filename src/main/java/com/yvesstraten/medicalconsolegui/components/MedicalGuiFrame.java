@@ -1,17 +1,10 @@
 package com.yvesstraten.medicalconsolegui.components;
 
 import com.yvesstraten.medicalconsole.HealthService;
-import com.yvesstraten.medicalconsole.facilities.Hospital;
 import com.yvesstraten.medicalconsolegui.Refreshable;
-import com.yvesstraten.medicalconsolegui.models.ClinicTableModel;
-import com.yvesstraten.medicalconsolegui.models.HospitalTableModel;
-import com.yvesstraten.medicalconsolegui.models.ProcedureTableModel;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.stream.Collectors;
-
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
