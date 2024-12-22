@@ -78,7 +78,7 @@
 						<phase>package</phase>
 						<goals><goal>shade</goal></goals>
 						<configuration>
-              <outputFile>${project.build.directory}/MedicalGui.jar</outputFile>
+              <outputFile>${project.build.directory}/MedicalGUI.jar</outputFile>
           	  <transformers>
           	    <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
           	        <mainClass>com.yvesstraten.medicalconsolegui.MedicalGui</mainClass>
