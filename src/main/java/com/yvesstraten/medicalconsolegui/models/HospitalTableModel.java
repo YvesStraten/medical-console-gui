@@ -3,6 +3,8 @@ package com.yvesstraten.medicalconsolegui.models;
 import com.yvesstraten.medicalconsole.HealthService;
 import com.yvesstraten.medicalconsole.facilities.Hospital;
 import com.yvesstraten.medicalconsole.facilities.MedicalFacility;
+import com.yvesstraten.medicalconsolegui.Refreshable;
+
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
@@ -12,7 +14,8 @@ import java.util.stream.Collectors;
  *
  * @author YvesStraten e2400068
  */
-public class HospitalTableModel extends MedicalTableModel {
+public class HospitalTableModel extends MedicalTableModel
+  implements Refreshable {
   /**
    * List of hospitals
    */
@@ -199,5 +202,14 @@ public class HospitalTableModel extends MedicalTableModel {
   public Class<?> getColumnClass(int column) {
     Object value = getValueAt(0, column);
     return value != null ? value.getClass() : Object.class;
+  }
+
+  @Override
+  public void refresh() {
+    setHospitals(
+      getService().getHospitals()
+        .collect(Collectors
+          .toCollection(ArrayList::new))
+    ); 
   }
 }

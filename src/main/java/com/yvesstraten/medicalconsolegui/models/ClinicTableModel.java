@@ -2,6 +2,8 @@ package com.yvesstraten.medicalconsolegui.models;
 
 import com.yvesstraten.medicalconsole.HealthService;
 import com.yvesstraten.medicalconsole.facilities.Clinic;
+import com.yvesstraten.medicalconsolegui.Refreshable;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -12,7 +14,8 @@ import java.util.stream.Collectors;
  *
  * @author YvesStraten e2400068
  */
-public class ClinicTableModel extends MedicalTableModel {
+public class ClinicTableModel extends MedicalTableModel
+  implements Refreshable {
   /**
    * List of clinics
    */
@@ -173,5 +176,14 @@ public class ClinicTableModel extends MedicalTableModel {
       default:
         return Object.class;
     }
+  }
+
+  @Override
+  public void refresh() {
+    setClinics(
+      getService().getClinics()
+        .collect(Collectors
+          .toCollection(ArrayList::new))
+    ); 
   }
 }

@@ -3,6 +3,8 @@ package com.yvesstraten.medicalconsolegui.models;
 import com.yvesstraten.medicalconsole.HealthService;
 import com.yvesstraten.medicalconsole.facilities.Hospital;
 import com.yvesstraten.medicalconsole.facilities.Procedure;
+import com.yvesstraten.medicalconsolegui.Refreshable;
+
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -12,7 +14,8 @@ import java.util.stream.Collectors;
  * procedures present in the service
  * @author YvesStraten e2400068
  */
-public class ProcedureTableModel extends MedicalTableModel {
+public class ProcedureTableModel extends MedicalTableModel
+  implements Refreshable {
   /**
    * List of procedures
    */
@@ -259,5 +262,15 @@ public class ProcedureTableModel extends MedicalTableModel {
             })
         .findFirst()
         .orElse(null);
+  }
+
+  @Override
+  public void refresh() {
+    setProcedures(
+      getService().getHospitals()
+        .flatMap(Hospital::getProceduresStream)
+        .collect(Collectors
+          .toCollection(ArrayList::new))
+    ); 
   }
 }

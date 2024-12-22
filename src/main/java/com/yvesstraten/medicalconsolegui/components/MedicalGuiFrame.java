@@ -2,9 +2,9 @@ package com.yvesstraten.medicalconsolegui.components;
 
 import com.yvesstraten.medicalconsole.HealthService;
 import com.yvesstraten.medicalconsole.facilities.Hospital;
+import com.yvesstraten.medicalconsolegui.Refreshable;
 import com.yvesstraten.medicalconsolegui.models.ClinicTableModel;
 import com.yvesstraten.medicalconsolegui.models.HospitalTableModel;
-import com.yvesstraten.medicalconsolegui.models.PatientTableModel;
 import com.yvesstraten.medicalconsolegui.models.ProcedureTableModel;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -18,6 +18,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
+import javax.swing.table.TableModel;
 
 /**
  * This class acts as the main {@link JFrame} for the application
@@ -88,34 +89,16 @@ public class MedicalGuiFrame extends JFrame {
             ListPanel listPanel = 
               mainMenu.getListPanel();
 
-            // Update all models
-            HospitalTableModel hospitalTableModel =
-              listPanel.getHospitalTableModel();
-
-            ClinicTableModel clinicTableModel = 
-              listPanel.getClinicTableModel();
-
-            ProcedureTableModel procedureTableModel = 
-              listPanel.getProcedureTableModel();
-
-            hospitalTableModel.setHospitals(
-              service.getHospitals()
-                .collect(Collectors
-                  .toCollection(ArrayList::new))
-            ); 
-
-            clinicTableModel.setClinics(
-              service.getClinics()
-                .collect(Collectors
-                  .toCollection(ArrayList::new))
-            ); 
-
-            procedureTableModel.setProcedures(
-              service.getHospitals()
-                .flatMap(Hospital::getProceduresStream)
-                .collect(Collectors
-                  .toCollection(ArrayList::new))
-            ); 
+            TableModel[] models = 
+              listPanel
+                .getTableModels();
+            
+            for(TableModel model : models){
+              // Can be refreshed and should
+              if(model instanceof Refreshable){
+                ((Refreshable) model).refresh();
+              }
+            }
 
             setTitle(getNewTitle(service));
           }
