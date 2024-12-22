@@ -144,6 +144,14 @@ public class ListPanel extends JPanel {
           }
         };
 
+    // For sorting
+    listTable
+      .setAutoCreateRowSorter(true);
+    // Id as default sort column
+    listTable
+      .getRowSorter()
+      .toggleSortOrder(0);
+
     setCurrentTable(listTable);
     JScrollPane scrollPane = new JScrollPane(getCurrentTable());
     setScrollPane(scrollPane);
