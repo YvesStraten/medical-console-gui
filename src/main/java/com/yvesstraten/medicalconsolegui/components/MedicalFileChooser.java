@@ -1,8 +1,12 @@
 package com.yvesstraten.medicalconsolegui.components;
 
 import com.yvesstraten.medicalconsole.HealthService;
+import com.yvesstraten.medicalconsole.IdGenerator;
 import com.yvesstraten.medicalconsole.Patient;
+import com.yvesstraten.medicalconsole.facilities.Hospital;
 import com.yvesstraten.medicalconsole.facilities.MedicalFacility;
+import com.yvesstraten.medicalconsole.facilities.Procedure;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -10,6 +14,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.stream.IntStream;
+
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -70,6 +76,34 @@ public class MedicalFileChooser extends JFileChooser {
 
     inputStream.close();
     chosenFile.close();
+    
+    int lastHighestId = service.getIdDispenser().getLastDispensedId();
+    IntStream facilityIds = service
+      .getMedicalFacilitiesStream()
+      .mapToInt(MedicalFacility::getId);
+
+    IntStream patientIds = service 
+      .getPatientsStream()
+      .mapToInt(Patient::getId);
+
+    IntStream procedureIds = service
+      .getHospitals()
+      .flatMap(Hospital::getProceduresStream)
+      .mapToInt(Procedure::getId);
+
+    IntStream allIds = IntStream.concat(
+      IntStream.concat(facilityIds, patientIds),
+      procedureIds);
+
+    IdGenerator idGenerator = service.getIdDispenser();
+    idGenerator
+      .setLastDispensedId(
+        allIds.max()
+        .orElse(
+          idGenerator
+          .getLastDispensedId()
+        )
+      );
   }
 
   /**
@@ -109,7 +143,8 @@ public class MedicalFileChooser extends JFileChooser {
           int chosenOption =
               JOptionPane.showOptionDialog(
                   this,
-                  "Could not write to file!"                   + " Please choose another location!",
+                  "Could not write to file!"
+                  + " Please choose another location!",
                   "Warning",
                   JOptionPane.DEFAULT_OPTION,
                   JOptionPane.WARNING_MESSAGE,
