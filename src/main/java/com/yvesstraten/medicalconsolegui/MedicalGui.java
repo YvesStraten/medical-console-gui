@@ -1,6 +1,7 @@
 package com.yvesstraten.medicalconsolegui;
 
 import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 
 import com.yvesstraten.medicalconsole.HealthService;
 import com.yvesstraten.medicalconsole.MedicalConsole;
@@ -25,8 +26,15 @@ public class MedicalGui extends JFrame {
 
     HealthService service = MedicalConsole.generateSampleData();
     // HealthService service = new HealthService();
-    MedicalGuiFrame medicalFrame = new MedicalGuiFrame(service);
-    medicalFrame.setVisible(true);
+    
+    // Instantiate GUI on Java AWT event thread
+    SwingUtilities.invokeLater(new Runnable() {
+      @Override
+      public void run() {
+        MedicalGuiFrame medicalFrame = new MedicalGuiFrame(service);
+        medicalFrame.setVisible(true);
+      }
+    });
   }
 
   private MedicalGui(){}

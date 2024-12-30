@@ -77,7 +77,6 @@ public class MedicalFileChooser extends JFileChooser {
     inputStream.close();
     chosenFile.close();
     
-    int lastHighestId = service.getIdDispenser().getLastDispensedId();
     IntStream facilityIds = service
       .getMedicalFacilitiesStream()
       .mapToInt(MedicalFacility::getId);

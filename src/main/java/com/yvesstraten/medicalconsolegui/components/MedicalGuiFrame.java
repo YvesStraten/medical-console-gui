@@ -52,6 +52,7 @@ public class MedicalGuiFrame extends JFrame {
     super(getNewTitle(service));
 
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    setLayout(new BorderLayout());
     setService(service);
 
     // Setup the main menu
@@ -65,6 +66,8 @@ public class MedicalGuiFrame extends JFrame {
                 setTitle(getNewTitle(getService()));
               }
             });
+    setContentPane(mainMenu);
+    mainMenu.setupListeners();
 
     // Setup menubar
     JMenuBar menuBar = new JMenuBar();
@@ -112,8 +115,10 @@ public class MedicalGuiFrame extends JFrame {
     customMenu.add(load);
     menuBar.add(customMenu);
     setJMenuBar(menuBar);
-    add(mainMenu, BorderLayout.NORTH);
     pack();
+
+    // To spawn centered
+    setLocationRelativeTo(null);
   }
 
   /**
