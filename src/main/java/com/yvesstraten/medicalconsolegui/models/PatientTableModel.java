@@ -37,7 +37,7 @@ public class PatientTableModel extends MedicalTableModel {
    */
   public void addPatient(String name, boolean isPrivate) {
     getService().initializePatient(name, isPrivate);
-    fireTableRowsInserted(getRowCount(), getRowCount());
+    fireTableRowsInserted(getRowCount() - 1, getRowCount() - 1);
   }
 
   /**

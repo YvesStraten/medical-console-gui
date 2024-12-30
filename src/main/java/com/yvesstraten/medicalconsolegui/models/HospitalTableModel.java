@@ -116,7 +116,6 @@ public class HospitalTableModel extends MedicalTableModel
   public void deleteHospital(Hospital selected) {
     int row = getHospitals().indexOf(selected);
     deleteHospital(row);
-    fireTableRowsDeleted(row, row);
   }
 
   /**
